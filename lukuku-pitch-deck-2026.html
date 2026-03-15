@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUKUKU 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box}
+
+  :root {
+    --ink:#1A1A1A;
+    --white:#fff;
+    --g50:#FAFAFA;
+    --g100:#F5F5F5;
+    --g200:#E5E5E5;
+    --g300:#D4D4D4;
+    --g400:#A3A3A3;
+    --g500:#737373;
+    --g600:#525252;
+    --mint:#2BF5A0;
+  }
+
+  body{font-family:'Inter','Noto Sans KR',sans-serif;background:var(--g200);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  .slide{width:1280px;height:720px;margin:40px auto;background:var(--white);overflow:hidden;position:relative}
+  .s{width:100%;height:100%;position:relative}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .kr{font-family:'Noto Sans KR',sans-serif}
+  .flex{display:flex}.flex-col{flex-direction:column}.flex-1{flex:1}
+  .items-center{align-items:center}.items-end{align-items:flex-end}
+  .justify-center{justify-content:center}.justify-between{justify-content:space-between}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr}
+  .grid-5{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+  .cap{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g500)}
+  .pill{display:inline-block;padding:4px 12px;border:1px solid var(--g200);border-radius:100px;font-size:10px;font-weight:500;color:var(--g500)}
+  .pill-dk{border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.4);padding:4px 12px;display:inline-block;border-radius:100px;font-size:10px}
+  .slide-num{position:absolute;bottom:28px;right:40px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g400)}
+  .slide-logo{position:absolute;bottom:28px;left:40px;font-size:13px;font-weight:800;color:var(--g300)}
+  .tb{width:100%;border-collapse:collapse}
+  .tb th{text-align:left;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g500);padding:10px 0;border-bottom:1.5px solid var(--ink)}
+  .tb td{padding:10px 0;font-size:12px;color:var(--g600);border-bottom:1px solid var(--g200);vertical-align:top;line-height:1.4}
+  .tb td:first-child{font-weight:600;color:var(--ink)}
+  .dbox{background:var(--g50);border:1px solid var(--g200);padding:10px 14px;text-align:center;font-size:11px;font-weight:600;color:var(--ink);border-radius:4px}
+  .dbox-dk{background:var(--ink);border:1px solid var(--ink);padding:10px 14px;text-align:center;font-size:11px;font-weight:600;color:var(--white);border-radius:4px}
+  .dbox-acc{background:var(--ink);border:1px solid var(--ink);padding:10px 14px;text-align:center;font-size:11px;font-weight:600;color:var(--white);border-radius:4px}
+  .harr{font-size:14px;color:var(--g400);padding:0 6px}
+
+  /* === VISUAL EFFECTS === */
+  .dot-grid{background-image:radial-gradient(circle,#D4D4D4 1px,transparent 1px);background-size:24px 24px}
+  .gradient-mesh{background:radial-gradient(ellipse at 20% 50%,rgba(43,245,160,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(43,245,160,0.05) 0%,transparent 40%),radial-gradient(ellipse at 60% 80%,rgba(200,200,200,0.1) 0%,transparent 50%)}
+  .zoom-pan{animation:zoomPan 8s ease-in-out infinite alternate}
+  @keyframes zoomPan{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-3%,-2%)}}
+
+  /* === ANIMATIONS === */
+  @property --num{syntax:"<integer>";initial-value:0;inherits:false}
+  @property --n4{syntax:"<integer>";initial-value:0;inherits:false}
+  @property --n36{syntax:"<integer>";initial-value:0;inherits:false}
+  @property --n68{syntax:"<integer>";initial-value:0;inherits:false}
+  @property --n44{syntax:"<integer>";initial-value:0;inherits:false}
+  @property --n110{syntax:"<integer>";initial-value:0;inherits:false}
+
+  .counter-4{animation:c4 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n4);font-variant-numeric:tabular-nums}
+  .counter-4::after{content:counter(n)}
+  @keyframes c4{from{--n4:0}to{--n4:4}}
+
+  .counter-36{animation:c36 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n36);font-variant-numeric:tabular-nums}
+  .counter-36::after{content:counter(n)}
+  @keyframes c36{from{--n36:0}to{--n36:36}}
+
+  .counter-68{animation:c68 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n68);font-variant-numeric:tabular-nums}
+  .counter-68::after{content:counter(n)}
+  @keyframes c68{from{--n68:0}to{--n68:68}}
+
+  .counter-44{animation:c44 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n44);font-variant-numeric:tabular-nums}
+  .counter-44::after{content:counter(n)}
+  @keyframes c44{from{--n44:0}to{--n44:44}}
+
+  .counter-110{animation:c110 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n110);font-variant-numeric:tabular-nums}
+  .counter-110::after{content:counter(n)}
+  @keyframes c110{from{--n110:0}to{--n110:110}}
+
+  .text-scramble{animation:textScramble 600ms steps(8) forwards}
+  @keyframes textScramble{0%{filter:blur(4px);opacity:0;letter-spacing:4px}50%{filter:blur(1px);opacity:.7;letter-spacing:1px}100%{filter:blur(0);opacity:1;letter-spacing:-3px}}
+
+  @media print{body{background:#fff}.slide{margin:0;page-break-after:always}}
+</style>
+</head>
+<body>
+
+
+<!-- 01. COVER — gradient-mesh + dot-grid + Text Scramble -->
+<div class="slide">
+  <div class="s flex flex-col justify-between gradient-mesh dot-grid" style="padding:72px 80px">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center" style="gap:8px">
+        <span style="font-size:20px;font-weight:800;color:var(--ink)">Lukuku<span style="color:var(--mint)">.</span></span>
+      </div>
+      <div class="mono" style="font-size:11px;color:var(--g400)">Confidential &middot; March 2026</div>
+    </div>
+
+    <div>
+      <div class="text-scramble" style="font-size:72px;font-weight:900;color:var(--ink);line-height:1.05;letter-spacing:-3px;margin-bottom:20px">
+        Global Commerce,<br>Engineered<span style="color:var(--mint)">.</span>
+      </div>
+      <div style="font-size:15px;font-weight:400;color:var(--g500);max-width:600px;line-height:1.7">
+        Shopify 전문 에이전시 &middot; 시스템 통합(ERP/POS/3PL) &middot; 해외 유통<br>
+        68+ 거래처 &middot; 44건 계약 &middot; 110건 견적 — 글로벌 이커머스를 설계하고 실행합니다.
+      </div>
+    </div>
+
+    <div class="flex" style="gap:48px">
+      <div><div class="cap" style="margin-bottom:4px">Est.</div><div class="mono" style="font-size:12px;color:var(--g600)">2022, Seoul</div></div>
+      <div><div class="cap" style="margin-bottom:4px">Team</div><div class="mono" style="font-size:12px;color:var(--g600)">36 members (KR·ID·US)</div></div>
+      <div><div class="cap" style="margin-bottom:4px">Clients</div><div class="mono" style="font-size:12px;color:var(--g600)">68+ companies</div></div>
+      <div><div class="cap" style="margin-bottom:4px">Regions</div><div class="mono" style="font-size:12px;color:var(--g600)">US · EU · JP · HK · TW · SEA</div></div>
+    </div>
+  </div>
+  <div class="slide-num">01 / 11</div>
+</div>
+
+
+<!-- 02. AT A GLANCE — Counter Up on stats -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:60px 80px">
+    <div style="margin-bottom:32px">
+      <div class="cap" style="margin-bottom:8px">COMPANY</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">루쿠쿠 주식회사</div>
+    </div>
+
+    <!-- stat row — Counter Up -->
+    <div class="grid-5" style="gap:1px;background:var(--g200);border:1px solid var(--g200);margin-bottom:32px">
+      <div style="background:var(--white);padding:24px">
+        <div class="mono counter-4" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)"></div>
+        <div style="font-size:22px;font-weight:700;color:var(--g400);display:inline">yr</div>
+        <div style="font-size:11px;color:var(--g500);margin-top:6px">업력</div>
+      </div>
+      <div style="background:var(--white);padding:24px">
+        <div class="mono counter-36" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)"></div>
+        <div style="font-size:11px;color:var(--g500);margin-top:6px">팀원</div>
+      </div>
+      <div style="background:var(--white);padding:24px">
+        <div class="mono counter-68" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--mint)"></div>
+        <div style="font-size:22px;font-weight:700;color:var(--g400);display:inline">+</div>
+        <div style="font-size:11px;color:var(--g500);margin-top:6px">거래처</div>
+      </div>
+      <div style="background:var(--white);padding:24px">
+        <div class="mono counter-44" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)"></div>
+        <div style="font-size:11px;color:var(--g500);margin-top:6px">계약 건수</div>
+      </div>
+      <div style="background:var(--white);padding:24px">
+        <div class="mono counter-110" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)"></div>
+        <div style="font-size:22px;font-weight:700;color:var(--g400);display:inline">+</div>
+        <div style="font-size:11px;color:var(--g500);margin-top:6px">견적서</div>
+      </div>
+    </div>
+
+    <!-- 3col detail -->
+    <div class="grid-3" style="gap:32px;margin-bottom:24px">
+      <div>
+        <div style="width:32px;height:1.5px;background:var(--ink);margin-bottom:14px"></div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px;color:var(--ink)">조직 구조</div>
+        <div style="font-size:12px;font-weight:400;color:var(--g600);line-height:1.8">서울 HQ — 전략·PM·클라이언트<br>인도네시아 — 개발·디자인·QA<br>미국 (2026~) — 유통·물류·현지 운영<br><br>성장: 3명 → 7 → 15 → 36명 (4년)</div>
+      </div>
+      <div>
+        <div style="width:32px;height:1.5px;background:var(--ink);margin-bottom:14px"></div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px;color:var(--ink)">팀 구성</div>
+        <div style="font-size:12px;font-weight:400;color:var(--g600);line-height:1.8">풀스택·Shopify 테마·백엔드·인프라<br>UI/UX·비주얼 디자이너<br>PM·QA·이커머스 컨설턴트<br><br>내부 인력 수행 원칙 (외주 없음)</div>
+      </div>
+      <div>
+        <div style="width:32px;height:1.5px;background:var(--ink);margin-bottom:14px"></div>
+        <div style="font-size:14px;font-weight:700;margin-bottom:8px;color:var(--ink)">산업 · 지역</div>
+        <div style="font-size:12px;font-weight:400;color:var(--g600);line-height:1.8"><strong style="color:var(--ink)">산업</strong> 패션·뷰티·전자제품·스포츠·F&B·엔터·NPO<br><strong style="color:var(--ink)">지역</strong> US·EU·JP·HK·TW·SEA<br><strong style="color:var(--ink)">PG</strong> Shopify Pay·PayPal·TapPay·Degica·Global Payments·Airwallex</div>
+      </div>
+    </div>
+
+    <!-- tools bar -->
+    <div class="flex" style="gap:1px;background:var(--g200);border:1px solid var(--g200)">
+      <div style="flex:1;background:var(--white);padding:12px 16px;font-size:11px;color:var(--g600)"><strong style="color:var(--ink)">개발</strong> &ensp;Shopify Liquid·React·Node.js·PostgreSQL</div>
+      <div style="flex:1;background:var(--white);padding:12px 16px;font-size:11px;color:var(--g600)"><strong style="color:var(--ink)">인프라</strong> &ensp;AWS EKS·Docker·Terraform·Redis·SQS</div>
+      <div style="flex:1;background:var(--white);padding:12px 16px;font-size:11px;color:var(--g600)"><strong style="color:var(--ink)">도구</strong> &ensp;Slack·ClickUp·Figma·GitHub·Modusign</div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">02 / 11</div>
+</div>
+
+
+<!-- 03. SERVICES — 4 Pillars -->
+<div class="slide">
+  <div class="s flex flex-col">
+    <div style="padding:60px 80px 0">
+      <div class="cap" style="margin-bottom:8px">SERVICES</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">서비스 영역</div>
+    </div>
+    <div class="flex-1 grid-4" style="margin-top:28px;border-top:1px solid var(--g200)">
+      <!-- Build -->
+      <div style="padding:28px 24px 28px 80px;border-right:1px solid var(--g200);display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="cap" style="margin-bottom:14px">01 · Build</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--ink)">Shopify 글로벌 스토어</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">
+            · Release/Dawn 등 유료 테마 커스텀<br>
+            · UI/UX 디자인 (Figma 기반)<br>
+            · 다국가/다통화 마켓 설정<br>
+            · Shopify Payments·PayPal·현지 PG<br>
+            · Global-e 크로스보더 연동<br>
+            · 카페24/Shopline → Shopify 마이그레이션<br>
+            · Shopify Plus 멀티브랜드 설정
+          </div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap"><span class="pill">Liquid</span><span class="pill">Figma</span><span class="pill">Global-e</span></div>
+      </div>
+      <!-- Integrate -->
+      <div style="padding:28px 24px;border-right:1px solid var(--g200);display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="cap" style="margin-bottom:14px">02 · Integrate</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--ink)">시스템 통합 개발</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">
+            · ERP ↔ Shopify 실시간 I/F<br>
+            · POS 시스템 (Global Payments·TapPay·Airwallex)<br>
+            · MSA 아키텍처 (admin/store/erp/payment/task)<br>
+            · Shopify Custom App 개발<br>
+            · 앱 vs 커스텀 의사결정 가이드<br>
+            · 물류 3PL/FBA/MCF 연동<br>
+            · 데이터 마이그레이션 자동화
+          </div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap"><span class="pill">AWS</span><span class="pill">MSA</span><span class="pill">ERP</span></div>
+      </div>
+      <!-- Operate -->
+      <div style="padding:28px 24px;border-right:1px solid var(--g200);display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="cap" style="margin-bottom:14px">03 · Operate</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--ink)">운영 & 유지보수</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">
+            · 전담 인력(1~3명) 월 리테이너<br>
+            · 주간 위클리 리포트 (금요일)<br>
+            · Slack 전용 채널 (내부/외부 분리)<br>
+            · CRO·A/B 테스트·캠페인 지원<br>
+            · 콘텐츠·배너 업데이트<br>
+            · Okendo 리뷰·GA4 퍼포먼스<br>
+            · 기능 추가·개선·마켓 확장
+          </div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap"><span class="pill">리테이너</span><span class="pill">CRO</span></div>
+      </div>
+      <!-- Distribute -->
+      <div style="padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="flex items-center" style="gap:8px;margin-bottom:14px">
+            <div class="cap">04 · Distribute</div>
+            <span style="display:inline-block;padding:2px 8px;background:var(--ink);color:var(--white);border-radius:100px;font-size:8px;font-weight:700">NEW 2026</span>
+          </div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px;color:var(--ink)">미국 유통</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">
+            · 미국 D2C 스토어 구축<br>
+            · 3PL 물류 세팅<br>
+            · Amazon FBA/MCF 연동<br>
+            · MCF → 자사몰 배송 운영<br>
+            · 브랜드 유통 대행<br>
+            · 수출지원사업 연계<br>
+            · Revenue Share 모델
+          </div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap"><span class="pill">US</span><span class="pill">3PL</span><span class="pill">FBA</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">03 / 11</div>
+</div>
+
+
+<!-- 04. ARCHITECTURE DIAGRAM — dot-grid background -->
+<div class="slide">
+  <div class="s dot-grid" style="padding:60px 80px">
+    <div style="margin-bottom:24px">
+      <div class="cap" style="margin-bottom:8px">TECHNICAL ARCHITECTURE</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">시스템 아키텍처</div>
+    </div>
+    <div style="font-size:12px;color:var(--g500);margin-bottom:24px">실제 운영 중인 글로벌 온·오프라인 통합 프로젝트 기준</div>
+
+    <!-- Architecture diagram -->
+    <div style="display:grid;grid-template-columns:200px 40px 280px 40px 200px;gap:8px 0;align-items:center">
+      <!-- Row 1 -->
+      <div class="dbox">Shopify Storefront<div style="font-size:9px;font-weight:400;color:var(--g500);margin-top:2px">HK · TW · Global</div></div>
+      <div class="harr">→</div>
+      <div class="dbox-acc">LUKUKU Middleware (MSA)<div style="font-size:9px;font-weight:400;opacity:.7;margin-top:2px">AWS EKS · Docker · Terraform</div></div>
+      <div class="harr">→</div>
+      <div class="dbox">ERP (GERP)<div style="font-size:9px;font-weight:400;color:var(--g500);margin-top:2px">주문·재고·회원·판매</div></div>
+    </div>
+    <!-- Row 2 -->
+    <div style="display:grid;grid-template-columns:200px 40px 280px 40px 200px;gap:8px 0;align-items:center;margin-top:8px">
+      <div class="dbox">POS App (Vercel)<div style="font-size:9px;font-weight:400;color:var(--g500);margin-top:2px">오프라인 매장</div></div>
+      <div class="harr">→</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+        <div class="dbox-dk" style="font-size:9px;padding:8px 4px;border-radius:3px">store-api</div>
+        <div class="dbox-dk" style="font-size:9px;padding:8px 4px;border-radius:3px">admin-api</div>
+        <div class="dbox-dk" style="font-size:9px;padding:8px 4px;border-radius:3px">erp-connector</div>
+      </div>
+      <div class="harr">←→</div>
+      <div class="dbox">3PL<div style="font-size:9px;font-weight:400;color:var(--g500);margin-top:2px">GEODIS(HK) · Maersk(TW)</div></div>
+    </div>
+    <!-- Row 3 -->
+    <div style="display:grid;grid-template-columns:200px 40px 280px 40px 200px;gap:8px 0;align-items:center;margin-top:8px">
+      <div class="dbox">Admin Dashboard<div style="font-size:9px;font-weight:400;color:var(--g500);margin-top:2px">Next.js · Vercel</div></div>
+      <div class="harr">→</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+        <div class="dbox-dk" style="font-size:9px;padding:8px 4px;border-radius:3px">payment-svc</div>
+        <div class="dbox-dk" style="font-size:9px;padding:8px 4px;border-radius:3px">task-processor</div>
+        <div class="dbox-dk" style="font-size:9px;padding:8px 4px;border-radius:3px">data-migration</div>
+      </div>
+      <div class="harr">←→</div>
+      <div class="dbox">Payment Gateway<div style="font-size:9px;font-weight:400;color:var(--g500);margin-top:2px">Airwallex(HK) · TapPay(TW)</div></div>
+    </div>
+    <!-- Infra bar -->
+    <div style="display:grid;grid-template-columns:200px 40px 280px 40px 200px;gap:0;margin-top:12px">
+      <div></div><div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px">
+        <div style="background:var(--g100);border:1px solid var(--g200);padding:6px 4px;text-align:center;font-size:9px;color:var(--g500);border-radius:3px">Aurora<br>PostgreSQL</div>
+        <div style="background:var(--g100);border:1px solid var(--g200);padding:6px 4px;text-align:center;font-size:9px;color:var(--g500);border-radius:3px">Redis<br>Cache</div>
+        <div style="background:var(--g100);border:1px solid var(--g200);padding:6px 4px;text-align:center;font-size:9px;color:var(--g500);border-radius:3px">AWS SQS<br>Queue</div>
+      </div>
+      <div></div><div></div>
+    </div>
+    <!-- Legend -->
+    <div class="flex" style="gap:24px;margin-top:20px;padding-top:16px;border-top:1px solid var(--g200)">
+      <div class="flex items-center" style="gap:6px"><div style="width:12px;height:12px;background:var(--ink);border-radius:2px"></div><div style="font-size:10px;color:var(--g500)">Lukuku 개발/운영 영역 · MSA 마이크로서비스 (6개)</div></div>
+      <div class="flex items-center" style="gap:6px"><div style="width:12px;height:12px;background:var(--g100);border:1px solid var(--g200);border-radius:2px"></div><div style="font-size:10px;color:var(--g500)">데이터 인프라</div></div>
+      <div style="flex:1"></div>
+      <div class="mono" style="font-size:10px;color:var(--g400)">CI/CD: GitHub Actions · DNS: Cloudflare + Route53 · Registry: ECR</div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">04 / 11</div>
+</div>
+
+
+<!-- 05. CLIENT PORTFOLIO -->
+<div class="slide">
+  <div class="s" style="padding:60px 80px">
+    <div class="flex justify-between items-end" style="margin-bottom:20px">
+      <div>
+        <div class="cap" style="margin-bottom:8px">PORTFOLIO</div>
+        <div style="font-size:32px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">68개 거래처 — 주요 레퍼런스</div>
+      </div>
+    </div>
+    <table class="tb" style="font-size:11px">
+      <thead><tr>
+        <th style="width:120px">Client</th><th>프로젝트</th><th style="width:220px">Scope</th><th style="width:80px">Industry</th><th style="width:60px;text-align:right">Region</th>
+      </tr></thead>
+      <tbody>
+        <tr><td>M사 (글로벌 유통)</td><td style="color:var(--g600)">글로벌 스토어 · POS · ERP I/F</td><td style="color:var(--g600)">MSA · Airwallex · TapPay · 3PL(GEODIS/Maersk)</td><td style="color:var(--g500)">패션</td><td style="text-align:right;color:var(--g500)">HK·TW</td></tr>
+        <tr><td>A사 (글로벌 스포츠)</td><td style="color:var(--g600)">스포츠 브랜드 2개 운영/확장</td><td style="color:var(--g600)">월 리테이너 · 물류 연동 · 사이즈차트</td><td style="color:var(--g500)">스포츠</td><td style="text-align:right;color:var(--g500)">KR</td></tr>
+        <tr><td>H사 (패션 대기업)</td><td style="color:var(--g600)">글로벌 스트리트 브랜드 구축</td><td style="color:var(--g600)">Shopify 테마 커스텀 · 마켓 설정</td><td style="color:var(--g500)">패션</td><td style="text-align:right;color:var(--g500)">KR</td></tr>
+        <tr><td>S사 (전자제품)</td><td style="color:var(--g600)">유럽 D2C 멀티마켓</td><td style="color:var(--g600)">MCF SKU Import · 지오로케이션 · PDP/Cart</td><td style="color:var(--g500)">전자제품</td><td style="text-align:right;color:var(--g500)">EU</td></tr>
+        <tr><td>K사 (패션 액세서리)</td><td style="color:var(--g600)">JP·TW·글로벌 스토어</td><td style="color:var(--g600)">Global-e 크로스보더 · 멀티 통화</td><td style="color:var(--g500)">패션</td><td style="text-align:right;color:var(--g500)">JP·TW</td></tr>
+        <tr><td>P사 (IoT/자동차)</td><td style="color:var(--g600)">B2C·B2B·웹사이트 리뉴얼</td><td style="color:var(--g600)">글로벌 사이트 리디자인</td><td style="color:var(--g500)">전자제품</td><td style="text-align:right;color:var(--g500)">Global</td></tr>
+        <tr><td>E사 (뷰티)</td><td style="color:var(--g600)">K-Beauty 글로벌 D2C</td><td style="color:var(--g600)">Shopify · 글로벌 결제 연동</td><td style="color:var(--g500)">뷰티</td><td style="text-align:right;color:var(--g500)">Global</td></tr>
+        <tr><td>W사 (뷰티 D2C)</td><td style="color:var(--g600)">Shopify 구축·운영</td><td style="color:var(--g600)">글로벌 스토어 · CRO</td><td style="color:var(--g500)">뷰티</td><td style="text-align:right;color:var(--g500)">Global</td></tr>
+        <tr><td>B사 (패션 플랫폼)</td><td style="color:var(--g600)">플랫폼 개발·유지보수</td><td style="color:var(--g600)">커스텀 개발 · 운영</td><td style="color:var(--g500)">패션</td><td style="text-align:right;color:var(--g500)">KR</td></tr>
+        <tr><td>J사 (럭셔리 셀렉트)</td><td style="color:var(--g600)">큐 시스템·리디자인</td><td style="color:var(--g600)">월 리테이너 · 반응형 UX</td><td style="color:var(--g500)">럭셔리</td><td style="text-align:right;color:var(--g500)">Global</td></tr>
+        <tr><td>EF사 (글로벌→한국)</td><td style="color:var(--g600)">글로벌 D2C → 한국 로컬라이제이션</td><td style="color:var(--g600)">PDP·위시리스트·BOPIS·nPay·카카오 알림톡</td><td style="color:var(--g500)">패션</td><td style="text-align:right;color:var(--g500)">KR</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top:10px;font-size:10px;color:var(--g400)">
+      + 뷰티(클린뷰티·프래그런스·K-Beauty US) · 엔터(피규어·K-pop) · F&B · NPO(그린피스) · 라이프스타일 등 다양한 산업군 레퍼런스 보유
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">05 / 11</div>
+</div>
+
+
+<!-- 06. CLIENT SCREENSHOTS — Zoom Pan on images -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:60px 80px">
+    <div style="margin-bottom:24px">
+      <div class="cap" style="margin-bottom:8px">LIVE REFERENCES</div>
+      <div style="font-size:32px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">구축/운영 중인 사이트</div>
+    </div>
+    <div class="flex-1" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:var(--g200);border:1px solid var(--g200)">
+      <!-- FILA -->
+      <div style="background:var(--white);overflow:hidden">
+        <div style="overflow:hidden;height:160px"><img src="captures/fila.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">FILA Korea</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · POS · ERP · HK/TW</div></div>
+      </div>
+      <!-- Salomon -->
+      <div style="background:var(--white);overflow:hidden">
+        <div style="overflow:hidden;height:160px"><img src="captures/salomon.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:1s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Salomon Korea</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · 월 리테이너 · 물류 연동</div></div>
+      </div>
+      <!-- Verish -->
+      <div style="background:var(--white);overflow:hidden">
+        <div style="overflow:hidden;height:160px"><img src="captures/verish.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:2s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Verish (Amer Sports)</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · 사이즈차트 · 리뷰정책</div></div>
+      </div>
+      <!-- Standoil -->
+      <div style="background:var(--white);overflow:hidden">
+        <div style="overflow:hidden;height:160px"><img src="captures/standoil.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:3s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Stand Oil (코자)</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · JP/TW · Global-e</div></div>
+      </div>
+      <!-- BlackVue -->
+      <div style="background:var(--white);overflow:hidden">
+        <div style="overflow:hidden;height:160px"><img src="captures/blackvue.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:4s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">BlackVue (피타소프트)</div><div style="font-size:10px;color:var(--g500);margin-top:2px">글로벌 B2C/B2B · FLEETA</div></div>
+      </div>
+      <!-- Nonfiction -->
+      <div style="background:var(--white);overflow:hidden">
+        <div style="overflow:hidden;height:160px"><img src="captures/nonfiction.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:5s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Nonfiction</div><div style="font-size:10px;color:var(--g500);margin-top:2px">카페24 + Shopify · IP 리다이렉션</div></div>
+      </div>
+      <!-- Amuz -->
+      <div style="background:var(--white);overflow:hidden">
+        <div style="overflow:hidden;height:160px"><img src="captures/amuz.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:6s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">어뮤즈 글로벌</div><div style="font-size:10px;color:var(--g500);margin-top:2px">K-Beauty · Shopify 글로벌</div></div>
+      </div>
+      <!-- Spigen -->
+      <div style="background:var(--white);overflow:hidden">
+        <div style="overflow:hidden;height:160px"><img src="captures/spigen.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:7s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Wilson Korea</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · 번들링 · 사이즈차트</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">06 / 11</div>
+</div>
+
+
+<!-- 07. CASE STUDY — Diagonal Split layout -->
+<div class="slide">
+  <div class="s flex" style="position:relative">
+    <!-- Diagonal ink background -->
+    <div style="position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 0,50% 0,38% 100%,0 100%)"></div>
+    <!-- Ink content panel -->
+    <div style="width:460px;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;padding:60px 44px">
+      <div>
+        <div class="cap" style="color:var(--g600);margin-bottom:14px">CASE STUDY</div>
+        <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.2;letter-spacing:-1px;margin-bottom:8px">M사 (글로벌 유통)</div>
+        <div style="font-size:14px;font-weight:400;color:var(--g500);margin-bottom:20px">On·Offline 통합</div>
+        <div style="width:32px;height:1.5px;background:var(--g600);margin-bottom:16px"></div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.8">글로벌 패션 유통 그룹 홍콩/대만 리전. 레거시 → Shopify 전면 전환, POS 결제 연동과 ERP 실시간 I/F 동시 구축. 멀티 브랜드 운영 체계.</div>
+      </div>
+      <div>
+        <div class="flex" style="gap:24px;margin-bottom:24px">
+          <div><div class="mono" style="font-size:36px;font-weight:700;color:var(--white)">6</div><div class="cap" style="color:var(--g600);margin-top:2px">Months</div></div>
+          <div><div class="mono" style="font-size:36px;font-weight:700;color:var(--white)">3</div><div class="cap" style="color:var(--g600);margin-top:2px">Fulltime</div></div>
+          <div><div class="mono" style="font-size:36px;font-weight:700;color:var(--white)">2</div><div class="cap" style="color:var(--g600);margin-top:2px">Regions</div></div>
+          <div><div class="mono" style="font-size:36px;font-weight:700;color:var(--white)">97</div><div class="cap" style="color:var(--g600);margin-top:2px">Test Cases</div></div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <span class="pill-dk">Shopify</span><span class="pill-dk">AWS EKS</span><span class="pill-dk">Node.js</span><span class="pill-dk">React</span><span class="pill-dk">MSA</span><span class="pill-dk">Airwallex</span><span class="pill-dk">TapPay</span><span class="pill-dk">GEODIS</span><span class="pill-dk">Maersk</span>
+        </div>
+      </div>
+    </div>
+    <!-- White content panel -->
+    <div class="flex-1 flex flex-col" style="position:relative;z-index:1;overflow-y:auto">
+      <div style="flex:1;padding:32px 40px;border-bottom:1px solid var(--g200)">
+        <div class="cap" style="margin-bottom:12px">SCOPE</div>
+        <div class="grid-2" style="gap:20px">
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink)">글로벌 스토어</div>
+            <div style="font-size:11px;color:var(--g600);line-height:1.8">기존 플랫폼 → Shopify 마이그레이션<br>멀티 브랜드 (Tag 구분: brand:xx)<br>다국어(EN/ZH-TW/ZH-HK)<br>Release 테마 커스텀<br>Shopify 앱 7개 확정 설치</div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink)">POS 시스템</div>
+            <div style="font-size:11px;color:var(--g600);line-height:1.8">Global Payments 단말기 연동<br>오프라인 ↔ Shopify 실시간 동기화<br>화면정의서 12개 화면 자체 작성<br>테스트케이스 97개 (T1:68 / T2:13)<br>GO-LIVE 2026.05~06</div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;padding:32px 40px;border-bottom:1px solid var(--g200)">
+        <div class="grid-2" style="gap:20px">
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink)">ERP 인터페이스</div>
+            <div style="font-size:11px;color:var(--g600);line-height:1.8">ERP ↔ Lukuku 실시간 I/F<br>주문·재고·회원·판매·사은품·프로모션<br>erp-connector 독립 배포<br>배치 기반 데이터 마이그레이션<br>AWS SQS 비동기 메시지 통신</div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px;color:var(--ink)">결제 · 물류</div>
+            <div style="font-size:11px;color:var(--g600);line-height:1.8"><strong style="color:var(--ink)">홍콩</strong> Airwallex(HKD) — VISA·MASTER·ALIPAY<br><strong style="color:var(--ink)">대만</strong> TapPay(TWD) — VISA·JCB·LINE Pay·街口支付<br><strong style="color:var(--ink)">물류</strong> GEODIS(HK) · Maersk(TW)<br>ShipAny 앱 송장 연동<br>PG 이원화 운영 확정</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:24px 40px">
+        <div class="cap" style="margin-bottom:10px">DOCUMENTATION</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="pill">기능정의서 v1.5</span><span class="pill">화면정의서 v1.4</span><span class="pill">개발범위정의서</span><span class="pill">WBS (10~20% 버퍼)</span><span class="pill">테스트케이스 97건</span><span class="pill">Developer Guide (영문)</span><span class="pill">주간보고 (8회+)</span><span class="pill">1차 통합테스트 계획서</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-num">07 / 11</div>
+</div>
+
+
+<!-- 08. PROCESS -->
+<div class="slide">
+  <div class="s flex flex-col">
+    <div style="padding:60px 80px 0">
+      <div class="cap" style="margin-bottom:8px">PROCESS</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">프로젝트 수행 프로세스</div>
+    </div>
+    <div class="flex-1 grid-4" style="margin-top:28px;border-top:1px solid var(--g200)">
+      <div style="padding:28px 24px 28px 80px;border-right:1px solid var(--g200);display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:40px;font-weight:700;color:var(--g200);line-height:1">01</div>
+          <div style="font-size:14px;font-weight:700;margin:12px 0 8px;color:var(--ink)">Discovery</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">· 비즈니스 목표 · 시스템 분석<br>· I/F 대상 파악 · 접근권한 확보<br>· 앱 vs 커스텀 의사결정 가이드<br>· 범위 정의 · 견적서 (ClickUp)<br>· Modusign 전자계약</div>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--g400)">1–2 weeks</div>
+      </div>
+      <div style="padding:28px 24px;border-right:1px solid var(--g200);display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:40px;font-weight:700;color:var(--g200);line-height:1">02</div>
+          <div style="font-size:14px;font-weight:700;margin:12px 0 8px;color:var(--ink)">Design & Build</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">· 요구사항 수집 (2일)<br>· 와이어프레임 (3일)<br>· Figma UI 시안 (3~4일)<br>· 기능정의서 · 화면정의서 작성<br>· 테마 · Custom App 개발<br>· WBS 기반 주간 관리 (10~20% 버퍼)</div>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--g400)">4–12 weeks</div>
+      </div>
+      <div style="padding:28px 24px;border-right:1px solid var(--g200);display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:40px;font-weight:700;color:var(--g200);line-height:1">03</div>
+          <div style="font-size:14px;font-weight:700;margin:12px 0 8px;color:var(--ink)">QA & Launch</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">· 테스트케이스 작성 (3일)<br>· 내부 QA (5일)<br>· 통합 테스트 T1/T2 (7~10일)<br>· 클라이언트 UAT (10일)<br>· Go-live · 모니터링<br>· 결제·배송·I/F 통합 검증</div>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--g400)">1–3 weeks</div>
+      </div>
+      <div style="padding:28px 24px;background:var(--g50);display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:40px;font-weight:700;color:var(--g200);line-height:1">04</div>
+          <div style="font-size:14px;font-weight:700;margin:12px 0 8px;color:var(--ink)">Operate & Scale</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">· 전담 인력 월 리테이너<br>· 주간 위클리 리포트 (금요일)<br>· CRO · A/B 테스트 · 캠페인<br>· 기능 확장 · 신규 마켓 추가<br>· Slack 내부/외부 채널 분리 운영<br>· 번들링 · 사이즈차트 · 리뷰 정책</div>
+        </div>
+        <div class="mono" style="font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--g400)">Ongoing</div>
+      </div>
+    </div>
+    <div class="flex" style="gap:1px;background:var(--g200);border:1px solid var(--g200);border-top:0">
+      <div style="flex:1;background:var(--white);padding:12px 20px 12px 80px;font-size:11px;color:var(--g600)"><strong style="color:var(--ink)">커뮤니케이션</strong> Slack 전용채널(내부/외부 분리)</div>
+      <div style="flex:1;background:var(--white);padding:12px 20px;font-size:11px;color:var(--g600)"><strong style="color:var(--ink)">PM</strong> ClickUp(견적110건+) · Figma · GitHub</div>
+      <div style="flex:1;background:var(--white);padding:12px 20px;font-size:11px;color:var(--g600)"><strong style="color:var(--ink)">계약</strong> Modusign 전자계약(44건)</div>
+      <div style="flex:1;background:var(--white);padding:12px 20px;font-size:11px;color:var(--g600)"><strong style="color:var(--ink)">보안</strong> NDA · 접근권한 관리 · IP 제한</div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">08 / 11</div>
+</div>
+
+
+<!-- 09. WHY LUKUKU — Asymmetric Grid -->
+<div class="slide">
+  <div class="s" style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;height:100%">
+    <!-- Large left panel spanning 2 rows -->
+    <div style="grid-row:span 2;background:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:60px 48px">
+      <div>
+        <div class="cap" style="color:var(--g600);margin-bottom:14px">WHY LUKUKU</div>
+        <div style="font-size:32px;font-weight:900;color:var(--white);letter-spacing:-1px;line-height:1.15">단순 외주가 아닌,<br><span style="color:var(--g500)">성장 파트너</span></div>
+      </div>
+      <div>
+        <div style="width:32px;height:1.5px;background:var(--g600);margin-bottom:16px"></div>
+        <div style="font-size:13px;color:var(--g500);line-height:1.8">
+          "브랜드 사들한테 요청하는 건<br>코어 한 일에 집중하시라는 겁니다.<br>나머지 일들을 저희한테 주시면<br>저희가 해결합니다."<br><span style="color:var(--g600)">— CEO</span>
+        </div>
+      </div>
+    </div>
+    <!-- Top right cells -->
+    <div style="padding:24px 28px;border-bottom:1px solid var(--g200);border-left:1px solid var(--g200)">
+      <div class="cap" style="margin-bottom:6px">01 — Shopify 전문성</div>
+      <div style="font-size:11px;color:var(--g600);line-height:1.7">테마(Liquid)·Payments·멀티마켓·Custom App·POS — Shopify 전 영역 내재화. <strong style="color:var(--ink)">한국 법인 SP 활성화 불가 → 해외 법인 연동</strong>, Shopline 마이그레이션, Global-e 크로스보더.</div>
+    </div>
+    <div style="padding:24px 28px;border-bottom:1px solid var(--g200);border-left:1px solid var(--g200)">
+      <div class="cap" style="margin-bottom:6px">02 — 엔터프라이즈 시스템 통합</div>
+      <div style="font-size:11px;color:var(--g600);line-height:1.7"><strong style="color:var(--ink)">AWS EKS 위 MSA 6개 서비스</strong> 독립 배포. Aurora PostgreSQL·Redis·SQS. Terraform IaC. ERP/POS/3PL 실시간 I/F. 97개 테스트케이스.</div>
+    </div>
+    <!-- Bottom right cells -->
+    <div style="padding:24px 28px;border-left:1px solid var(--g200)">
+      <div class="cap" style="margin-bottom:6px">03 — 8개국+ 글로벌 실행력</div>
+      <div style="font-size:11px;color:var(--g600);line-height:1.7">미국·유럽·일본·홍콩·대만·동남아. 현지 PG(<strong style="color:var(--ink)">TapPay·Airwallex·Degica·PayPal</strong>), 물류(Amazon MCF·GEODIS·Maersk·FBA).</div>
+    </div>
+    <div style="padding:24px 28px;border-left:1px solid var(--g200)">
+      <div class="cap" style="margin-bottom:6px">04 — Build → Operate → Distribute</div>
+      <div style="font-size:11px;color:var(--g600);line-height:1.7">구축 후 <strong style="color:var(--ink)">월 리테이너</strong>로 지속 운영. 기능정의서→화면정의서→WBS→테스트케이스→주간보고까지 <strong style="color:var(--ink)">전 문서 체계 자체 운영</strong>. 2026년 미국 직접 유통.</div>
+    </div>
+  </div>
+  <div class="slide-num">09 / 11</div>
+</div>
+
+
+<!-- 10. ENGAGEMENT MODEL -->
+<div class="slide">
+  <div class="s flex flex-col">
+    <div style="padding:60px 80px 0">
+      <div class="cap" style="margin-bottom:8px">ENGAGEMENT</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">협업 모델</div>
+    </div>
+    <div class="flex-1 grid-3" style="margin-top:28px;border-top:1px solid var(--g200)">
+      <div style="padding:32px 28px 32px 80px;border-right:1px solid var(--g200);display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="cap" style="margin-bottom:14px">Fixed Scope</div>
+          <div style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:14px">프로젝트 기반</div>
+          <div style="font-size:12px;color:var(--g600);line-height:1.8">· Shopify 스토어 신규 구축<br>· 플랫폼 마이그레이션 (카페24/Shopline→Shopify)<br>· Custom App / 미들웨어 개발<br>· POS / ERP 연동<br>· 디자인 리뉴얼<br>· Global-e 크로스보더 설정</div>
+        </div>
+        <div style="border-top:1px solid var(--g200);padding-top:14px;margin-top:14px"><div class="mono" style="font-size:10px;color:var(--g400)">견적 기반 · 마일스톤 결제</div></div>
+      </div>
+      <div style="padding:32px 28px;border-right:1px solid var(--g200);background:var(--g50);display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="flex items-center" style="gap:8px;margin-bottom:14px">
+            <div class="cap">Retainer</div>
+            <span style="display:inline-block;padding:2px 10px;background:var(--ink);color:var(--white);border-radius:100px;font-size:9px;font-weight:700">Recommended</span>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:14px">월 리테이너</div>
+          <div style="font-size:12px;color:var(--g600);line-height:1.8">· 전담 인력 배치 (1~3명 PM+Dev+Design)<br>· 스토어 운영 · 유지보수<br>· 기능 추가 · 개선 · A/B 테스트<br>· 주간 리포트 · 싱크 미팅<br>· 콘텐츠/배너/캠페인 지원<br>· Okendo 리뷰 · GA4 분석</div>
+        </div>
+        <div style="border-top:1px solid var(--g200);padding-top:14px;margin-top:14px"><div class="mono" style="font-size:10px;color:var(--g400)">월 정액 · 최소 3개월</div></div>
+      </div>
+      <div style="padding:32px 80px 32px 28px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="flex items-center" style="gap:8px;margin-bottom:14px">
+            <div class="cap">Distribution</div>
+            <span style="display:inline-block;padding:2px 8px;background:var(--ink);color:var(--white);border-radius:100px;font-size:9px;font-weight:700">2026</span>
+          </div>
+          <div style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:14px">미국 유통 통합</div>
+          <div style="font-size:12px;color:var(--g600);line-height:1.8">· 미국 D2C 스토어 구축<br>· 3PL · FBA 물류 세팅<br>· Amazon MCF → 자사몰 배송<br>· 마케팅 · 운영 대행<br>· 수출지원사업 연계<br>· Revenue Share 모델</div>
+        </div>
+        <div style="border-top:1px solid var(--g200);padding-top:14px;margin-top:14px"><div class="mono" style="font-size:10px;color:var(--g400)">기본 구축비 + Revenue Share</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">10 / 11</div>
+</div>
+
+
+<!-- 11. CLOSE — gradient-mesh -->
+<div class="slide">
+  <div class="s flex flex-col justify-between gradient-mesh" style="padding:72px 80px">
+    <div class="flex justify-between items-center">
+      <span style="font-size:20px;font-weight:800;color:var(--ink)">Lukuku<span style="color:var(--mint)">.</span></span>
+      <div class="flex items-center" style="gap:6px">
+        <div style="width:7px;height:7px;border-radius:50%;background:var(--mint)"></div>
+        <div class="mono" style="font-size:11px;color:var(--g500)">Available</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="text-scramble" style="font-size:64px;font-weight:900;color:var(--ink);line-height:1.1;letter-spacing:-3px;margin-bottom:16px">
+        Let's build<br>something global<span style="color:var(--mint)">.</span>
+      </div>
+      <div style="font-size:15px;font-weight:400;color:var(--g500)">글로벌 이커머스, 같이 만들어 갈까요?</div>
+    </div>
+
+    <div class="flex" style="gap:48px">
+      <div><div class="cap" style="margin-bottom:6px">Contact</div><div style="font-size:14px;font-weight:600;color:var(--ink)">hello@lukuku.io</div></div>
+      <div><div class="cap" style="margin-bottom:6px">Web</div><div style="font-size:14px;font-weight:600;color:var(--ink)">lukuku.dev</div></div>
+      <div><div class="cap" style="margin-bottom:6px">CEO</div><div style="font-size:14px;font-weight:600;color:var(--ink)">Lee Donguk (Luke)</div></div>
+      <div><div class="cap" style="margin-bottom:6px">Location</div><div style="font-size:14px;font-weight:600;color:var(--ink)">Seoul · Jakarta · US</div></div>
+    </div>
+  </div>
+  <div class="slide-num">11 / 11</div>
+</div>
+
+
+</body>
+</html>

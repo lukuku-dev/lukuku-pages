@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LUKUKU OPS 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box}
+
+  :root {
+    --ink: #1A1A1A;
+    --white: #FFFFFF;
+    --g50: #FAFAFA;
+    --g100: #F5F5F5;
+    --g200: #E5E5E5;
+    --g300: #D4D4D4;
+    --g400: #A3A3A3;
+    --g500: #737373;
+    --g600: #525252;
+    --mint: #2BF5A0;
+  }
+
+  body{font-family:'Inter','Noto Sans KR',sans-serif;background:var(--g200);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+  .slide{width:1280px;height:720px;margin:40px auto;background:var(--white);overflow:hidden;position:relative}
+  .s{width:100%;height:100%}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .cap{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g500)}
+  .flex{display:flex}.flex-col{flex-direction:column}.flex-1{flex:1}
+  .items-center{align-items:center}.items-end{align-items:flex-end}
+  .justify-center{justify-content:center}.justify-between{justify-content:space-between}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr}
+  .pill{display:inline-block;padding:4px 12px;border:1px solid var(--g200);border-radius:100px;font-size:10px;font-weight:500;color:var(--g600)}
+  .pill-dk{display:inline-block;padding:4px 12px;border:1px solid rgba(255,255,255,.12);border-radius:100px;font-size:10px;font-weight:500;color:rgba(255,255,255,.4)}
+  .slide-num{position:absolute;bottom:28px;right:40px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g400)}
+  .slide-logo{position:absolute;bottom:28px;left:40px;font-size:13px;font-weight:800;color:var(--g300)}
+
+  /* === VISUAL EFFECTS === */
+  .gradient-mesh{background:radial-gradient(ellipse at 20% 50%,rgba(43,245,160,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(43,245,160,0.05) 0%,transparent 40%),radial-gradient(ellipse at 60% 80%,rgba(200,200,200,0.1) 0%,transparent 50%)}
+  .dot-grid{background-image:radial-gradient(circle,#D4D4D4 1px,transparent 1px);background-size:24px 24px}
+  .zoom-pan{animation:zoomPan 8s ease-in-out infinite alternate}
+  @keyframes zoomPan{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-3%,-2%)}}
+
+  /* === ANIMATIONS === */
+  .text-scramble{animation:textScramble 600ms steps(8) forwards}
+  @keyframes textScramble{0%{filter:blur(4px);opacity:0;letter-spacing:4px}50%{filter:blur(1px);opacity:.7;letter-spacing:1px}100%{filter:blur(0);opacity:1;letter-spacing:-2px}}
+
+  @property --n68{syntax:"<integer>";initial-value:0;inherits:false}
+  @property --n110{syntax:"<integer>";initial-value:0;inherits:false}
+  @property --n44{syntax:"<integer>";initial-value:0;inherits:false}
+
+  .counter-68{animation:c68 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n68);font-variant-numeric:tabular-nums}
+  .counter-68::after{content:counter(n)}
+  @keyframes c68{from{--n68:0}to{--n68:68}}
+
+  .counter-110{animation:c110 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n110);font-variant-numeric:tabular-nums}
+  .counter-110::after{content:counter(n)}
+  @keyframes c110{from{--n110:0}to{--n110:110}}
+
+  .counter-44{animation:c44 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n44);font-variant-numeric:tabular-nums}
+  .counter-44::after{content:counter(n)}
+  @keyframes c44{from{--n44:0}to{--n44:44}}
+
+  .progress-fill{width:0;animation:pFill 1.5s cubic-bezier(0.4,0,0.2,1) 0.5s forwards}
+  @keyframes pFill{to{width:var(--t)}}
+
+  /* Stacked Cards */
+  .stacked-card{transition:transform 0.3s ease;border-radius:8px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
+  .stacked-card:nth-child(odd){transform:rotate(-1deg)}
+  .stacked-card:nth-child(even){transform:rotate(1deg)}
+  .stacked-card:hover{transform:rotate(0) scale(1.02);z-index:2}
+
+  @media print{body{background:#fff}.slide{margin:0;page-break-after:always}}
+</style>
+</head>
+<body>
+
+<!-- 01. COVER — gradient-mesh + Text Scramble -->
+<div class="slide">
+  <div class="s flex gradient-mesh" style="overflow:hidden">
+    <!-- Ink panel — left 38% -->
+    <div style="width:38%;background:var(--ink);padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between">
+      <div style="font-size:20px;font-weight:800;color:var(--white)">Lukuku<span style="color:var(--mint)">.</span></div>
+      <div>
+        <div class="text-scramble mono" style="font-size:56px;font-weight:700;color:var(--white);line-height:1.05;letter-spacing:-2px;margin-bottom:16px">
+          Operate<br>&amp; Optimize<span style="color:var(--mint)">.</span>
+        </div>
+        <div style="font-size:12px;color:rgba(255,255,255,.35);line-height:1.7">
+          Shopify 스토어 운영 파트너<br>
+          전담 인력 배치 · 월 리테이너
+        </div>
+      </div>
+      <div style="font-size:10px;color:rgba(255,255,255,.2)">Confidential · March 2026</div>
+    </div>
+    <!-- White panel — right with Counter Up -->
+    <div style="flex:1;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between">
+      <div>
+        <div class="cap" style="margin-bottom:32px">Key Numbers</div>
+        <div style="display:flex;flex-direction:column;gap:28px">
+          <div>
+            <div class="flex items-end" style="gap:4px">
+              <div class="mono counter-68" style="font-size:48px;font-weight:700;color:var(--ink);line-height:1"></div>
+              <span class="mono" style="font-size:20px;color:var(--g400);line-height:1.8">+</span>
+            </div>
+            <div style="font-size:11px;color:var(--g500);margin-top:4px">거래처 운영 경험</div>
+          </div>
+          <div style="height:1px;background:var(--g200)"></div>
+          <div>
+            <div class="flex items-end" style="gap:4px">
+              <div class="mono counter-110" style="font-size:48px;font-weight:700;color:var(--mint);line-height:1"></div>
+              <span class="mono" style="font-size:20px;color:var(--g400);line-height:1.8">+</span>
+            </div>
+            <div style="font-size:11px;color:var(--g500);margin-top:4px">견적 운영 실적</div>
+          </div>
+          <div style="height:1px;background:var(--g200)"></div>
+          <div>
+            <div class="mono counter-44" style="font-size:48px;font-weight:700;color:var(--ink);line-height:1"></div>
+            <div style="font-size:11px;color:var(--g500);margin-top:4px">Modusign 계약 체결</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:var(--g500);line-height:1.7">구축 이후의 모든 것을 책임집니다.</div>
+    </div>
+  </div>
+  <div class="slide-num">01 / 11</div>
+</div>
+
+
+<!-- 02. PROBLEM -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:60px 80px">
+    <div style="margin-bottom:40px">
+      <div class="cap" style="margin-bottom:8px">Problem</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px;line-height:1.1">구축 후 운영의 현실</div>
+    </div>
+
+    <div class="flex-1" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+      <div>
+        <div class="mono" style="font-size:36px;font-weight:700;color:var(--g200);line-height:1;margin-bottom:16px">01</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px">운영 역량 공백</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.8">구축 에이전시가 떠나면 내부 운영 역량 부재. Shopify 전문 인력을 자체 채용하기 어렵습니다.</div>
+      </div>
+      <div>
+        <div class="mono" style="font-size:36px;font-weight:700;color:var(--g200);line-height:1;margin-bottom:16px">02</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px">반복되는 견적 협의</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.8">기능 추가마다 별도 견적 + 일정 협의. 작은 변경에도 2~3주 소요. 속도와 유연성이 떨어집니다.</div>
+      </div>
+      <div>
+        <div class="mono" style="font-size:36px;font-weight:700;color:var(--g200);line-height:1;margin-bottom:16px">03</div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:8px">기술 대응 지연</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.8">Shopify 앱 업데이트, 테마 호환성 이슈. 캠페인 배너 교체. 빠르게 대응할 팀이 없습니다.</div>
+      </div>
+    </div>
+
+    <div style="border-top:1px solid var(--g200);margin-top:32px;padding-top:24px">
+      <div class="grid-2" style="gap:32px">
+        <div>
+          <div class="mono" style="font-size:36px;font-weight:700;color:var(--g200);line-height:1;margin-bottom:16px">04</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">CRO 부재</div>
+          <div style="font-size:12px;color:var(--g500);line-height:1.8">데이터 분석 기반 전환율 최적화 미수행. A/B 테스트 없이 감에 의존합니다.</div>
+        </div>
+        <div>
+          <div class="mono" style="font-size:36px;font-weight:700;color:var(--g200);line-height:1;margin-bottom:16px">05</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:8px">현지 정책 변경</div>
+          <div style="font-size:12px;color:var(--g500);line-height:1.8">PG사 정책 변경, 물류 이슈, 현지 규제 대응. 글로벌 운영 시 복잡도가 배로 증가합니다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">02 / 11</div>
+</div>
+
+
+<!-- 03. SOLUTION -->
+<div class="slide">
+  <div class="s flex" style="overflow:hidden">
+    <div style="width:40%;background:var(--ink);padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between">
+      <div>
+        <div class="cap" style="color:rgba(255,255,255,.3);margin-bottom:16px">Solution</div>
+        <div style="font-size:36px;font-weight:900;color:var(--white);letter-spacing:-1.5px;line-height:1.15;margin-bottom:20px">월 리테이너 =<br>전담 팀</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.3);line-height:1.8;margin-top:16px">별도 견적 없이 리테이너 내에서 기능 추가, 개선, A/B 테스트까지. 브랜드의 코어 업무에 집중하세요.</div>
+      </div>
+      <div>
+        <div style="display:flex;gap:24px;margin-bottom:20px">
+          <div><div class="mono" style="font-size:32px;font-weight:700;color:var(--white)">1~3</div><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:2px">전담 인력</div></div>
+          <div><div class="mono" style="font-size:32px;font-weight:700;color:var(--white)">Fri</div><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:2px">위클리 싱크</div></div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <span class="pill-dk">PM</span><span class="pill-dk">Developer</span><span class="pill-dk">Designer</span><span class="pill-dk">Slack</span><span class="pill-dk">ClickUp</span>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column">
+      <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
+        <div class="cap" style="margin-bottom:8px">01 — Dedicated Team</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.8">전담 인력 배치 <strong style="color:var(--ink)">(1~3명: PM + Developer + Designer)</strong>. 브랜드 컨텍스트를 깊이 이해하는 팀이 지속적으로 운영. 내부 인력 수행 원칙.</div>
+      </div>
+      <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
+        <div class="cap" style="margin-bottom:8px">02 — Real-time Communication</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.8"><strong style="color:var(--ink)">Slack 전용 채널 (내부/외부 분리)</strong> — 실시간 커뮤니케이션. 긴급 이슈 핫픽스 즉시 대응.</div>
+      </div>
+      <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
+        <div class="cap" style="margin-bottom:8px">03 — Weekly Sync &amp; Report</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.8">매주 금요일 <strong style="color:var(--ink)">위클리 싱크 미팅 + 주간보고서</strong> 전달. 완료 태스크, 진행 이슈, 다음 주 계획 공유.</div>
+      </div>
+      <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
+        <div class="cap" style="margin-bottom:8px">04 — Task Management</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.8"><strong style="color:var(--ink)">ClickUp 기반 태스크 관리</strong> (110건+ 견적 운영 실적). 우선순위, 진행 상황, 완료 내역 실시간 확인.</div>
+      </div>
+      <div style="flex:1;padding:28px 48px">
+        <div class="cap" style="margin-bottom:8px">05 — No Extra Quotes</div>
+        <div style="font-size:12px;color:var(--g500);line-height:1.8">기능 추가 · 개선 · A/B 테스트 — <strong style="color:var(--ink)">별도 견적 없이 리테이너 내 처리</strong>. 속도와 유연성 극대화.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">03 / 11</div>
+</div>
+
+
+<!-- 04. SERVICE DETAIL -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:60px 80px">
+    <div style="margin-bottom:32px">
+      <div class="cap" style="margin-bottom:8px">Operations Service</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">운영 서비스 상세</div>
+    </div>
+    <div class="flex-1 grid-4" style="gap:1px;background:var(--g200);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+      <div style="background:var(--white);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="cap" style="margin-bottom:14px">01 — Store Ops</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px">스토어 운영</div>
+          <div style="font-size:11px;color:var(--g500);line-height:1.9">· 콘텐츠 · 배너 업데이트<br>· 신제품 등록 · 카탈로그 관리<br>· 프로모션 설정 · 할인 코드<br>· 시즌 캠페인 기획 · 실행<br>· 메뉴 · 네비게이션 개편<br>· 페이지 레이아웃 변경</div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:16px"><span class="pill">콘텐츠</span><span class="pill">캠페인</span></div>
+      </div>
+      <div style="background:var(--white);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="cap" style="margin-bottom:14px">02 — CRO</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px">CRO 최적화</div>
+          <div style="font-size:11px;color:var(--g500);line-height:1.9">· A/B 테스트 설계 · 실행<br>· PDP(상품 상세) 최적화<br>· 카트 · 체크아웃 개선<br>· 전환율 분석 · 개선안<br>· 랜딩 페이지 최적화<br>· UX 히트맵 분석</div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:16px"><span class="pill">A/B Test</span><span class="pill">CRO</span></div>
+      </div>
+      <div style="background:var(--white);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="cap" style="margin-bottom:14px">03 — Tech Maintenance</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px">기술 유지보수</div>
+          <div style="font-size:11px;color:var(--g500);line-height:1.9">· Shopify 앱 관리 · 업데이트<br>· 테마 업데이트 · 호환성<br>· 버그 수정 · 핫픽스<br>· 성능 최적화 (Core Web Vitals)<br>· 보안 점검 · 대응<br>· Custom App 유지보수</div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:16px"><span class="pill">Shopify</span><span class="pill">QA</span></div>
+      </div>
+      <div style="background:var(--g50);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="cap" style="margin-bottom:14px">04 — Data &amp; Report</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:10px">데이터 · 리포트</div>
+          <div style="font-size:11px;color:var(--g500);line-height:1.9">· GA4 퍼포먼스 분석<br>· Okendo 리뷰 관리<br>· 월간 퍼포먼스 리포트<br>· 고객 행동 분석<br>· 매출 · 전환 트렌드<br>· 경쟁사 벤치마킹</div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:16px"><span class="pill">GA4</span><span class="pill">Okendo</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">04 / 11</div>
+</div>
+
+
+<!-- 05. WEEKLY PROCESS — Data Viz (progress bars) -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:60px 80px">
+    <div style="margin-bottom:32px">
+      <div class="cap" style="margin-bottom:8px">Operations Process</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">Weekly Cycle</div>
+    </div>
+
+    <!-- Weekly cycle with Data Viz progress -->
+    <div style="display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr;align-items:stretch;margin-bottom:24px">
+      <div style="border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="background:var(--ink);padding:16px 20px">
+          <div class="mono" style="font-size:13px;font-weight:700;color:var(--white)">MON</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:2px">주간 태스크 확인</div>
+        </div>
+        <div style="padding:16px 20px;font-size:11px;color:var(--g500);line-height:1.9">· 주간 태스크 확인<br>· 우선순위 정리<br>· 리소스 배분<br>· 긴급 이슈 체크</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center"><span style="font-size:16px;color:var(--g400)">&rarr;</span></div>
+      <div style="border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="background:var(--ink);padding:16px 20px">
+          <div class="mono" style="font-size:13px;font-weight:700;color:var(--white)">TUE — THU</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:2px">작업 수행</div>
+        </div>
+        <div style="padding:16px 20px;font-size:11px;color:var(--g500);line-height:1.9">· 개발 작업 수행<br>· 디자인 에셋 제작<br>· 콘텐츠 업데이트<br>· QA · 테스트</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center"><span style="font-size:16px;color:var(--g400)">&rarr;</span></div>
+      <div style="border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="background:var(--ink);padding:16px 20px">
+          <div class="mono" style="font-size:13px;font-weight:700;color:var(--white)">FRI</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.3);margin-top:2px">위클리 싱크</div>
+        </div>
+        <div style="padding:16px 20px;font-size:11px;color:var(--g500);line-height:1.9">· 위클리 싱크 미팅<br>· 주간보고서 전달<br>· 다음 주 계획 공유<br>· 피드백 반영</div>
+      </div>
+    </div>
+
+    <!-- Data Viz: Weekly task progress bars -->
+    <div style="margin-bottom:24px;padding:20px 24px;background:var(--g50);border:1px solid var(--g200);border-radius:8px">
+      <div class="cap" style="margin-bottom:12px">Weekly Task Distribution</div>
+      <div class="flex" style="gap:24px">
+        <div style="flex:1">
+          <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:11px;font-weight:600">스토어 운영</div><div class="mono" style="font-size:10px;color:var(--g400)">35%</div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--ink);border-radius:3px;--t:35%"></div></div>
+        </div>
+        <div style="flex:1">
+          <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:11px;font-weight:600">기능 개발</div><div class="mono" style="font-size:10px;color:var(--g400)">30%</div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--ink);border-radius:3px;--t:30%;animation-delay:.7s"></div></div>
+        </div>
+        <div style="flex:1">
+          <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:11px;font-weight:600">CRO / A/B</div><div class="mono" style="font-size:10px;color:var(--g400)">20%</div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--mint);border-radius:3px;--t:20%;animation-delay:.9s"></div></div>
+        </div>
+        <div style="flex:1">
+          <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:11px;font-weight:600">리포트</div><div class="mono" style="font-size:10px;color:var(--g400)">15%</div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--g400);border-radius:3px;--t:15%;animation-delay:1.1s"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Always-on + Monthly -->
+    <div class="grid-2" style="gap:24px">
+      <div style="padding:24px 28px;background:var(--g50);border:1px solid var(--g200);border-radius:8px">
+        <div class="flex items-center" style="gap:8px;margin-bottom:12px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--mint)"></div>
+          <div style="font-size:13px;font-weight:700">상시 대응</div>
+        </div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.9">· Slack 실시간 커뮤니케이션 (내부/외부 채널 분리)<br>· 긴급 이슈 핫픽스 — 장애 발생 시 즉시 대응<br>· Shopify 앱 업데이트 · 호환성 체크</div>
+      </div>
+      <div style="padding:24px 28px;background:var(--g50);border:1px solid var(--g200);border-radius:8px">
+        <div class="flex items-center" style="gap:8px;margin-bottom:12px">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--ink)"></div>
+          <div style="font-size:13px;font-weight:700">월간 리포트</div>
+        </div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.9">· 퍼포먼스 데이터 (매출 · 전환율 · 트래픽)<br>· 완료 태스크 요약 · 성과 측정<br>· 다음 달 계획 · 개선 제안</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">05 / 11</div>
+</div>
+
+
+<!-- 06. PORTFOLIO — Stacked Cards + Zoom Pan -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:60px 80px">
+    <div style="margin-bottom:24px">
+      <div class="cap" style="margin-bottom:8px">Operations Portfolio</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">운영 중인 사이트</div>
+    </div>
+
+    <div class="flex-1" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;padding:8px">
+      <!-- Row 1 — Stacked Cards with Zoom Pan -->
+      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
+        <div style="overflow:hidden;height:170px"><img src="captures/fila.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px">
+          <div style="font-size:12px;font-weight:700">FILA Korea</div>
+          <div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · POS · ERP · 리테이너</div>
+        </div>
+      </div>
+      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
+        <div style="overflow:hidden;height:170px"><img src="captures/salomon.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:2s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px">
+          <div style="font-size:12px;font-weight:700">Salomon Korea</div>
+          <div style="font-size:10px;color:var(--g500);margin-top:2px">월 리테이너 · 물류 연동</div>
+        </div>
+      </div>
+      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
+        <div style="overflow:hidden;height:170px"><img src="captures/verish.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:4s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px">
+          <div style="font-size:12px;font-weight:700">Verish (Amer Sports)</div>
+          <div style="font-size:10px;color:var(--g500);margin-top:2px">사이즈차트 · 리뷰 · 포인트 정책</div>
+        </div>
+      </div>
+      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
+        <div style="overflow:hidden;height:170px"><img src="captures/standoil.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:6s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px">
+          <div style="font-size:12px;font-weight:700">Stand Oil</div>
+          <div style="font-size:10px;color:var(--g500);margin-top:2px">JP/TW · Global-e · 멀티마켓</div>
+        </div>
+      </div>
+      <!-- Row 2 -->
+      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
+        <div style="overflow:hidden;height:170px"><img src="captures/blackvue.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:1s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px">
+          <div style="font-size:12px;font-weight:700">BlackVue</div>
+          <div style="font-size:10px;color:var(--g500);margin-top:2px">B2C/B2B · FLEETA</div>
+        </div>
+      </div>
+      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
+        <div style="overflow:hidden;height:170px"><img src="captures/nonfiction.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:3s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px">
+          <div style="font-size:12px;font-weight:700">Nonfiction</div>
+          <div style="font-size:10px;color:var(--g500);margin-top:2px">카페24 + 글로벌</div>
+        </div>
+      </div>
+      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
+        <div style="overflow:hidden;height:170px"><img src="captures/amuz.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:5s" onerror="this.style.display='none'"></div>
+        <div style="padding:12px 16px">
+          <div style="font-size:12px;font-weight:700">어뮤즈</div>
+          <div style="font-size:10px;color:var(--g500);margin-top:2px">K-Beauty 글로벌</div>
+        </div>
+      </div>
+      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
+        <div style="width:100%;height:170px;background:var(--ink);display:flex;align-items:center;justify-content:center">
+          <div style="font-size:22px;font-weight:800;color:var(--white);letter-spacing:4px">WILSON</div>
+        </div>
+        <div style="padding:12px 16px">
+          <div style="font-size:12px;font-weight:700">Wilson Korea</div>
+          <div style="font-size:10px;color:var(--g500);margin-top:2px">번들링 · 사이즈차트</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">06 / 11</div>
+</div>
+
+
+<!-- 07. CASE A — Diagonal Split -->
+<div class="slide">
+  <div class="s flex" style="overflow:hidden;position:relative">
+    <!-- Diagonal ink background -->
+    <div style="position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 0,48% 0,36% 100%,0 100%)"></div>
+    <!-- Ink panel content -->
+    <div style="width:38%;position:relative;z-index:1;padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between">
+      <div>
+        <div class="cap" style="color:rgba(255,255,255,.3);margin-bottom:14px">Case Study — Retainer</div>
+        <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:20px">A사<br>(글로벌 스포츠 그룹)</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.3);line-height:1.8">글로벌 스포츠 그룹 산하 2개 브랜드를 단일 전담팀이 동시 운영. 월 리테이너 기반 장기 파트너십으로 지속적 기능 추가와 개선을 수행합니다.</div>
+      </div>
+      <div>
+        <div style="display:flex;gap:24px;margin-bottom:20px">
+          <div><div class="mono" style="font-size:32px;font-weight:700;color:var(--white)">2</div><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:2px">Brands</div></div>
+          <div><div class="mono" style="font-size:32px;font-weight:700;color:var(--white)">21</div><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:2px">Estimates</div></div>
+          <div><div class="mono" style="font-size:32px;font-weight:700;color:var(--white)">'26</div><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:2px">New Contract</div></div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap"><span class="pill-dk">월 리테이너</span><span class="pill-dk">장기 파트너십</span><span class="pill-dk">물류 연동</span></div>
+      </div>
+    </div>
+    <!-- White panel — right -->
+    <div style="flex:1;display:flex;flex-direction:column;position:relative;z-index:1">
+      <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
+        <div class="cap" style="margin-bottom:12px">Operation Scope</div>
+        <div class="grid-2" style="gap:20px">
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px">브랜드 A — 아웃도어</div>
+            <div style="font-size:11px;color:var(--g500);line-height:1.8">· 월 리테이너 계약<br>· 물류사(판토스) 연동<br>· 사이즈 차트 고도화<br>· 리뷰 · 포인트 정책 설정<br>· 시즌 캠페인 운영</div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px">브랜드 B — 스포츠</div>
+            <div style="font-size:11px;color:var(--g500);line-height:1.8">· 번들링 테스트 · 구현<br>· 사이즈 차트 시스템<br>· 상품 카탈로그 관리<br>· 프로모션 설정<br>· 기술 유지보수</div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
+        <div class="cap" style="margin-bottom:12px">Key Achievements</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.9">· 견적서 <strong style="color:var(--ink)">21건 누적</strong> — 지속적 기능 추가 · 개선<br>· 번들링 테스트 성공적 운영 — 객단가 향상<br>· 사이즈 차트 고도화 — 반품률 감소<br>· 물류사 연동 완료 — 배송 프로세스 자동화<br>· <strong style="color:var(--ink)">2026 확장 개발 신규 계약 체결</strong></div>
+      </div>
+      <div style="padding:20px 48px">
+        <div class="cap" style="margin-bottom:8px">Partnership Model</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill">월 리테이너</span><span class="pill">전담 PM</span><span class="pill">위클리 싱크</span><span class="pill">Slack 채널</span><span class="pill">ClickUp</span><span class="pill">견적 21건</span><span class="pill">2026 신규 계약</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">07 / 11</div>
+</div>
+
+
+<!-- 08. CASE J — Diagonal Split -->
+<div class="slide">
+  <div class="s flex" style="overflow:hidden;position:relative">
+    <div style="position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 0,48% 0,36% 100%,0 100%)"></div>
+    <div style="width:38%;position:relative;z-index:1;padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between">
+      <div>
+        <div class="cap" style="color:rgba(255,255,255,.3);margin-bottom:14px">Case Study — Retainer</div>
+        <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:20px">J사<br>(럭셔리 셀렉트샵)</div>
+        <div style="font-size:12px;color:rgba(255,255,255,.3);line-height:1.8">럭셔리 셀렉트샵의 한정판 드롭 시스템부터 전면 UX 리디자인까지. Slack 내부/외부 채널 분리 운영으로 효율적 커뮤니케이션 체계를 구축했습니다.</div>
+      </div>
+      <div>
+        <div style="display:flex;gap:24px;margin-bottom:20px">
+          <div><div class="mono" style="font-size:28px;font-weight:700;color:var(--white)">Queue</div><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:2px">Drop System</div></div>
+          <div><div class="mono" style="font-size:32px;font-weight:700;color:var(--white)">2</div><div style="font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:2px">Modusign</div></div>
+        </div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap"><span class="pill-dk">큐 시스템</span><span class="pill-dk">UX 리디자인</span><span class="pill-dk">Slack Ops</span></div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;position:relative;z-index:1">
+      <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
+        <div class="cap" style="margin-bottom:12px">Operation Scope</div>
+        <div class="grid-2" style="gap:20px">
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px">기능 개발</div>
+            <div style="font-size:11px;color:var(--g500);line-height:1.8">· 큐 시스템 (한정판 드롭)<br>· 반응형 UX 리디자인<br>· Wing 메뉴 개편<br>· 커스텀 기능 추가<br>· 성능 최적화</div>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px">운영 · 컨설팅</div>
+            <div style="font-size:11px;color:var(--g500);line-height:1.8">· Shopify 리포트 온보딩 세션<br>· 데이터 활용 교육<br>· 운영 프로세스 설계<br>· 캠페인 지원<br>· 기술 자문</div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
+        <div class="cap" style="margin-bottom:12px">Key Highlights</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.9">· <strong style="color:var(--ink)">큐 시스템</strong> — 한정판 드롭 시 트래픽 폭주 대응, 공정한 구매 기회 제공<br>· <strong style="color:var(--ink)">반응형 UX 리디자인</strong> — 모바일 전환율 개선<br>· Wing 메뉴 개편 — 네비게이션 UX 향상<br>· <strong style="color:var(--ink)">Modusign 계약 2건</strong> — 추가 프로젝트 확장<br>· Slack 내부/외부 채널 분리 운영</div>
+      </div>
+      <div style="padding:20px 48px">
+        <div class="cap" style="margin-bottom:8px">Communication</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill">Slack (내부/외부)</span><span class="pill">위클리 싱크</span><span class="pill">Shopify 온보딩</span><span class="pill">Modusign 2건</span><span class="pill">큐 시스템</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">08 / 11</div>
+</div>
+
+
+<!-- 09. TOOL STACK -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:60px 80px">
+    <div style="margin-bottom:32px">
+      <div class="cap" style="margin-bottom:8px">Operations Tool Stack</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">Tool Stack</div>
+    </div>
+
+    <div class="flex-1" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--g200);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+      <div style="background:var(--white);padding:24px"><div style="font-size:14px;font-weight:800;margin-bottom:8px">Slack</div><div style="font-size:11px;color:var(--g500);line-height:1.8">전용 채널 운영<br><strong style="color:var(--ink)">client-외부</strong>: 클라이언트 소통<br><strong style="color:var(--ink)">client-내부</strong>: 팀 내부 논의<br>실시간 대응 · 핫픽스</div></div>
+      <div style="background:var(--white);padding:24px"><div style="font-size:14px;font-weight:800;margin-bottom:8px">ClickUp</div><div style="font-size:11px;color:var(--g500);line-height:1.8">태스크 관리 · 트래킹<br>견적서 관리 (110건+)<br>WBS · 마일스톤<br>이슈 트래킹 · 우선순위</div></div>
+      <div style="background:var(--white);padding:24px"><div style="font-size:14px;font-weight:800;margin-bottom:8px">Figma</div><div style="font-size:11px;color:var(--g500);line-height:1.8">디자인 에셋 관리<br>배너 · 캠페인 제작<br>UI 시안 · 프로토타입<br>클라이언트 리뷰</div></div>
+      <div style="background:var(--white);padding:24px"><div style="font-size:14px;font-weight:800;margin-bottom:8px">GitHub</div><div style="font-size:11px;color:var(--g500);line-height:1.8">코드 버전 관리<br>CI/CD 파이프라인<br>PR 리뷰 프로세스<br>테마 배포 관리</div></div>
+      <div style="background:var(--white);padding:24px"><div style="font-size:14px;font-weight:800;margin-bottom:8px">Modusign</div><div style="font-size:11px;color:var(--g500);line-height:1.8">전자계약 플랫폼<br><strong style="color:var(--ink)">44건 계약 체결</strong><br>리테이너 계약서<br>NDA · 견적 계약</div></div>
+      <div style="background:var(--white);padding:24px"><div style="font-size:14px;font-weight:800;margin-bottom:8px">Shopify Admin</div><div style="font-size:11px;color:var(--g500);line-height:1.8">스토어 운영 · 설정<br>주문 · 재고 관리<br>앱 설정 · 업데이트<br>마켓 · 결제 관리</div></div>
+      <div style="background:var(--g50);padding:24px"><div style="font-size:14px;font-weight:800;margin-bottom:8px">GA4</div><div style="font-size:11px;color:var(--g500);line-height:1.8">퍼포먼스 분석<br>전환 퍼널 추적<br>고객 행동 분석<br>월간 리포트 데이터</div></div>
+      <div style="background:var(--g50);padding:24px"><div style="font-size:14px;font-weight:800;margin-bottom:8px">Okendo</div><div style="font-size:11px;color:var(--g500);line-height:1.8">리뷰 수집 · 관리<br>UGC 콘텐츠 활용<br>리뷰 위젯 최적화<br>Social Proof 전략</div></div>
+      <div style="background:var(--ink);padding:24px;display:flex;flex-direction:column;justify-content:center"><div style="font-size:14px;font-weight:800;color:var(--white);margin-bottom:8px">All-in-One Ops</div><div style="font-size:11px;color:rgba(255,255,255,.35);line-height:1.8">커뮤니케이션부터 태스크 관리, 디자인, 개발, 계약, 분석까지 통합 운영 체계.</div></div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">09 / 11</div>
+</div>
+
+
+<!-- 10. PRICING -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:60px 80px">
+    <div style="margin-bottom:32px">
+      <div class="cap" style="margin-bottom:8px">Pricing</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">월 리테이너 모델</div>
+    </div>
+
+    <div class="grid-3" style="gap:24px;margin-bottom:32px">
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div class="mono" style="font-size:36px;font-weight:700;line-height:1;letter-spacing:-1px">1~3</div>
+        <div style="font-size:11px;color:var(--g500);margin-top:6px">전담 인력 배치</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:2px">PM + Developer + Designer</div>
+      </div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div class="mono" style="font-size:36px;font-weight:700;line-height:1;letter-spacing:-1px">3<span style="font-size:18px;color:var(--g400)">mo+</span></div>
+        <div style="font-size:11px;color:var(--g500);margin-top:6px">최소 계약 기간</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:2px">장기 파트너십 권장</div>
+      </div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div class="mono" style="font-size:36px;font-weight:700;line-height:1;letter-spacing:-1px">Fri</div>
+        <div style="font-size:11px;color:var(--g500);margin-top:6px">매주 위클리 싱크</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:2px">+ 월간 퍼포먼스 리포트</div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:32px">
+      <div class="cap" style="margin-bottom:12px">Included in Retainer</div>
+      <div class="grid-2" style="gap:1px;background:var(--g200);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="background:var(--white);padding:20px 24px"><div style="font-size:11px;color:var(--g500);line-height:2"><span style="color:var(--ink);font-weight:600">+</span> &ensp;Slack 실시간 대응 (내부/외부 채널)<br><span style="color:var(--ink);font-weight:600">+</span> &ensp;기능 추가 · 개선 (별도 견적 없음)<br><span style="color:var(--ink);font-weight:600">+</span> &ensp;A/B 테스트 · CRO 최적화</div></div>
+        <div style="background:var(--white);padding:20px 24px"><div style="font-size:11px;color:var(--g500);line-height:2"><span style="color:var(--ink);font-weight:600">+</span> &ensp;콘텐츠 · 배너 · 캠페인 업데이트<br><span style="color:var(--ink);font-weight:600">+</span> &ensp;Shopify 앱 관리 · 기술 유지보수<br><span style="color:var(--ink);font-weight:600">+</span> &ensp;월간 퍼포먼스 리포트 (GA4 + Okendo)</div></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="cap" style="margin-bottom:12px">Retainer Examples</div>
+      <div class="grid-3" style="gap:1px;background:var(--g200);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="background:var(--g50);padding:20px 24px"><div style="font-size:13px;font-weight:700;margin-bottom:6px">글로벌 스포츠 그룹</div><div style="font-size:10px;color:var(--g500);line-height:1.8">2개 브랜드 동시 운영<br>견적 21건 누적<br>물류 연동 포함<br>2026 신규 계약 체결</div></div>
+        <div style="background:var(--g50);padding:20px 24px"><div style="font-size:13px;font-weight:700;margin-bottom:6px">럭셔리 셀렉트샵</div><div style="font-size:10px;color:var(--g500);line-height:1.8">큐 시스템 (한정판 드롭)<br>UX 리디자인<br>Modusign 계약 2건<br>온보딩 세션 포함</div></div>
+        <div style="background:var(--g50);padding:20px 24px"><div style="font-size:13px;font-weight:700;margin-bottom:6px">뷰티 D2C 글로벌</div><div style="font-size:10px;color:var(--g500);line-height:1.8">K-Beauty 글로벌 스토어<br>콘텐츠 · 캠페인 운영<br>리뷰 · 포인트 정책<br>멀티마켓 관리</div></div>
+      </div>
+    </div>
+
+    <div class="flex" style="gap:1px;background:var(--g200);border:1px solid var(--g200);border-radius:8px;overflow:hidden;margin-top:24px">
+      <div style="flex:1;background:var(--white);padding:12px 20px;font-size:11px;color:var(--g500)"><strong style="color:var(--ink)">계약</strong> &ensp;Modusign 전자계약 (44건 체결)</div>
+      <div style="flex:1;background:var(--white);padding:12px 20px;font-size:11px;color:var(--g500)"><strong style="color:var(--ink)">관리</strong> &ensp;ClickUp 태스크 관리 (110건+)</div>
+      <div style="flex:1;background:var(--white);padding:12px 20px;font-size:11px;color:var(--g500)"><strong style="color:var(--ink)">소통</strong> &ensp;Slack 전용 채널 + 위클리 싱크</div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">10 / 11</div>
+</div>
+
+
+<!-- 11. CLOSE — gradient-mesh -->
+<div class="slide">
+  <div class="s flex" style="overflow:hidden">
+    <!-- Ink panel — left 45% -->
+    <div style="width:45%;background:var(--ink);padding:72px 48px;display:flex;flex-direction:column;justify-content:space-between">
+      <div style="font-size:20px;font-weight:800;color:var(--white)">Lukuku<span style="color:var(--mint)">.</span></div>
+      <div>
+        <div class="text-scramble" style="font-size:48px;font-weight:900;color:var(--white);line-height:1.1;letter-spacing:-2px;margin-bottom:16px">
+          Your store,<br>always<br>optimized<span style="color:var(--mint)">.</span>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,.3);line-height:1.7">구축 이후의 모든 것,<br>루쿠쿠가 함께합니다.</div>
+      </div>
+      <div style="display:inline-block">
+        <a href="mailto:hello@lukuku.io" style="display:inline-block;background:var(--mint);color:var(--ink);padding:12px 32px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none">Let's talk</a>
+      </div>
+    </div>
+    <!-- White panel — right with gradient-mesh -->
+    <div class="gradient-mesh" style="flex:1;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between">
+      <div class="cap" style="margin-bottom:8px">Contact</div>
+      <div style="display:flex;flex-direction:column;gap:28px">
+        <div><div class="cap" style="margin-bottom:6px">Email</div><div style="font-size:15px;font-weight:600;color:var(--ink)">hello@lukuku.io</div></div>
+        <div style="height:1px;background:var(--g200)"></div>
+        <div><div class="cap" style="margin-bottom:6px">Web</div><div style="font-size:15px;font-weight:600;color:var(--ink)">lukuku.dev</div></div>
+        <div style="height:1px;background:var(--g200)"></div>
+        <div><div class="cap" style="margin-bottom:6px">CEO</div><div style="font-size:15px;font-weight:600;color:var(--ink)">Lee Donguk (Luke)</div></div>
+        <div style="height:1px;background:var(--g200)"></div>
+        <div><div class="cap" style="margin-bottom:6px">Location</div><div style="font-size:15px;font-weight:600;color:var(--ink)">Seoul · Jakarta · US</div></div>
+      </div>
+      <div class="mono" style="font-size:10px;color:var(--g400)">Confidential · March 2026</div>
+    </div>
+  </div>
+  <div class="slide-num">11 / 11</div>
+</div>
+
+</body>
+</html>
