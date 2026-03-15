@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lukuku Visual Exploration</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--ink:#1A1A1A;--white:#fff;--g50:#FAFAFA;--g100:#F5F5F5;--g200:#E5E5E5;--g300:#D4D4D4;--g400:#A3A3A3;--g500:#737373;--g600:#525252;--g800:#262626;--g900:#171717;--mint:#2BF5A0}
+  body{font-family:'Inter','Noto Sans KR',sans-serif;background:var(--g200);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .slide{width:1280px;height:720px;margin:40px auto;background:var(--white);overflow:hidden;position:relative}
+  .s{width:100%;height:100%;position:relative}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .cap{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g500)}
+
+  .flex{display:flex}.flex-col{flex-direction:column}.flex-1{flex:1}
+  .items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}
+
+  /* ── Dot Grid Background ── */
+  .dot-grid {
+    background-image: radial-gradient(circle, var(--g300) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* ── Glow effect ── */
+  .glow-mint {
+    box-shadow: 0 0 40px rgba(43, 245, 160, 0.15), 0 0 80px rgba(43, 245, 160, 0.05);
+  }
+  .glow-text {
+    text-shadow: 0 0 40px rgba(43, 245, 160, 0.3);
+  }
+
+  /* ── Glass Card ── */
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+  }
+  .glass-dark {
+    background: rgba(26, 26, 26, 0.8);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  /* ── Perspective ── */
+  .perspective { perspective: 1200px; }
+  .float-card {
+    transform: rotateY(-4deg) rotateX(2deg);
+    box-shadow: 20px 20px 60px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+    transition: transform 0.4s ease;
+  }
+  .float-card:hover { transform: rotateY(0deg) rotateX(0deg); }
+
+  /* ── Gradient Mesh ── */
+  .gradient-mesh {
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(43,245,160,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(43,245,160,0.05) 0%, transparent 40%),
+      radial-gradient(ellipse at 60% 80%, rgba(200,200,200,0.1) 0%, transparent 50%);
+  }
+
+  /* ── Noise Texture ── */
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ── Isometric Grid ── */
+  .iso-grid {
+    background-image:
+      linear-gradient(30deg, var(--g200) 12%, transparent 12.5%, transparent 87%, var(--g200) 87.5%, var(--g200)),
+      linear-gradient(150deg, var(--g200) 12%, transparent 12.5%, transparent 87%, var(--g200) 87.5%, var(--g200)),
+      linear-gradient(30deg, var(--g200) 12%, transparent 12.5%, transparent 87%, var(--g200) 87.5%, var(--g200)),
+      linear-gradient(150deg, var(--g200) 12%, transparent 12.5%, transparent 87%, var(--g200) 87.5%, var(--g200));
+    background-size: 80px 140px;
+    background-position: 0 0, 0 0, 40px 70px, 40px 70px;
+  }
+
+  /* ── Depth Shadows ── */
+  .depth-sm { box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 2px 8px rgba(0,0,0,0.04); }
+  .depth-md { box-shadow: 0 4px 16px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04); }
+  .depth-lg { box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04); }
+  .depth-xl { box-shadow: 0 16px 48px rgba(0,0,0,0.1), 0 4px 12px rgba(0,0,0,0.05); }
+
+  .label{text-align:center;margin:16px auto 40px;font-size:14px;font-weight:700;color:var(--ink)}
+</style>
+</head>
+<body>
+
+
+<!-- ═══ 1. COVER — Gradient Mesh + Glow Stat ═══ -->
+<div class="label">01 — Gradient Mesh + Glow Metrics + Dot Grid</div>
+<div class="slide">
+  <div class="s flex flex-col justify-between gradient-mesh dot-grid" style="padding:72px 80px">
+    <div class="flex justify-between items-center">
+      <div style="font-size:20px;font-weight:800;color:var(--ink)">Lukuku<span style="color:var(--mint)">.</span></div>
+      <div class="mono" style="font-size:11px;color:var(--g400)">2026</div>
+    </div>
+
+    <div>
+      <div style="font-size:72px;font-weight:900;color:var(--ink);line-height:1.05;letter-spacing:-3px;margin-bottom:20px">
+        68개 거래처와 함께한<br>글로벌 이커머스<span style="color:var(--mint)">.</span>
+      </div>
+      <div style="font-size:15px;color:var(--g500);max-width:500px;line-height:1.7">
+        Shopify 전문 에이전시 · 시스템 통합 · 해외 유통
+      </div>
+    </div>
+
+    <!-- Glow stat bar -->
+    <div class="flex" style="gap:12px">
+      <div class="glow-mint" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 28px;text-align:center">
+        <div class="mono" style="font-size:36px;font-weight:700;color:var(--mint);line-height:1">68<span style="font-size:18px;color:var(--g400)">+</span></div>
+        <div style="font-size:10px;color:var(--g500);margin-top:4px">거래처</div>
+      </div>
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 28px;text-align:center">
+        <div class="mono" style="font-size:36px;font-weight:700;color:var(--ink);line-height:1">36</div>
+        <div style="font-size:10px;color:var(--g500);margin-top:4px">팀원</div>
+      </div>
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 28px;text-align:center">
+        <div class="mono" style="font-size:36px;font-weight:700;color:var(--ink);line-height:1">8<span style="font-size:18px;color:var(--g400)">+</span></div>
+        <div style="font-size:10px;color:var(--g500);margin-top:4px">국가</div>
+      </div>
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 28px;text-align:center">
+        <div class="mono" style="font-size:36px;font-weight:700;color:var(--ink);line-height:1">97</div>
+        <div style="font-size:10px;color:var(--g500);margin-top:4px">테스트케이스</div>
+      </div>
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 28px;text-align:center">
+        <div class="mono" style="font-size:36px;font-weight:700;color:var(--ink);line-height:1">6</div>
+        <div style="font-size:10px;color:var(--g500);margin-top:4px">MSA 서비스</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ 2. ARCHITECTURE — Perspective Float Cards ═══ -->
+<div class="label">02 — Perspective Float Cards + Glass + Depth Shadows</div>
+<div class="slide">
+  <div class="s dot-grid" style="padding:60px 80px">
+    <div style="margin-bottom:28px">
+      <div class="cap" style="margin-bottom:8px">ARCHITECTURE</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">시스템 아키텍처</div>
+    </div>
+
+    <div class="perspective" style="display:flex;flex-direction:column;gap:16px;margin-top:20px">
+      <!-- Channels row -->
+      <div class="flex" style="gap:12px;justify-content:center">
+        <div class="float-card depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 32px;text-align:center;width:180px">
+          <div style="font-size:14px;font-weight:700">Shopify</div>
+          <div style="font-size:11px;color:var(--g500)">Storefront</div>
+        </div>
+        <div class="float-card depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 32px;text-align:center;width:180px">
+          <div style="font-size:14px;font-weight:700">POS</div>
+          <div style="font-size:11px;color:var(--g500)">오프라인</div>
+        </div>
+        <div class="float-card depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 32px;text-align:center;width:180px">
+          <div style="font-size:14px;font-weight:700">Admin</div>
+          <div style="font-size:11px;color:var(--g500)">대시보드</div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:20px;color:var(--g300)">↓</div>
+
+      <!-- Middleware — hero card -->
+      <div class="flex justify-center">
+        <div class="glow-mint depth-xl" style="background:var(--ink);border-radius:12px;padding:28px 48px;text-align:center;width:620px">
+          <div style="font-size:18px;font-weight:800;color:var(--white);margin-bottom:14px">Lukuku<span style="color:var(--mint)">.</span> Middleware</div>
+          <div class="flex" style="gap:8px;justify-content:center">
+            <div class="glass-dark" style="border-radius:6px;padding:8px 14px"><div class="mono" style="font-size:10px;color:var(--g400)">store-api</div></div>
+            <div class="glass-dark" style="border-radius:6px;padding:8px 14px"><div class="mono" style="font-size:10px;color:var(--g400)">admin-api</div></div>
+            <div class="glass-dark" style="border-radius:6px;padding:8px 14px"><div class="mono" style="font-size:10px;color:var(--g400)">erp-connector</div></div>
+            <div class="glass-dark" style="border-radius:6px;padding:8px 14px"><div class="mono" style="font-size:10px;color:var(--g400)">payment</div></div>
+            <div class="glass-dark" style="border-radius:6px;padding:8px 14px"><div class="mono" style="font-size:10px;color:var(--g400)">task-proc</div></div>
+          </div>
+          <div class="flex" style="gap:16px;justify-content:center;margin-top:12px">
+            <div class="mono" style="font-size:9px;color:var(--g600)">AWS EKS</div>
+            <div class="mono" style="font-size:9px;color:var(--g600)">PostgreSQL</div>
+            <div class="mono" style="font-size:9px;color:var(--g600)">Redis</div>
+            <div class="mono" style="font-size:9px;color:var(--g600)">SQS</div>
+            <div class="mono" style="font-size:9px;color:var(--g600)">Terraform</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;font-size:20px;color:var(--g300)">↓</div>
+
+      <!-- External row -->
+      <div class="flex" style="gap:12px;justify-content:center">
+        <div class="float-card depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 32px;text-align:center;width:180px">
+          <div style="font-size:14px;font-weight:700">ERP</div>
+          <div style="font-size:11px;color:var(--g500)">주문·재고·회원</div>
+        </div>
+        <div class="float-card depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 32px;text-align:center;width:180px">
+          <div style="font-size:14px;font-weight:700">Payment</div>
+          <div style="font-size:11px;color:var(--g500)">Airwallex · TapPay</div>
+        </div>
+        <div class="float-card depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px 32px;text-align:center;width:180px">
+          <div style="font-size:14px;font-weight:700">3PL</div>
+          <div style="font-size:11px;color:var(--g500)">GEODIS · Maersk</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ 3. CASE STUDY — Glass + Depth ═══ -->
+<div class="label">03 — Glass Card + Gradient Background + Depth</div>
+<div class="slide">
+  <div class="s flex">
+    <!-- Ink panel with gradient mesh -->
+    <div style="width:460px;background:var(--ink);position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;padding:60px 44px">
+      <!-- Subtle gradient orb -->
+      <div style="position:absolute;top:-80px;right:-80px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(43,245,160,0.12) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="position:absolute;bottom:-60px;left:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(43,245,160,0.06) 0%,transparent 70%);pointer-events:none"></div>
+
+      <div style="position:relative;z-index:1">
+        <div class="cap" style="color:var(--g600);margin-bottom:14px">CASE STUDY</div>
+        <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.2;letter-spacing:-1px">M사 글로벌 유통</div>
+        <div style="font-size:14px;color:var(--g500);margin-top:8px">On·Offline 통합</div>
+      </div>
+
+      <div style="position:relative;z-index:1">
+        <!-- Glass stat cards -->
+        <div class="flex" style="gap:8px;margin-bottom:20px;flex-wrap:wrap">
+          <div class="glass-dark" style="border-radius:8px;padding:16px 20px;text-align:center;flex:1">
+            <div class="mono" style="font-size:28px;font-weight:700;color:var(--white)">6</div>
+            <div style="font-size:9px;color:var(--g500)">Months</div>
+          </div>
+          <div class="glass-dark" style="border-radius:8px;padding:16px 20px;text-align:center;flex:1">
+            <div class="mono" style="font-size:28px;font-weight:700;color:var(--white)">3</div>
+            <div style="font-size:9px;color:var(--g500)">Fulltime</div>
+          </div>
+          <div class="glass-dark" style="border-radius:8px;padding:16px 20px;text-align:center;flex:1">
+            <div class="mono glow-text" style="font-size:28px;font-weight:700;color:var(--mint)">97</div>
+            <div style="font-size:9px;color:var(--g500)">Tests</div>
+          </div>
+        </div>
+        <div class="flex" style="gap:4px;flex-wrap:wrap">
+          <span class="glass-dark" style="border-radius:100px;padding:4px 12px;font-size:10px;color:var(--g400)">Shopify</span>
+          <span class="glass-dark" style="border-radius:100px;padding:4px 12px;font-size:10px;color:var(--g400)">AWS EKS</span>
+          <span class="glass-dark" style="border-radius:100px;padding:4px 12px;font-size:10px;color:var(--g400)">MSA</span>
+          <span class="glass-dark" style="border-radius:100px;padding:4px 12px;font-size:10px;color:var(--g400)">Airwallex</span>
+          <span class="glass-dark" style="border-radius:100px;padding:4px 12px;font-size:10px;color:var(--g400)">TapPay</span>
+        </div>
+      </div>
+    </div>
+    <!-- White content -->
+    <div class="flex-1" style="padding:40px;overflow-y:auto">
+      <div class="cap" style="margin-bottom:16px">SCOPE & DELIVERABLES</div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="depth-sm" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">글로벌 스토어</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">기존 플랫폼 → Shopify 마이그레이션 · 멀티 브랜드 · 다국어(EN/ZH-TW/ZH-HK) · Release 테마 커스텀 · Shopify 앱 7개 확정</div>
+        </div>
+        <div class="depth-sm" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">POS 시스템</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">Global Payments 단말기 · 오프라인 ↔ Shopify 실시간 동기화 · 화면정의서 12개 화면 · GO-LIVE 2026.05~06</div>
+        </div>
+        <div class="depth-sm" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">ERP 인터페이스</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">ERP ↔ Lukuku 실시간 I/F · 주문·재고·회원·판매·사은품 · erp-connector 독립 배포 · AWS SQS 비동기</div>
+        </div>
+        <div class="depth-sm" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px">
+          <div style="font-size:13px;font-weight:700;margin-bottom:6px">결제 이원화</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8"><strong>홍콩</strong> Airwallex(HKD) — VISA·MASTER·ALIPAY &ensp; <strong>대만</strong> TapPay(TWD) — VISA·JCB·LINE Pay·街口支付</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ 4. STATS — Large Glow Numbers ═══ -->
+<div class="label">04 — Large Glow Numbers + Gradient Mesh Background</div>
+<div class="slide">
+  <div class="s flex flex-col justify-between gradient-mesh" style="padding:72px 80px">
+    <div>
+      <div class="cap" style="margin-bottom:8px">TRACK RECORD</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">숫자로 봅니다.</div>
+    </div>
+
+    <div class="flex" style="gap:48px">
+      <div>
+        <div class="mono" style="font-size:120px;font-weight:700;color:var(--ink);line-height:1;letter-spacing:-6px">68<span style="font-size:60px;color:var(--g300)">+</span></div>
+        <div style="font-size:16px;color:var(--g500);margin-top:8px">누적 거래처</div>
+      </div>
+      <div>
+        <div class="mono glow-text" style="font-size:120px;font-weight:700;color:var(--mint);line-height:1;letter-spacing:-6px">36</div>
+        <div style="font-size:16px;color:var(--g500);margin-top:8px">팀 멤버</div>
+      </div>
+      <div>
+        <div class="mono" style="font-size:120px;font-weight:700;color:var(--ink);line-height:1;letter-spacing:-6px">8<span style="font-size:60px;color:var(--g300)">+</span></div>
+        <div style="font-size:16px;color:var(--g500);margin-top:8px">진출 국가</div>
+      </div>
+    </div>
+
+    <div class="flex" style="gap:16px">
+      <div class="mono" style="font-size:11px;color:var(--g400)">Seoul · Jakarta · US</div>
+      <div class="mono" style="font-size:11px;color:var(--g400)">·</div>
+      <div class="mono" style="font-size:11px;color:var(--g400)">44 contracts · 110+ estimates</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ 5. CODE TERMINAL — Tech Cred ═══ -->
+<div class="label">05 — Terminal UI + Code Aesthetics + Depth</div>
+<div class="slide">
+  <div class="s flex flex-col" style="padding:60px 80px">
+    <div style="margin-bottom:28px">
+      <div class="cap" style="margin-bottom:8px">TECH STACK</div>
+      <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">기술 스택</div>
+    </div>
+
+    <div class="flex" style="gap:24px;flex:1">
+      <!-- Terminal window -->
+      <div class="depth-lg" style="flex:1;background:var(--ink);border-radius:10px;overflow:hidden;display:flex;flex-direction:column">
+        <!-- Title bar -->
+        <div class="flex items-center" style="padding:12px 16px;gap:8px;border-bottom:1px solid rgba(255,255,255,0.06)">
+          <div style="width:12px;height:12px;border-radius:50%;background:#FF5F57"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#FEBC2E"></div>
+          <div style="width:12px;height:12px;border-radius:50%;background:#28C840"></div>
+          <div class="mono" style="font-size:11px;color:var(--g600);margin-left:8px">lukuku@prod ~ kubectl</div>
+        </div>
+        <!-- Terminal content -->
+        <div style="padding:20px;flex:1;overflow:auto">
+          <div class="mono" style="font-size:12px;line-height:2.2;color:var(--g400)">
+            <span style="color:var(--mint)">$</span> kubectl get pods -n lukuku-prod<br>
+            <span style="color:var(--g600)">NAME                           READY   STATUS</span><br>
+            store-api-7d4f9b-x2k9j &ensp;&ensp;&ensp;&ensp;<span style="color:var(--mint)">1/1</span> &ensp;&ensp;&ensp;Running<br>
+            admin-api-5c8e7a-m4p2n &ensp;&ensp;&ensp;&ensp;<span style="color:var(--mint)">1/1</span> &ensp;&ensp;&ensp;Running<br>
+            erp-connector-9f2d1e-q7w &ensp;&ensp;<span style="color:var(--mint)">1/1</span> &ensp;&ensp;&ensp;Running<br>
+            payment-svc-3a8b2c-r5t &ensp;&ensp;&ensp;<span style="color:var(--mint)">1/1</span> &ensp;&ensp;&ensp;Running<br>
+            task-proc-6e1d4f-w8y &ensp;&ensp;&ensp;&ensp;&ensp;<span style="color:var(--mint)">1/1</span> &ensp;&ensp;&ensp;Running<br>
+            data-migration-2b7c-j3k &ensp;&ensp;&ensp;<span style="color:var(--g600)">0/1</span> &ensp;&ensp;&ensp;Completed<br>
+            <br>
+            <span style="color:var(--mint)">$</span> kubectl get svc -n lukuku-prod<br>
+            <span style="color:var(--g600)">NAME              TYPE          CLUSTER-IP</span><br>
+            store-api &ensp;&ensp;&ensp;&ensp;&ensp;ClusterIP &ensp;&ensp;&ensp;10.100.45.12<br>
+            admin-api &ensp;&ensp;&ensp;&ensp;&ensp;ClusterIP &ensp;&ensp;&ensp;10.100.62.89<br>
+            erp-connector &ensp;&ensp;ClusterIP &ensp;&ensp;&ensp;10.100.78.34<br>
+            <br>
+            <span style="color:var(--mint)">$</span> <span style="animation:blink 1s infinite">_</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Stack cards -->
+      <div style="width:380px;display:flex;flex-direction:column;gap:12px">
+        <div class="depth-sm" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:6px">Frontend</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">Shopify Liquid · React · Next.js · Vercel</div>
+        </div>
+        <div class="depth-sm" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:6px">Backend</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">Node.js · Express · Aurora PostgreSQL · Redis</div>
+        </div>
+        <div class="depth-sm" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:6px">Infrastructure</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">AWS EKS · Docker · Terraform · GitHub Actions · ECR</div>
+        </div>
+        <div class="depth-sm" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:6px">Messaging</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">AWS SQS · Kestra Orchestration</div>
+        </div>
+        <div class="depth-sm" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:20px">
+          <div style="font-size:12px;font-weight:700;margin-bottom:6px">DNS & CDN</div>
+          <div style="font-size:11px;color:var(--g600);line-height:1.8">Cloudflare (Public) · Route53 (Private)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <style>@keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}</style>
+</div>
+
+
+<!-- ═══ 6. CTA — Gradient + Glass ═══ -->
+<div class="label">06 — CTA with Gradient Mesh + Glass Button</div>
+<div class="slide">
+  <div class="s flex flex-col justify-between gradient-mesh" style="padding:72px 80px">
+    <div style="font-size:20px;font-weight:800;color:var(--ink)">Lukuku<span style="color:var(--mint)">.</span></div>
+
+    <div>
+      <div style="font-size:64px;font-weight:900;color:var(--ink);line-height:1.1;letter-spacing:-3px;margin-bottom:20px">
+        Let's talk<span style="color:var(--mint)">.</span>
+      </div>
+      <div style="font-size:16px;color:var(--g500);margin-bottom:32px">글로벌 이커머스, 같이 만들어 갈까요?</div>
+      <div class="glow-mint" style="display:inline-block;background:var(--mint);color:var(--ink);padding:16px 40px;border-radius:8px;font-size:18px;font-weight:700">
+        hello@lukuku.io
+      </div>
+    </div>
+
+    <div class="flex" style="gap:40px">
+      <div><div class="cap" style="margin-bottom:4px">Web</div><div class="mono" style="font-size:13px;color:var(--g600)">lukuku.dev</div></div>
+      <div><div class="cap" style="margin-bottom:4px">CEO</div><div class="mono" style="font-size:13px;color:var(--g600)">Lee Donguk</div></div>
+      <div><div class="cap" style="margin-bottom:4px">Location</div><div class="mono" style="font-size:13px;color:var(--g600)">Seoul · Jakarta · US</div></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ EFFECT CATALOGUE ═══ -->
+<div class="label" style="margin-top:80px;font-size:18px">Effect Catalogue — 적용 가능한 효과 목록</div>
+<div class="slide">
+  <div class="s" style="padding:60px 80px">
+    <div style="font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:32px">적용 가능한 효과</div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+      <!-- 1 -->
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Gradient Mesh</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.7;margin-bottom:12px">Stripe 스타일 미세 그라디언트. 커버/CTA 배경에 은은한 깊이감.</div>
+        <div class="gradient-mesh" style="height:48px;border:1px solid var(--g200);border-radius:4px"></div>
+      </div>
+      <!-- 2 -->
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Dot Grid</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.7;margin-bottom:12px">테크니컬 느낌의 점 격자 배경. 아키텍처/다이어그램 슬라이드에.</div>
+        <div class="dot-grid" style="height:48px;border:1px solid var(--g200);border-radius:4px"></div>
+      </div>
+      <!-- 3 -->
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Depth Shadows</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.7;margin-bottom:12px">4단계 깊이(sm/md/lg/xl). 카드에 떠있는 느낌.</div>
+        <div class="flex" style="gap:8px">
+          <div class="depth-sm" style="flex:1;height:36px;background:var(--white);border:1px solid var(--g200);border-radius:4px"></div>
+          <div class="depth-md" style="flex:1;height:36px;background:var(--white);border:1px solid var(--g200);border-radius:4px"></div>
+          <div class="depth-lg" style="flex:1;height:36px;background:var(--white);border:1px solid var(--g200);border-radius:4px"></div>
+          <div class="depth-xl" style="flex:1;height:36px;background:var(--white);border:1px solid var(--g200);border-radius:4px"></div>
+        </div>
+      </div>
+      <!-- 4 -->
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Mint Glow</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.7;margin-bottom:12px">핵심 숫자/CTA에 은은한 민트 발광. 포인트 강조.</div>
+        <div class="flex justify-center" style="padding:8px 0">
+          <div class="glow-mint" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:8px 20px">
+            <div class="mono glow-text" style="font-size:24px;font-weight:700;color:var(--mint)">97</div>
+          </div>
+        </div>
+      </div>
+      <!-- 5 -->
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Glass / Blur</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.7;margin-bottom:12px">Glassmorphism. Ink 패널 위에서 반투명 유리 효과.</div>
+        <div style="background:var(--ink);border-radius:4px;padding:12px;display:flex;gap:6px">
+          <div class="glass-dark" style="flex:1;border-radius:4px;padding:6px;text-align:center"><div class="mono" style="font-size:9px;color:var(--g400)">glass</div></div>
+          <div class="glass-dark" style="flex:1;border-radius:4px;padding:6px;text-align:center"><div class="mono" style="font-size:9px;color:var(--g400)">glass</div></div>
+        </div>
+      </div>
+      <!-- 6 -->
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Perspective Float</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.7;margin-bottom:12px">3D 회전 카드. 아키텍처 다이어그램에 입체감.</div>
+        <div class="perspective" style="padding:8px 0;display:flex;justify-content:center">
+          <div class="float-card depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:4px;padding:8px 20px">
+            <div style="font-size:11px;font-weight:700">hover me</div>
+          </div>
+        </div>
+      </div>
+      <!-- 7 -->
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Terminal UI</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.7;margin-bottom:12px">실제 터미널 느낌. 기술력을 시각적으로 증명.</div>
+        <div style="background:var(--ink);border-radius:4px;padding:8px">
+          <div class="mono" style="font-size:9px;color:var(--g500)"><span style="color:var(--mint)">$</span> deploy --env=prod<span style="animation:blink 1s infinite">_</span></div>
+        </div>
+      </div>
+      <!-- 8 -->
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Gradient Orb</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.7;margin-bottom:12px">Ink 패널 위 민트 그라디언트 구체. 고급스러운 깊이.</div>
+        <div style="background:var(--ink);border-radius:4px;height:48px;position:relative;overflow:hidden">
+          <div style="position:absolute;top:-20px;right:-10px;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(43,245,160,0.15),transparent 70%)"></div>
+        </div>
+      </div>
+      <!-- 9 -->
+      <div class="depth-md" style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:24px">
+        <div style="font-size:13px;font-weight:700;margin-bottom:8px">Blinking Cursor</div>
+        <div style="font-size:11px;color:var(--g500);line-height:1.7;margin-bottom:12px">깜빡이는 커서. 터미널/코드 블록에 생동감.</div>
+        <div style="background:var(--g100);border-radius:4px;padding:8px">
+          <div class="mono" style="font-size:11px;color:var(--g600)">lukuku-prod <span style="color:var(--mint)">→</span> <span style="animation:blink 1s infinite;color:var(--ink)">▊</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

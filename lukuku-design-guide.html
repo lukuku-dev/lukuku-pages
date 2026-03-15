@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lukuku Design Guide 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box}
+
+  :root {
+    --black: #1A1A1A;
+    --ink: #231F20;
+    --white: #FFFFFF;
+    --mint: #2BF5A0;
+    --mint-dark: #0F9B63;
+    --mint-soft: #E8FFF5;
+    --mint-mid: #B0FFD9;
+    --gray-950: #0A0A0A;
+    --gray-900: #171717;
+    --gray-800: #262626;
+    --gray-700: #404040;
+    --gray-600: #525252;
+    --gray-500: #737373;
+    --gray-400: #A3A3A3;
+    --gray-300: #D4D4D4;
+    --gray-200: #E5E5E5;
+    --gray-100: #F5F5F5;
+    --gray-50: #FAFAFA;
+    --success: #2BF5A0;
+    --warning: #FBBF24;
+    --error: #EF4444;
+    --info: #60A5FA;
+  }
+
+  body{font-family:'Inter','Noto Sans KR',sans-serif;background:#E5E5E5;color:var(--black);-webkit-font-smoothing:antialiased;line-height:1.5}
+  .slide{width:1280px;height:720px;margin:40px auto;background:var(--white);overflow:hidden;position:relative}
+  .s{width:100%;height:100%}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .kr{font-family:'Pretendard','Noto Sans KR',sans-serif}
+  .cap{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-500)}
+  .cap-m{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gray-500)}
+  .flex{display:flex}.flex-col{flex-direction:column}.flex-1{flex:1}
+  .items-center{align-items:center}.items-end{align-items:flex-end}
+  .justify-center{justify-content:center}.justify-between{justify-content:space-between}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr}
+  .grid-3{display:grid;grid-template-columns:1fr 1fr 1fr}
+  .grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr}
+  .grid-5{display:grid;grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+  .slide-num{position:absolute;bottom:28px;right:40px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--gray-400)}
+  .slide-logo{position:absolute;bottom:28px;left:40px;font-size:13px;font-weight:800;color:var(--gray-300)}
+  .dont-x{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--error);color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:18px;margin-right:6px}
+  .do-check{display:inline-block;width:18px;height:18px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:18px;margin-right:6px}
+  @media print{body{background:#fff}.slide{margin:0;page-break-after:always}}
+</style>
+</head>
+<body>
+
+
+<!-- 01. COVER -->
+<div class="slide">
+  <div class="s flex flex-col justify-between" style="background:var(--white);padding:72px 80px">
+    <div class="flex justify-between items-center">
+      <div class="flex items-center" style="gap:8px">
+        <span style="font-size:20px;font-weight:800;color:var(--ink)">Lukuku<span style="color:#2BF5A0">.</span></span>
+      </div>
+      <div class="mono" style="font-size:11px;color:var(--gray-400)">design-guide v2.0</div>
+    </div>
+    <div>
+      <div style="font-size:72px;font-weight:900;color:var(--ink);line-height:1.05;letter-spacing:-3px;margin-bottom:16px">
+        Design<br>Guide<span style="color:var(--mint)">.</span>
+      </div>
+      <div style="font-size:15px;font-weight:400;color:var(--gray-500);max-width:480px;line-height:1.7">
+        Builder-first visual identity system.<br>
+        White-base, restrained mint, mono metrics.<br>
+        Informed by Toss TDS, Stripe, Linear, Vercel Geist.
+      </div>
+    </div>
+    <div class="flex" style="gap:40px">
+      <div><div class="cap" style="margin-bottom:4px">Version</div><div class="mono" style="font-size:12px;color:var(--gray-600)">2.0.0</div></div>
+      <div><div class="cap" style="margin-bottom:4px">Date</div><div class="mono" style="font-size:12px;color:var(--gray-600)">2026-03-15</div></div>
+      <div><div class="cap" style="margin-bottom:4px">Status</div><div class="flex items-center" style="gap:5px"><div style="width:7px;height:7px;border-radius:50%;background:var(--mint)"></div><div class="mono" style="font-size:12px;color:var(--ink)">Active</div></div></div>
+      <div><div class="cap" style="margin-bottom:4px">Slides</div><div class="mono" style="font-size:12px;color:var(--gray-600)">28</div></div>
+    </div>
+  </div>
+  <div class="slide-num">01 / 28</div>
+</div>
+
+
+<!-- 02. PRINCIPLES 1/2 -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Principles</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px;line-height:1.1">Design Principles</div>
+    </div>
+    <div class="grid-2" style="gap:40px;flex:1">
+      <div style="padding:36px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+        <div class="mono" style="font-size:48px;font-weight:700;color:var(--gray-200);line-height:1;margin-bottom:16px">01</div>
+        <div style="font-size:22px;font-weight:800;margin-bottom:12px;color:var(--ink)">Builder-first</div>
+        <div style="font-size:14px;color:var(--gray-600);line-height:1.8">
+          실행력을 보여주는 디자인. <strong style="color:var(--ink)">화려함보다 명확함.</strong><br>
+          결과를 보여주는 팀. 숫자와 실행으로 증명합니다.
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:20px;padding-top:16px;border-top:1px solid var(--gray-200)">ref: Linear "precision over decoration"</div>
+      </div>
+      <div style="padding:36px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+        <div class="mono" style="font-size:48px;font-weight:700;color:var(--gray-200);line-height:1;margin-bottom:16px">02</div>
+        <div style="font-size:22px;font-weight:800;margin-bottom:12px;color:var(--ink)">Data-driven</div>
+        <div style="font-size:14px;color:var(--gray-600);line-height:1.8">
+          <strong style="color:var(--ink)">숫자가 말한다.</strong> 68개 거래처, 97개 테스트케이스.<br>
+          모노스페이스로 메트릭 강조. 데이터가 곧 신뢰.
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:20px;padding-top:16px;border-top:1px solid var(--gray-200)">ref: Vercel mono-heavy approach</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">02 / 28</div>
+</div>
+
+
+<!-- 03. PRINCIPLES 2/2 -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Principles</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px;line-height:1.1">Design Principles</div>
+    </div>
+    <div class="grid-2" style="gap:40px;flex:1">
+      <div style="padding:36px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+        <div class="mono" style="font-size:48px;font-weight:700;color:var(--gray-200);line-height:1;margin-bottom:16px">03</div>
+        <div style="font-size:22px;font-weight:800;margin-bottom:12px;color:var(--ink)">One thing per page</div>
+        <div style="font-size:14px;color:var(--gray-600);line-height:1.8">
+          <strong style="color:var(--ink)">한 화면에 하나의 메시지.</strong><br>
+          집중시키려면 비워야 합니다. 여백이 곧 메시지.
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:20px;padding-top:16px;border-top:1px solid var(--gray-200)">ref: Toss "1 Thing per 1 Page"</div>
+      </div>
+      <div style="padding:36px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+        <div class="mono" style="font-size:48px;font-weight:700;color:var(--gray-200);line-height:1;margin-bottom:16px">04</div>
+        <div style="font-size:22px;font-weight:800;margin-bottom:12px;color:var(--ink)">Restrained accent</div>
+        <div style="font-size:14px;color:var(--gray-600);line-height:1.8">
+          <strong style="color:var(--ink)">포인트는 절제해야 포인트다.</strong><br>
+          민트는 진짜 포인트에만. 로고 도트, CTA, 핵심 숫자.
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:20px;padding-top:16px;border-top:1px solid var(--gray-200)">ref: Stripe single accent (#635BFF sparingly)</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">03 / 28</div>
+</div>
+
+
+<!-- 04. COLOR — PRIMARY -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Color</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Primary Colors</div>
+    </div>
+    <div class="grid-4" style="gap:32px;flex:1">
+      <div>
+        <div style="height:160px;background:var(--ink);border-radius:8px;margin-bottom:12px;display:flex;align-items:flex-end;padding:16px">
+          <div class="mono" style="font-size:12px;color:var(--gray-500)">#231F20</div>
+        </div>
+        <div style="font-size:14px;font-weight:700">Ink</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-top:4px">텍스트 / 부분 패널</div>
+      </div>
+      <div>
+        <div style="height:160px;background:var(--mint);border-radius:8px;margin-bottom:12px;display:flex;align-items:flex-end;padding:16px">
+          <div class="mono" style="font-size:12px;color:var(--ink)">#2BF5A0</div>
+        </div>
+        <div style="font-size:14px;font-weight:700">Mint</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-top:4px">CTA / 핵심숫자 / 로고도트</div>
+      </div>
+      <div>
+        <div style="height:160px;background:var(--white);border:1px solid var(--gray-200);border-radius:8px;margin-bottom:12px;display:flex;align-items:flex-end;padding:16px">
+          <div class="mono" style="font-size:12px;color:var(--gray-400)">#FFFFFF</div>
+        </div>
+        <div style="font-size:14px;font-weight:700">White</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-top:4px">기본 배경</div>
+      </div>
+      <div>
+        <div style="height:160px;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;margin-bottom:12px;display:flex;align-items:flex-end;padding:16px">
+          <div class="mono" style="font-size:12px;color:var(--gray-400)">#F5F5F5</div>
+        </div>
+        <div style="font-size:14px;font-weight:700">Light Gray</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-top:4px">카드 / 코드블록 배경</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">04 / 28</div>
+</div>
+
+
+<!-- 05. COLOR — GRAY SCALE -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Color</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Gray Scale</div>
+    </div>
+    <div style="margin-bottom:48px">
+      <div class="cap" style="margin-bottom:16px">11 Steps</div>
+      <div class="flex" style="gap:8px">
+        <div style="flex:1"><div style="height:80px;background:var(--gray-950);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">950</div><div class="mono" style="font-size:9px;color:var(--gray-400)">#0A0A0A</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-900);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">900</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-800);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">800</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-700);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">700</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-600);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">600</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-500);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">500</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-400);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">400</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-300);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">300</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-200);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">200</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">100</div></div>
+        <div style="flex:1"><div style="height:80px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px"></div><div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:8px">50</div></div>
+      </div>
+    </div>
+    <div style="padding:24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+      <div style="font-size:13px;color:var(--gray-500);line-height:1.8">
+        <strong style="color:var(--ink)">Usage:</strong> 950-800 텍스트/패널 &middot; 600-500 보조 텍스트 &middot; 400-300 비활성/보더 &middot; 200-50 배경/서브틀
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">05 / 28</div>
+</div>
+
+
+<!-- 06. COLOR — SEMANTIC + USAGE -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Color</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Semantic Colors &amp; Usage</div>
+    </div>
+    <div class="flex" style="gap:48px;flex:1">
+      <div style="width:320px">
+        <div class="cap" style="margin-bottom:16px">Semantic</div>
+        <div class="flex" style="gap:16px;margin-bottom:32px">
+          <div><div style="height:56px;width:56px;background:var(--success);border-radius:8px"></div><div style="font-size:10px;color:var(--gray-500);margin-top:8px">Success</div></div>
+          <div><div style="height:56px;width:56px;background:var(--warning);border-radius:8px"></div><div style="font-size:10px;color:var(--gray-500);margin-top:8px">Warning</div></div>
+          <div><div style="height:56px;width:56px;background:var(--error);border-radius:8px"></div><div style="font-size:10px;color:var(--gray-500);margin-top:8px">Error</div></div>
+          <div><div style="height:56px;width:56px;background:var(--info);border-radius:8px"></div><div style="font-size:10px;color:var(--gray-500);margin-top:8px">Info</div></div>
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);line-height:1.8;padding:16px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px">
+          OKLCH 기반 확장 예정<br>ref: Toss TDS, Linear
+        </div>
+      </div>
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:16px"><span class="do-check">O</span> DO — Mint 올바른 사용</div>
+        <div class="flex" style="gap:16px;margin-bottom:32px">
+          <div style="flex:1;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:20px;text-align:center">
+            <div style="font-size:13px;font-weight:800;color:var(--ink);margin-bottom:8px">Lukuku<span style="color:var(--mint)">.</span></div>
+            <div style="font-size:10px;color:var(--gray-400)">Logo dot</div>
+          </div>
+          <div style="flex:1;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:20px;text-align:center">
+            <div class="mono" style="font-size:28px;font-weight:700;color:var(--mint)">97</div>
+            <div style="font-size:10px;color:var(--gray-400)">Key metric</div>
+          </div>
+          <div style="flex:1;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:20px;text-align:center">
+            <div style="background:var(--mint);color:var(--ink);padding:6px 16px;border-radius:4px;font-size:11px;font-weight:700;display:inline-block">CTA</div>
+            <div style="font-size:10px;color:var(--gray-400);margin-top:8px">Button</div>
+          </div>
+        </div>
+        <div class="cap" style="margin-bottom:16px"><span class="dont-x">X</span> DON'T — Mint 금지 사용</div>
+        <div class="flex" style="gap:16px">
+          <div style="flex:1;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:20px;text-align:center;opacity:0.6">
+            <div style="border-left:3px solid var(--mint);padding-left:8px;font-size:11px;text-align:left;text-decoration:line-through">Border line</div>
+            <div style="font-size:10px;color:var(--gray-400);margin-top:8px">민트 선 금지</div>
+          </div>
+          <div style="flex:1;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:20px;text-align:center;opacity:0.6">
+            <div style="font-size:11px;font-weight:700;color:var(--mint);text-decoration:line-through">SERVICES</div>
+            <div style="font-size:10px;color:var(--gray-400);margin-top:8px">민트 라벨 금지</div>
+          </div>
+          <div style="flex:1;background:var(--mint-soft);border:1px solid var(--mint-mid);border-radius:8px;padding:20px;text-align:center;opacity:0.6">
+            <div style="font-size:11px;text-decoration:line-through">Mint bg</div>
+            <div style="font-size:10px;color:var(--gray-400);margin-top:8px">민트 배경 금지</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">06 / 28</div>
+</div>
+
+
+<!-- 07. TYPOGRAPHY — FONT FAMILIES -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Typography</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Font Families</div>
+    </div>
+    <div class="grid-3" style="gap:48px;flex:1">
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--gray-500);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px">Primary — Inter</div>
+        <div style="font-size:64px;font-weight:900;letter-spacing:-2px;line-height:1;margin-bottom:16px;color:var(--ink)">Aa</div>
+        <div style="font-size:12px;color:var(--gray-500);line-height:1.8;margin-bottom:24px">
+          EN headings &amp; body text.<br>
+          Weight: 400 / 500 / 600 / 700 / 800 / 900
+        </div>
+        <div style="border-top:1px solid var(--gray-200);padding-top:20px">
+          <div style="font-size:28px;font-weight:900;letter-spacing:-1px;margin-bottom:4px">68+ clients<span style="color:var(--mint)">.</span></div>
+          <div style="font-size:14px;font-weight:600;color:var(--gray-700);margin-bottom:4px">Shopify Global Store</div>
+          <div style="font-size:12px;font-weight:400;color:var(--gray-500)">Body text sample here.</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--gray-500);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px">Korean — Pretendard</div>
+        <div class="kr" style="font-size:64px;font-weight:900;line-height:1;margin-bottom:16px;color:var(--ink)">가나</div>
+        <div style="font-size:12px;color:var(--gray-500);line-height:1.8;margin-bottom:24px">
+          KR headings &amp; body text.<br>
+          Pretendard primary, Noto Sans KR fallback.<br>
+          Inter와 동일 weight 매칭.
+        </div>
+        <div style="border-top:1px solid var(--gray-200);padding-top:20px">
+          <div class="kr" style="font-size:24px;font-weight:800;letter-spacing:-0.5px;margin-bottom:4px">글로벌 유통 인프라</div>
+          <div class="kr" style="font-size:14px;font-weight:600;color:var(--gray-700);margin-bottom:4px">브랜드는 브랜드에 집중하세요.</div>
+          <div class="kr" style="font-size:12px;font-weight:400;color:var(--gray-500)">나머지는 저희가 합니다.</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;color:var(--gray-500);letter-spacing:1px;text-transform:uppercase;margin-bottom:16px">Technical — JetBrains Mono</div>
+        <div class="mono" style="font-size:64px;font-weight:700;letter-spacing:-1px;line-height:1;margin-bottom:16px;color:var(--ink)">01</div>
+        <div style="font-size:12px;color:var(--gray-500);line-height:1.8;margin-bottom:24px">
+          Numbers, code, metrics, terminal UI.<br>
+          Weight: 400 / 500 / 600 / 700
+        </div>
+        <div style="border-top:1px solid var(--gray-200);padding-top:20px">
+          <div class="mono" style="font-size:28px;font-weight:700;color:var(--ink);margin-bottom:4px">97 <span style="color:var(--gray-400)">tests</span></div>
+          <div class="mono" style="font-size:12px;color:var(--gray-500);margin-bottom:8px">erp-connector v2.1.0</div>
+          <div style="background:var(--gray-100);border-radius:4px;padding:8px 12px;border:1px solid var(--gray-200)">
+            <div class="mono" style="font-size:10px;color:var(--gray-500)"><span style="color:var(--gray-400)">$</span> deploy --env=prod</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">07 / 28</div>
+</div>
+
+
+<!-- 08. TYPOGRAPHY — HIERARCHY -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Typography</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Type Hierarchy</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:32px">
+      <div style="display:flex;align-items:baseline;gap:40px;padding-bottom:32px;border-bottom:1px solid var(--gray-200)">
+        <div style="width:120px"><div class="mono" style="font-size:10px;color:var(--gray-400)">H1</div></div>
+        <div style="font-size:48px;font-weight:900;letter-spacing:-1.5px;line-height:1;color:var(--ink)">Heading One</div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400)">36-48px / 900 / -1.5px</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:40px;padding-bottom:32px;border-bottom:1px solid var(--gray-200)">
+        <div style="width:120px"><div class="mono" style="font-size:10px;color:var(--gray-400)">H2</div></div>
+        <div style="font-size:28px;font-weight:700;letter-spacing:-0.5px;line-height:1;color:var(--ink)">Heading Two</div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400)">20-28px / 700 / -0.5px</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:40px;padding-bottom:32px;border-bottom:1px solid var(--gray-200)">
+        <div style="width:120px"><div class="mono" style="font-size:10px;color:var(--gray-400)">H3</div></div>
+        <div style="font-size:16px;font-weight:600;line-height:1;color:var(--ink)">Subheading Three</div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400)">14-16px / 600 / 0</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:40px;padding-bottom:32px;border-bottom:1px solid var(--gray-200)">
+        <div style="width:120px"><div class="mono" style="font-size:10px;color:var(--gray-400)">Body</div></div>
+        <div style="font-size:14px;font-weight:400;line-height:1;color:var(--gray-600)">Body text paragraph sample</div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400)">13-14px / 400 / 0</div>
+      </div>
+      <div style="display:flex;align-items:baseline;gap:40px">
+        <div style="width:120px"><div class="mono" style="font-size:10px;color:var(--gray-400)">Code</div></div>
+        <div class="mono" style="font-size:12px;font-weight:400;line-height:1;color:var(--gray-500)">code --sample</div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400)">11-12px / mono / 0</div>
+      </div>
+    </div>
+    <div class="mono" style="font-size:9px;color:var(--gray-400);margin-top:24px;padding-top:16px;border-top:1px solid var(--gray-200)">ref: Inter Display(Linear) + Geist(Vercel) + System(Toss)</div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">08 / 28</div>
+</div>
+
+
+<!-- 09. SPACING — SPECS -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Layout</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Spacing &amp; Grid</div>
+    </div>
+    <div class="flex" style="gap:48px;flex:1">
+      <div style="width:400px">
+        <div class="cap" style="margin-bottom:16px">Specifications</div>
+        <div style="font-size:13px;color:var(--gray-600);line-height:2.4">
+          <strong style="color:var(--ink)">Base unit</strong> — 4px grid<br>
+          <strong style="color:var(--ink)">Slide</strong> — 1280 x 720px<br>
+          <strong style="color:var(--ink)">Padding</strong> — 60~80px (generous whitespace)<br>
+          <strong style="color:var(--ink)">Grid</strong> — 2 / 3 / 4 / 5 columns<br>
+          <strong style="color:var(--ink)">Gap</strong> — 1px border-grid OR 24~32px whitespace<br>
+          <strong style="color:var(--ink)">Card radius</strong> — 6~8px (no excessive rounding)<br>
+          <strong style="color:var(--ink)">Section divider</strong> — 1px solid #E5E5E5
+        </div>
+      </div>
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:16px">Spacing Scale</div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:32px">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;gap:16px">
+              <div class="mono" style="font-size:12px;color:var(--gray-400);width:48px;text-align:right">4px</div>
+              <div style="height:14px;width:4px;background:var(--gray-300);border-radius:2px"></div>
+              <div style="font-size:12px;color:var(--gray-500)">인라인 요소 간격</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <div class="mono" style="font-size:12px;color:var(--gray-400);width:48px;text-align:right">8px</div>
+              <div style="height:14px;width:8px;background:var(--gray-300);border-radius:2px"></div>
+              <div style="font-size:12px;color:var(--gray-500)">pill 간격, 아이콘-텍스트</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <div class="mono" style="font-size:12px;color:var(--gray-400);width:48px;text-align:right">16px</div>
+              <div style="height:14px;width:16px;background:var(--gray-300);border-radius:2px"></div>
+              <div style="font-size:12px;color:var(--gray-500)">카드 내부 패딩</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <div class="mono" style="font-size:12px;color:var(--gray-400);width:48px;text-align:right">24px</div>
+              <div style="height:14px;width:24px;background:var(--gray-400);border-radius:2px"></div>
+              <div style="font-size:12px;color:var(--gray-500)">섹션 내 블록 간격</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <div class="mono" style="font-size:12px;color:var(--gray-400);width:48px;text-align:right">32px</div>
+              <div style="height:14px;width:32px;background:var(--gray-400);border-radius:2px"></div>
+              <div style="font-size:12px;color:var(--gray-500)">그리드 gap, 컬럼 간격</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <div class="mono" style="font-size:12px;color:var(--gray-400);width:48px;text-align:right">48px</div>
+              <div style="height:14px;width:48px;background:var(--gray-600);border-radius:2px"></div>
+              <div style="font-size:12px;color:var(--gray-500)">대 섹션 간 간격</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:16px">
+              <div class="mono" style="font-size:12px;color:var(--gray-400);width:48px;text-align:right">80px</div>
+              <div style="height:14px;width:80px;background:var(--ink);border-radius:2px"></div>
+              <div style="font-size:12px;color:var(--gray-500)">슬라이드 좌우 패딩 (최소)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">09 / 28</div>
+</div>
+
+
+<!-- 10. WHITESPACE + LAYOUT PATTERNS -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Whitespace</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">여백은 메시지다</div>
+    </div>
+    <div class="flex" style="gap:48px;flex:1">
+      <div style="width:440px">
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px">여백은 빈 공간이 아니다</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">요소 사이의 여백은 정보의 위계를 만듭니다. 같은 그룹은 가깝게, 다른 그룹은 멀리.</div>
+        </div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px">채우고 싶은 충동을 참아라</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">빈 곳이 보이면 채우고 싶어집니다. 그 충동이 디자인을 망칩니다.</div>
+        </div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:8px">여백이 클수록 중요하다</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">헤딩 위의 여백이 가장 큽니다. 본문 사이는 중간. 이 차이가 위계.</div>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:16px">3 Layout Patterns</div>
+        <div style="margin-bottom:20px">
+          <div style="border:1px solid var(--gray-200);border-radius:6px;overflow:hidden;height:76px;display:flex;flex-direction:column">
+            <div style="height:22px;background:var(--white);padding:4px 10px;font-size:9px;font-weight:700;color:var(--gray-600);border-bottom:1px solid var(--gray-200);display:flex;align-items:center">Top Header</div>
+            <div style="flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--gray-200)">
+              <div style="background:var(--white);padding:6px 8px;font-size:8px;color:var(--gray-400)">Col 1</div>
+              <div style="background:var(--white);padding:6px 8px;font-size:8px;color:var(--gray-400)">Col 2</div>
+              <div style="background:var(--white);padding:6px 8px;font-size:8px;color:var(--gray-400)">Col 3</div>
+            </div>
+          </div>
+          <div style="font-size:10px;color:var(--gray-500);margin-top:6px"><strong>A.</strong> Top Header + Grid — 서비스, 프로세스</div>
+        </div>
+        <div style="margin-bottom:20px">
+          <div style="border:1px solid var(--gray-200);border-radius:6px;overflow:hidden;height:76px;display:flex">
+            <div style="width:40%;background:var(--ink);padding:10px;display:flex;align-items:center">
+              <div style="font-size:9px;font-weight:700;color:var(--gray-400)">Ink Panel (30-45%)</div>
+            </div>
+            <div style="flex:1;background:var(--white);padding:10px;display:flex;align-items:center">
+              <div style="font-size:9px;color:var(--gray-400)">White Content</div>
+            </div>
+          </div>
+          <div style="font-size:10px;color:var(--gray-500);margin-top:6px"><strong>B.</strong> Split (Ink + White) — 케이스 스터디</div>
+        </div>
+        <div>
+          <div style="border:1px solid var(--gray-200);border-radius:6px;overflow:hidden;height:76px;display:flex;flex-direction:column">
+            <div style="flex:1;padding:8px 10px;border-bottom:1px solid var(--gray-200)"><div style="font-size:9px;font-weight:700;color:var(--gray-500)">Full-width Section</div></div>
+            <div style="flex:1;padding:8px 10px"><div style="font-size:9px;color:var(--gray-400)">Full-width Section</div></div>
+          </div>
+          <div style="font-size:10px;color:var(--gray-500);margin-top:6px"><strong>C.</strong> Full-width + borders — 스탯, 포트폴리오</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">10 / 28</div>
+</div>
+
+
+<!-- 11. COMPONENTS — BUTTONS + PILLS -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Components</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Buttons &amp; Pills</div>
+    </div>
+    <div class="flex" style="gap:48px;flex:1">
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:20px">Buttons</div>
+        <div class="flex" style="gap:16px;margin-bottom:40px;flex-wrap:wrap">
+          <div style="background:var(--ink);color:var(--white);padding:14px 32px;border-radius:6px;font-size:13px;font-weight:600">Primary</div>
+          <div style="background:var(--mint);color:var(--ink);padding:14px 32px;border-radius:6px;font-size:13px;font-weight:700">Accent CTA</div>
+          <div style="background:var(--white);color:var(--ink);padding:14px 32px;border-radius:6px;font-size:13px;font-weight:600;border:1.5px solid var(--gray-300)">Outline</div>
+        </div>
+        <div style="padding:24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+          <div style="font-size:12px;color:var(--gray-500);line-height:2">
+            <strong style="color:var(--ink)">Primary:</strong> ink bg, 기본 액션<br>
+            <strong style="color:var(--ink)">Accent CTA:</strong> mint bg, 페이지당 1개만<br>
+            <strong style="color:var(--ink)">Outline:</strong> 보조 액션, 취소/뒤로
+          </div>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:20px">Pills / Tags</div>
+        <div class="flex" style="gap:12px;margin-bottom:40px;flex-wrap:wrap">
+          <span style="display:inline-block;padding:8px 20px;border:1px solid var(--gray-200);border-radius:100px;font-size:12px;font-weight:500;color:var(--gray-600)">Shopify</span>
+          <span style="display:inline-block;padding:8px 20px;border:1px solid var(--gray-200);border-radius:100px;font-size:12px;font-weight:500;color:var(--gray-600)">AWS</span>
+          <span style="display:inline-block;padding:8px 20px;background:var(--ink);border-radius:100px;font-size:12px;font-weight:500;color:var(--gray-300)">MSA</span>
+          <span style="display:inline-block;padding:8px 20px;background:var(--ink);border-radius:100px;font-size:12px;font-weight:600;color:var(--mint)">Active</span>
+        </div>
+        <div style="padding:24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+          <div style="font-size:12px;color:var(--gray-500);line-height:2">
+            <strong style="color:var(--ink)">Outline pill:</strong> 기술 스택, 카테고리<br>
+            <strong style="color:var(--ink)">Ink pill:</strong> 강조 태그<br>
+            <strong style="color:var(--ink)">Active pill:</strong> 상태 표시 (mint 텍스트)
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">11 / 28</div>
+</div>
+
+
+<!-- 12. COMPONENTS — CARDS + CODE -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Components</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Cards &amp; Code</div>
+    </div>
+    <div class="flex" style="gap:48px;flex:1">
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:20px">Card Variants</div>
+        <div class="flex" style="gap:16px;margin-bottom:32px">
+          <div style="flex:1;background:var(--white);border:1px solid var(--gray-200);border-radius:8px;padding:24px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px">Default</div>
+            <div style="font-size:11px;color:var(--gray-500)">white + border</div>
+          </div>
+          <div style="flex:1;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:24px">
+            <div style="font-size:13px;font-weight:700;margin-bottom:6px">Gray</div>
+            <div style="font-size:11px;color:var(--gray-500)">gray-100 bg</div>
+          </div>
+          <div style="flex:1;background:var(--ink);border-radius:8px;padding:24px">
+            <div style="font-size:13px;font-weight:700;color:var(--white);margin-bottom:6px">Ink</div>
+            <div style="font-size:11px;color:var(--gray-500)">partial dark only</div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:20px">Code Block</div>
+        <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:20px">
+          <div class="flex" style="gap:6px;margin-bottom:16px">
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--gray-300)"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--gray-300)"></div>
+            <div style="width:10px;height:10px;border-radius:50%;background:var(--gray-300)"></div>
+          </div>
+          <div class="mono" style="font-size:11px;color:var(--gray-600);line-height:2.2">
+            <span style="color:var(--gray-400)">$</span> kubectl get pods -n lukuku<br>
+            store-api-7d4f &ensp;<span style="color:var(--mint)">Running</span><br>
+            erp-connector-9f2d &ensp;<span style="color:var(--mint)">Running</span><br>
+            payment-svc-3a8b &ensp;<span style="color:var(--mint)">Running</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:32px">
+      <div class="cap" style="margin-bottom:16px">Table</div>
+      <div style="border:1px solid var(--gray-200);border-radius:6px;overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:12px">
+          <thead>
+            <tr style="background:var(--gray-50)">
+              <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--gray-500);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Service</th>
+              <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;color:var(--gray-500);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Status</th>
+              <th style="padding:10px 16px;text-align:right;font-size:10px;font-weight:700;color:var(--gray-500);letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--gray-200)">Uptime</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding:8px 16px;border-bottom:1px solid var(--gray-100)" class="mono">store-api</td><td style="padding:8px 16px;border-bottom:1px solid var(--gray-100)"><span class="flex items-center" style="gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--mint);display:inline-block"></span>Active</span></td><td style="padding:8px 16px;border-bottom:1px solid var(--gray-100);text-align:right" class="mono">99.9%</td></tr>
+            <tr><td style="padding:8px 16px;border-bottom:1px solid var(--gray-100)" class="mono">erp-conn</td><td style="padding:8px 16px;border-bottom:1px solid var(--gray-100)"><span class="flex items-center" style="gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--mint);display:inline-block"></span>Active</span></td><td style="padding:8px 16px;border-bottom:1px solid var(--gray-100);text-align:right" class="mono">99.7%</td></tr>
+            <tr><td style="padding:8px 16px" class="mono">payment</td><td style="padding:8px 16px"><span class="flex items-center" style="gap:6px"><span style="width:6px;height:6px;border-radius:50%;background:var(--warning);display:inline-block"></span>Pending</span></td><td style="padding:8px 16px;text-align:right" class="mono">--</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">12 / 28</div>
+</div>
+
+
+<!-- 13. COMPONENTS — STATS + STATUS -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Components</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Stats &amp; Status</div>
+    </div>
+    <div class="flex" style="gap:48px;flex:1">
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:20px">Stat Blocks</div>
+        <div class="grid-3" style="gap:20px">
+          <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:28px;text-align:center">
+            <div class="mono" style="font-size:36px;font-weight:700;color:var(--ink)">68<span style="font-size:16px;color:var(--gray-400)">+</span></div>
+            <div style="font-size:11px;color:var(--gray-500);margin-top:8px">Clients</div>
+          </div>
+          <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:28px;text-align:center">
+            <div class="mono" style="font-size:36px;font-weight:700;color:var(--mint)">97</div>
+            <div style="font-size:11px;color:var(--gray-500);margin-top:8px">Test Cases</div>
+          </div>
+          <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;padding:28px;text-align:center">
+            <div class="mono" style="font-size:36px;font-weight:700;color:var(--ink)">6</div>
+            <div style="font-size:11px;color:var(--gray-500);margin-top:8px">Services</div>
+          </div>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:20px">Status Dots</div>
+        <div style="display:flex;flex-direction:column;gap:24px">
+          <div class="flex items-center" style="gap:12px;padding:20px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+            <div style="width:12px;height:12px;border-radius:50%;background:var(--mint)"></div>
+            <span style="font-size:14px;font-weight:600">Active</span>
+            <span style="font-size:12px;color:var(--gray-400);margin-left:auto">정상 운영 중</span>
+          </div>
+          <div class="flex items-center" style="gap:12px;padding:20px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+            <div style="width:12px;height:12px;border-radius:50%;background:var(--warning)"></div>
+            <span style="font-size:14px;font-weight:600">Pending</span>
+            <span style="font-size:12px;color:var(--gray-400);margin-left:auto">대기 / 준비 중</span>
+          </div>
+          <div class="flex items-center" style="gap:12px;padding:20px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+            <div style="width:12px;height:12px;border-radius:50%;background:var(--error)"></div>
+            <span style="font-size:14px;font-weight:600">Error</span>
+            <span style="font-size:12px;color:var(--gray-400);margin-left:auto">오류 발생</span>
+          </div>
+          <div class="flex items-center" style="gap:12px;padding:20px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+            <div style="width:12px;height:12px;border-radius:50%;background:var(--gray-300)"></div>
+            <span style="font-size:14px;font-weight:600">Inactive</span>
+            <span style="font-size:12px;color:var(--gray-400);margin-left:auto">비활성</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">13 / 28</div>
+</div>
+
+
+<!-- 14. COLOR DO/DON'T -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Color Usage</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Mint Usage: DO &amp; DON'T</div>
+    </div>
+    <div class="grid-2" style="gap:48px;flex:1">
+      <div>
+        <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:24px;display:flex;align-items:center;gap:8px"><span class="do-check">O</span> DO</div>
+        <div style="margin-bottom:20px;padding:24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;display:flex;align-items:center;gap:24px">
+          <div style="font-size:22px;font-weight:800;color:var(--ink)">Lukuku<span style="color:var(--mint)">.</span></div>
+          <div style="font-size:12px;color:var(--gray-500)">Logo: mint은 도트(.)에만</div>
+        </div>
+        <div style="margin-bottom:20px;padding:24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;display:flex;align-items:center;gap:24px">
+          <div class="mono" style="font-size:36px;font-weight:700;color:var(--mint)">97</div>
+          <div style="font-size:12px;color:var(--gray-500)">Key metric: 핵심 숫자 하나만</div>
+        </div>
+        <div style="padding:24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;display:flex;align-items:center;gap:24px">
+          <div style="background:var(--mint);color:var(--ink);padding:12px 28px;border-radius:6px;font-size:13px;font-weight:700">Get Started</div>
+          <div style="font-size:12px;color:var(--gray-500)">CTA button 전용</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:16px;font-weight:800;color:var(--error);margin-bottom:24px;display:flex;align-items:center;gap:8px"><span class="dont-x">X</span> DON'T</div>
+        <div style="margin-bottom:20px;padding:24px;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;opacity:0.65;position:relative">
+          <div style="border-left:4px solid var(--mint);padding-left:12px"><div style="font-size:13px;font-weight:600">Mint border-left</div><div style="font-size:11px;color:var(--gray-500)">선/보더에 민트 금지</div></div>
+          <div style="position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:var(--error);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">X</div>
+        </div>
+        <div style="margin-bottom:20px;padding:24px;background:var(--gray-100);border:1px solid var(--gray-200);border-radius:8px;opacity:0.65;position:relative">
+          <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mint)">SERVICES</div>
+          <div style="font-size:11px;color:var(--gray-500);margin-top:4px">섹션 라벨에 민트 금지</div>
+          <div style="position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:var(--error);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">X</div>
+        </div>
+        <div style="padding:24px;background:var(--mint-soft);border:1px solid var(--mint-mid);border-radius:8px;opacity:0.65;position:relative">
+          <div style="font-size:13px;font-weight:600">Mint background card</div>
+          <div style="font-size:11px;color:var(--gray-500);margin-top:4px">민트 배경 채우기 금지</div>
+          <div style="position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;background:var(--error);color:#fff;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700">X</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">14 / 28</div>
+</div>
+
+
+<!-- 15. VOICE & TONE -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Voice & Tone</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Copy Guidelines</div>
+    </div>
+    <div class="grid-2" style="gap:48px;flex:1">
+      <div>
+        <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:24px">DO</div>
+        <div style="margin-bottom:16px;padding:20px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px">"68개 거래처. 97개 테스트케이스."</div>
+          <div style="font-size:11px;color:var(--gray-500)">숫자가 말하게 하세요.</div>
+        </div>
+        <div style="margin-bottom:16px;padding:20px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px">"브랜드는 브랜드에 집중하세요."</div>
+          <div style="font-size:11px;color:var(--gray-500)">짧고 직접적으로.</div>
+        </div>
+        <div style="padding:20px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+          <div style="font-size:14px;font-weight:700;margin-bottom:4px">"We ship. Every week."</div>
+          <div style="font-size:11px;color:var(--gray-500)">영어 혼용 OK. 빌더 에너지.</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:16px;font-weight:800;color:var(--error);margin-bottom:24px">DON'T</div>
+        <div style="margin-bottom:16px;padding:20px 24px;background:var(--gray-100);border-radius:8px;border:1px solid var(--gray-200);opacity:.6">
+          <div style="font-size:14px;font-weight:600;text-decoration:line-through;margin-bottom:4px">"최고의 파트너가 되어 드리겠습니다"</div>
+          <div style="font-size:11px;color:var(--gray-500)">추상적인 약속 금지.</div>
+        </div>
+        <div style="margin-bottom:16px;padding:20px 24px;background:var(--gray-100);border-radius:8px;border:1px solid var(--gray-200);opacity:.6">
+          <div style="font-size:14px;font-weight:600;text-decoration:line-through;margin-bottom:4px">"귀사의 성공적인 해외 진출을 위해..."</div>
+          <div style="font-size:11px;color:var(--gray-500)">기업 브로슈어 톤 금지.</div>
+        </div>
+        <div style="padding:20px 24px;background:var(--gray-100);border-radius:8px;border:1px solid var(--gray-200);opacity:.6">
+          <div style="font-size:14px;font-weight:600;text-decoration:line-through;margin-bottom:4px">Serif fonts (Playfair Display etc.)</div>
+          <div style="font-size:11px;color:var(--gray-500)">산세리프 + 모노스페이스만.</div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:16px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;margin-top:24px">
+      <div style="font-size:12px;color:var(--gray-500)"><strong style="color:var(--ink)">Core rules:</strong> 숫자가 말하게 하세요 &middot; 짧고 직접적으로 &middot; 기술 용어를 두려워하지 마세요</div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">15 / 28</div>
+</div>
+
+
+<!-- 16. COPY — WRITING RULES -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Copywriting</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">카피 작성 원칙</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+      <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+        <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:8px">한 문장에 하나의 메시지</div>
+        <div style="font-size:13px;color:var(--gray-500);line-height:1.8">접속사로 이어붙이지 마세요. 문장이 길어지면 끊으세요. "그리고", "또한", "뿐만 아니라" 삭제.</div>
+      </div>
+      <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+        <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:8px">숫자가 먼저, 설명이 뒤에</div>
+        <div style="font-size:13px;color:var(--gray-500);line-height:1.8">
+          <span style="text-decoration:line-through;opacity:.5">다양한 거래처와 함께 일하고 있습니다</span> &rarr; <strong style="color:var(--ink)">"68개 거래처."</strong> 끝.
+        </div>
+      </div>
+      <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+        <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:8px">능동태. 주어는 "우리"</div>
+        <div style="font-size:13px;color:var(--gray-500);line-height:1.8">
+          <span style="text-decoration:line-through;opacity:.5">프로젝트가 진행되었습니다</span> &rarr; <strong style="color:var(--ink)">"구축했습니다."</strong>
+        </div>
+      </div>
+      <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+        <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:8px">기술 용어 = 신뢰</div>
+        <div style="font-size:13px;color:var(--gray-500);line-height:1.8">"MSA", "ERP I/F", "3PL" — 이 단어 자체가 역량 증명. 아는 사람에게 보여주세요.</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">16 / 28</div>
+</div>
+
+
+<!-- 17. COPY — HEADING PATTERNS + SPECTRUM -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Copywriting</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">헤딩 카피 패턴</div>
+    </div>
+    <div class="flex" style="gap:48px;flex:1">
+      <div style="flex:1">
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:28px;margin-bottom:32px">
+          <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:12px">카피 톤 스펙트럼</div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:var(--gray-400)">차갑고 기술적</div>
+            <div style="font-size:11px;font-weight:600;color:var(--gray-400)">따뜻하고 친근</div>
+          </div>
+          <div style="height:4px;background:var(--gray-200);border-radius:2px;position:relative;margin-bottom:12px">
+            <div style="position:absolute;left:30%;top:-4px;width:12px;height:12px;background:var(--ink);border-radius:50%"></div>
+          </div>
+          <div style="font-size:12px;color:var(--gray-500);text-align:center">루쿠쿠의 위치: 기술적이되, 대화하듯</div>
+        </div>
+        <div style="padding:16px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px">
+          <div style="font-size:12px;color:var(--gray-500)"><strong style="color:var(--ink)">패턴:</strong> 짧은 문장 + 마침표<span style="color:var(--mint)">.</span>(민트) &middot; 질문형 &middot; 명령형 &middot; 영어 혼용 OK</div>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div style="padding:20px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px">커버 슬라이드</div>
+          <div style="font-size:20px;font-weight:800;color:var(--ink)">68개 거래처와 함께한 글로벌 이커머스<span style="color:var(--mint)">.</span></div>
+        </div>
+        <div style="padding:20px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px">문제 제기</div>
+          <div style="font-size:20px;font-weight:800;color:var(--ink)">해외 진출, 이런 고민 있으시죠?</div>
+        </div>
+        <div style="padding:20px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px">해결책</div>
+          <div style="font-size:20px;font-weight:800;color:var(--ink)">브랜드는 브랜드에 집중하세요<span style="color:var(--mint)">.</span></div>
+        </div>
+        <div style="padding:20px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px">CTA</div>
+          <div style="font-size:20px;font-weight:800;color:var(--ink)">Let's talk<span style="color:var(--mint)">.</span></div>
+        </div>
+        <div style="padding:20px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:6px">카드뉴스 커버</div>
+          <div style="font-size:20px;font-weight:800;color:var(--ink)">Shopify 글로벌 스토어, 어떻게 시작할까?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">17 / 28</div>
+</div>
+
+
+<!-- 18. LANGUAGE — KOREAN -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Language</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">한국어 규칙</div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:8px">
+      <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+        <div style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px">경어체 — "~합니다" 기본</div>
+        <div style="font-size:13px;color:var(--gray-500);line-height:1.8">피치덱, 공식 문서, 카드뉴스 모두 합니다체. "구축해 드리겠습니다" (X) &rarr; "구축합니다" (O).</div>
+      </div>
+      <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+        <div style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px">조사 생략 — 간결하게</div>
+        <div style="font-size:13px;color:var(--gray-500);line-height:1.8">"스토어를 구축하고 운영을 합니다" (X) &rarr; "스토어 구축 &middot; 운영" (O). 불릿/리스트에서는 조사를 과감히 생략.</div>
+      </div>
+      <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+        <div style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px">구분자 — 가운뎃점(&middot;) 사용</div>
+        <div style="font-size:13px;color:var(--gray-500);line-height:1.8">"Shopify &middot; AWS &middot; React" — 나열할 때 가운뎃점. 쉼표(,)보다 깔끔.</div>
+      </div>
+      <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+        <div style="font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px">마침표 규칙</div>
+        <div style="font-size:13px;color:var(--gray-500);line-height:1.8">
+          <strong style="color:var(--ink)">헤딩:</strong> 마침표 없음 (단, 민트 도트<span style="color:var(--mint)">.</span> 포인트 제외) &middot;
+          <strong style="color:var(--ink)">본문:</strong> 마침표 있음 &middot;
+          <strong style="color:var(--ink)">불릿:</strong> 마침표 없음
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">18 / 28</div>
+</div>
+
+
+<!-- 19. LANGUAGE — ENGLISH + NUMBERS -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Language</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">영어 혼용 &amp; 숫자</div>
+    </div>
+    <div class="grid-2" style="gap:48px;flex:1">
+      <div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">기술 용어는 영어 그대로</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">Shopify, MSA, ERP, POS, 3PL — 번역 금지.</div>
+        </div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">레이블은 영어</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">섹션: SERVICES, PORTFOLIO, CASE STUDY<br>본문 설명: 한국어. 이 조합이 테크 톤.</div>
+        </div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">CTA는 영어 허용</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">"Let's talk." "We ship." — 짧은 영어 CTA는 빌더 에너지.</div>
+        </div>
+      </div>
+      <div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">숫자 표기</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">
+            <strong style="color:var(--ink)">모노스페이스</strong>로 표기 (JetBrains Mono)<br>
+            단위: 68+, 36명, 8개국, 97개<br>
+            큰 숫자: 3자리마다 콤마 (1,280px)<br>
+            "약" "이상" 대신 <strong style="color:var(--ink)">+</strong> 사용
+          </div>
+        </div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">금지어</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">
+            "최고의", "차별화된", "혁신적인", "원활한"<br>
+            "귀사", "폐사", "저희 회사는"<br>
+            "~해 드리겠습니다", "~를 약속합니다"
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">19 / 28</div>
+</div>
+
+
+<!-- 20. LOGO -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Logo</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Logo Usage</div>
+    </div>
+    <div class="grid-3" style="gap:32px;flex:1">
+      <div>
+        <div class="cap" style="margin-bottom:12px">Primary — Light BG</div>
+        <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:8px;height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+          <span style="font-size:32px;font-weight:800;color:var(--ink)">Lukuku<span style="color:#2BF5A0">.</span></span>
+        </div>
+        <div style="font-size:12px;color:var(--gray-600);line-height:1.7">기본 사용. 피치덱, 문서, 웹사이트.</div>
+      </div>
+      <div>
+        <div class="cap" style="margin-bottom:12px">Reversed — Ink Panel</div>
+        <div style="background:var(--ink);border-radius:8px;height:160px;display:flex;align-items:center;justify-content:center;margin-bottom:12px">
+          <div style="font-size:32px;font-weight:800;color:var(--white)">Lukuku<span style="color:var(--mint)">.</span></div>
+        </div>
+        <div style="font-size:12px;color:var(--gray-600);line-height:1.7">부분 Ink 패널 위에서만 사용.</div>
+      </div>
+      <div>
+        <div class="cap" style="margin-bottom:12px">Icon — Square "Lu."</div>
+        <div class="flex" style="gap:16px;margin-bottom:12px">
+          <div style="background:var(--ink);border-radius:14px;height:160px;flex:1;display:flex;align-items:center;justify-content:center">
+            <div style="font-size:44px;font-weight:800;color:var(--white)">Lu<span style="color:var(--mint)">.</span></div>
+          </div>
+          <div style="background:var(--white);border:1px solid var(--gray-200);border-radius:14px;height:160px;flex:1;display:flex;align-items:center;justify-content:center">
+            <div style="font-size:44px;font-weight:800;color:var(--ink)">Lu<span style="color:var(--mint)">.</span></div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--gray-600);line-height:1.7">앱 아이콘, 파비콘, 소셜 프로필.</div>
+      </div>
+    </div>
+    <div style="padding:16px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;margin-top:24px">
+      <div class="flex" style="gap:40px;flex-wrap:wrap">
+        <div style="font-size:12px;color:var(--gray-600)"><strong style="color:var(--ink)">Clear space</strong> — 로고 높이 1x 사방 확보</div>
+        <div style="font-size:12px;color:var(--gray-600)"><strong style="color:var(--ink)">최소 크기</strong> — 디지털 120px / 인쇄 20mm</div>
+        <div style="font-size:12px;color:var(--gray-600)"><strong style="color:var(--ink)">금지</strong> — 도트 색상 변경, 회전, 그라디언트, 그림자</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">20 / 28</div>
+</div>
+
+
+<!-- 21. DARK ELEMENTS -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Dark Elements</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Using Ink (#231F20)</div>
+    </div>
+    <div style="padding:20px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;margin-bottom:32px">
+      <div style="font-size:15px;font-weight:800;color:var(--error);margin-bottom:6px">NEVER full dark background</div>
+      <div style="font-size:13px;color:var(--gray-600);line-height:1.7">Ink(#231F20)를 슬라이드 전체 배경으로 사용하지 않습니다. <strong style="color:var(--ink)">부분 패널(30~45% 너비)</strong>로만 사용.</div>
+    </div>
+    <div class="flex" style="gap:32px;flex:1">
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:16px">Correct — Partial Panel</div>
+        <div style="border:1px solid var(--gray-200);border-radius:8px;overflow:hidden;height:140px;margin-bottom:16px;display:flex">
+          <div style="width:40%;background:var(--ink);padding:20px;display:flex;flex-direction:column;justify-content:space-between">
+            <div style="font-size:9px;font-weight:700;color:var(--gray-600);letter-spacing:1px;text-transform:uppercase">Case Study</div>
+            <div><div style="font-size:16px;font-weight:800;color:var(--white)">M사 글로벌<span style="color:var(--mint)">.</span></div><div class="mono" style="font-size:22px;font-weight:700;color:var(--mint)">6<span style="font-size:10px;color:var(--gray-500)">mo</span></div></div>
+          </div>
+          <div style="flex:1;background:var(--white);padding:20px;display:flex;align-items:center"><div style="font-size:12px;color:var(--gray-500);line-height:1.7">White content area</div></div>
+        </div>
+        <div style="border:1px solid var(--gray-200);border-radius:8px;overflow:hidden;height:100px;display:flex">
+          <div style="width:35%;background:var(--ink);padding:20px;display:flex;align-items:center">
+            <div style="font-size:13px;font-weight:600;color:var(--white);line-height:1.5;font-style:italic">"We ship.<br>Every week."</div>
+          </div>
+          <div style="flex:1;background:var(--white);padding:20px;display:flex;align-items:center"><div style="font-size:12px;color:var(--gray-500)">Attribution on white</div></div>
+        </div>
+      </div>
+      <div style="flex:1">
+        <div class="cap" style="margin-bottom:16px">Use Cases for Ink</div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div style="padding:20px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px">
+            <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px">Case study left panels</div>
+            <div style="font-size:11px;color:var(--gray-500)">클라이언트 이름, 핵심 지표</div>
+          </div>
+          <div style="padding:20px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px">
+            <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px">Quote sections</div>
+            <div style="font-size:11px;color:var(--gray-500)">인용구, 핵심 메시지</div>
+          </div>
+          <div style="padding:20px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px">
+            <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px">Stat callouts &amp; Logo icon bg</div>
+            <div style="font-size:11px;color:var(--gray-500)">숫자 강조 블록, 파비콘, 앱 아이콘</div>
+          </div>
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);margin-top:20px;padding:12px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:4px">ref: Stripe light-first + Linear partial dark</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">21 / 28</div>
+</div>
+
+
+<!-- 22. TOKEN ARCHITECTURE -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Tokens</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Token Architecture</div>
+    </div>
+    <div class="flex" style="gap:24px;flex:1">
+      <div style="flex:1;border:1px solid var(--gray-200);border-radius:8px;padding:28px;display:flex;flex-direction:column">
+        <div style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:6px">Layer 1: Primitive</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-bottom:20px">Raw values. Name = value.</div>
+        <div class="mono" style="font-size:11px;line-height:2.4;color:var(--gray-600);flex:1">
+          <span style="color:var(--gray-400)">--</span>ink: <span style="display:inline-block;width:10px;height:10px;background:#231F20;border-radius:2px;vertical-align:middle"></span> #231F20<br>
+          <span style="color:var(--gray-400)">--</span>mint: <span style="display:inline-block;width:10px;height:10px;background:#2BF5A0;border-radius:2px;vertical-align:middle"></span> #2BF5A0<br>
+          <span style="color:var(--gray-400)">--</span>white: <span style="display:inline-block;width:10px;height:10px;background:#fff;border:1px solid #e5e5e5;border-radius:2px;vertical-align:middle"></span> #FFFFFF<br>
+          <span style="color:var(--gray-400)">--</span>gray-100: #F5F5F5<br>
+          <span style="color:var(--gray-400)">--</span>gray-500: #737373<br>
+          <span style="color:var(--gray-400)">--</span>error: #EF4444
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:24px;color:var(--gray-300)">&rarr;</div>
+      <div style="flex:1;border:1px solid var(--gray-200);border-radius:8px;padding:28px;display:flex;flex-direction:column">
+        <div style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:6px">Layer 2: Semantic</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-bottom:20px">Purpose-driven aliases.</div>
+        <div class="mono" style="font-size:11px;line-height:2.4;color:var(--gray-600);flex:1">
+          <span style="color:var(--gray-400)">--</span>color-text-primary: var(--ink)<br>
+          <span style="color:var(--gray-400)">--</span>color-bg-default: var(--white)<br>
+          <span style="color:var(--gray-400)">--</span>color-bg-subtle: var(--gray-100)<br>
+          <span style="color:var(--gray-400)">--</span>color-accent: var(--mint)<br>
+          <span style="color:var(--gray-400)">--</span>color-border: var(--gray-200)<br>
+          <span style="color:var(--gray-400)">--</span>color-error: var(--error)
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;font-size:24px;color:var(--gray-300)">&rarr;</div>
+      <div style="flex:1;border:1px solid var(--gray-200);border-radius:8px;padding:28px;display:flex;flex-direction:column">
+        <div style="font-size:15px;font-weight:800;color:var(--ink);margin-bottom:6px">Layer 3: Component</div>
+        <div style="font-size:11px;color:var(--gray-500);margin-bottom:20px">Scoped to components.</div>
+        <div class="mono" style="font-size:11px;line-height:2.4;color:var(--gray-600);flex:1">
+          <span style="color:var(--gray-400)">--</span>btn-primary-bg: var(--color-text-primary)<br>
+          <span style="color:var(--gray-400)">--</span>btn-accent-bg: var(--color-accent)<br>
+          <span style="color:var(--gray-400)">--</span>card-default-border: var(--color-border)<br>
+          <span style="color:var(--gray-400)">--</span>stat-highlight: var(--color-accent)<br>
+          <span style="color:var(--gray-400)">--</span>status-active: var(--color-accent)<br>
+          <span style="color:var(--gray-400)">--</span>code-bg: var(--color-bg-subtle)
+        </div>
+      </div>
+    </div>
+    <div style="padding:14px 20px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;margin-top:24px">
+      <div class="flex justify-between items-center">
+        <div class="mono" style="font-size:10px;color:var(--gray-400)">ref: Toss TDS 3-layer + Vercel Geist token system</div>
+        <div style="font-size:11px;color:var(--gray-500)">CSS custom properties, Tailwind extensible</div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">22 / 28</div>
+</div>
+
+
+<!-- 23. VISUAL EFFECTS 1/2 -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap" style="margin-bottom:8px">Visual Effects</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">시각 효과 (1/2)</div>
+    </div>
+    <div style="font-size:13px;color:var(--gray-500);margin-bottom:32px">2D 위에 깊이감과 기술적 인상을 더하는 7개 효과. 라이트 베이스 유지.</div>
+    <div class="grid-4" style="gap:24px;flex:1">
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:11px;color:var(--gray-400);margin-bottom:10px">01</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Gradient Mesh</div>
+          <div style="font-size:11px;color:var(--gray-500);line-height:1.7">커버 &middot; CTA 배경.<br>radial-gradient로 민트 미세 그라디언트.</div>
+        </div>
+        <div style="height:48px;margin-top:16px;border-radius:6px;background:radial-gradient(ellipse at 30% 50%,rgba(43,245,160,0.1),transparent 60%),radial-gradient(ellipse at 80% 30%,rgba(43,245,160,0.06),transparent 50%)"></div>
+      </div>
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:11px;color:var(--gray-400);margin-bottom:10px">02</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Dot Grid</div>
+          <div style="font-size:11px;color:var(--gray-500);line-height:1.7">아키텍처 &middot; 기술 슬라이드 배경.<br>24px 간격 점 격자.</div>
+        </div>
+        <div style="height:48px;margin-top:16px;border-radius:6px;background-image:radial-gradient(circle,var(--gray-300) 1px,transparent 1px);background-size:16px 16px"></div>
+      </div>
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:11px;color:var(--gray-400);margin-bottom:10px">03</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Topographic Lines</div>
+          <div style="font-size:11px;color:var(--gray-500);line-height:1.7">글로벌 리전 &middot; 시장 슬라이드.<br>SVG 등고선. opacity 0.06.</div>
+        </div>
+        <svg style="height:48px;width:100%;margin-top:16px" viewBox="0 0 200 40">
+          <path d="M0 20 Q50 10 100 20 T200 18" fill="none" stroke="var(--gray-300)" stroke-width="1.5"/>
+          <path d="M0 28 Q50 18 100 28 T200 26" fill="none" stroke="var(--gray-300)" stroke-width="1"/>
+          <path d="M0 12 Q50 4 100 12 T200 10" fill="none" stroke="var(--gray-300)" stroke-width="0.8"/>
+        </svg>
+      </div>
+      <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:11px;color:var(--gray-400);margin-bottom:10px">04</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Diagonal Split</div>
+          <div style="font-size:11px;color:var(--gray-500);line-height:1.7">케이스 스터디.<br>clip-path 대각선 Ink 분할.</div>
+        </div>
+        <div style="height:48px;margin-top:16px;border-radius:6px;position:relative;overflow:hidden;background:var(--white);border:1px solid var(--gray-200)">
+          <div style="position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 0,55% 0,40% 100%,0 100%)"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">23 / 28</div>
+</div>
+
+
+<!-- 24. VISUAL EFFECTS 2/2 -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap" style="margin-bottom:8px">Visual Effects</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">시각 효과 (2/2)</div>
+    </div>
+    <div class="flex" style="gap:24px;flex:1">
+      <div style="flex:1;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:11px;color:var(--gray-400);margin-bottom:10px">05</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Stacked Cards</div>
+          <div style="font-size:11px;color:var(--gray-500);line-height:1.7">포트폴리오. 회전 + 겹침 + 그림자.</div>
+        </div>
+        <div style="height:60px;margin-top:16px;position:relative">
+          <div style="position:absolute;left:8px;top:8px;width:80px;height:44px;background:var(--gray-200);border-radius:4px;transform:rotate(-3deg)"></div>
+          <div style="position:absolute;left:36px;top:4px;width:80px;height:44px;background:var(--gray-300);border-radius:4px;transform:rotate(1deg);box-shadow:0 2px 8px rgba(0,0,0,0.08)"></div>
+          <div style="position:absolute;left:64px;top:10px;width:80px;height:44px;background:var(--ink);border-radius:4px;transform:rotate(2deg);box-shadow:0 4px 12px rgba(0,0,0,0.12)"></div>
+        </div>
+      </div>
+      <div style="flex:1;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:11px;color:var(--gray-400);margin-bottom:10px">06</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Data Visualization</div>
+          <div style="font-size:11px;color:var(--gray-500);line-height:1.7">성장 &middot; 역량 슬라이드. 바 차트 + 프로그레스 바.</div>
+        </div>
+        <div style="margin-top:16px;display:flex;align-items:flex-end;gap:6px;height:60px">
+          <div style="flex:1;height:20%;background:var(--gray-200);border-radius:3px 3px 0 0"></div>
+          <div style="flex:1;height:40%;background:var(--gray-300);border-radius:3px 3px 0 0"></div>
+          <div style="flex:1;height:65%;background:var(--gray-400);border-radius:3px 3px 0 0"></div>
+          <div style="flex:1;height:100%;background:var(--ink);border-radius:3px 3px 0 0"></div>
+        </div>
+      </div>
+      <div style="flex:1;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div class="mono" style="font-size:11px;color:var(--gray-400);margin-bottom:10px">07</div>
+          <div style="font-size:14px;font-weight:700;margin-bottom:6px">Asymmetric Grid</div>
+          <div style="font-size:11px;color:var(--gray-500);line-height:1.7">Why &middot; 스탯 슬라이드. 2fr+1fr+1fr 비대칭.</div>
+        </div>
+        <div style="margin-top:16px;display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;height:60px">
+          <div style="grid-row:span 2;background:var(--ink);border-radius:3px"></div>
+          <div style="background:var(--gray-200);border-radius:3px"></div>
+          <div style="background:var(--gray-200);border-radius:3px"></div>
+          <div style="background:var(--gray-300);border-radius:3px"></div>
+          <div style="background:var(--gray-300);border-radius:3px"></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:20px 24px;background:var(--white);border:1px solid var(--gray-200);border-radius:8px;margin-top:32px">
+      <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:6px">사용 규칙</div>
+      <div style="font-size:11px;color:var(--gray-500);line-height:1.8">
+        배경 효과는 <strong style="color:var(--ink)">한 슬라이드에 하나</strong> &middot;
+        Diagonal Split은 <strong style="color:var(--ink)">Ink 30-45%</strong> 유지 &middot;
+        Stacked Cards <strong style="color:var(--ink)">최대 4장</strong> &middot;
+        효과 없는 클린 슬라이드도 필수
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">24 / 28</div>
+</div>
+
+
+<!-- 25. ANIMATION — PRINCIPLES -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap" style="margin-bottom:8px">Animation</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">모션 원칙</div>
+    </div>
+    <div class="grid-2" style="gap:48px;flex:1">
+      <div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:16px;font-weight:700;margin-bottom:8px">목적이 있어야 움직인다</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">장식용 애니메이션 금지. 시선 유도, 상태 변화, 관계 표현에만.</div>
+        </div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:16px;font-weight:700;margin-bottom:8px">빠르고 정확하게</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">200-400ms 기본. 500ms 초과 금지. 빌더 에너지는 속도감에서 나옵니다.</div>
+        </div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:16px;font-weight:700;margin-bottom:8px">과하면 촌스럽다</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">바운스, 스프링, 오버슈트 금지. ease-out 기반 자연스러운 감속만.</div>
+        </div>
+        <div style="padding:24px 0;border-top:1px solid var(--gray-200)">
+          <div style="font-size:16px;font-weight:700;margin-bottom:8px">prefers-reduced-motion 존중</div>
+          <div style="font-size:13px;color:var(--gray-500);line-height:1.8">접근성 설정 모션 줄이기 시 애니메이션 비활성화.</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:15px;font-weight:700;margin-bottom:20px">Timing &amp; Easing</div>
+        <div style="background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;padding:24px;margin-bottom:24px">
+          <div style="display:grid;grid-template-columns:120px 1fr 1fr;gap:12px;font-size:12px">
+            <div style="font-weight:700;color:var(--gray-400)">용도</div>
+            <div style="font-weight:700;color:var(--gray-400)">Duration</div>
+            <div style="font-weight:700;color:var(--gray-400)">Easing</div>
+            <div style="font-weight:600;padding-top:12px;border-top:1px solid var(--gray-200)">Micro</div>
+            <div class="mono" style="color:var(--gray-600);padding-top:12px;border-top:1px solid var(--gray-200)">100-150ms</div>
+            <div class="mono" style="color:var(--gray-600);padding-top:12px;border-top:1px solid var(--gray-200)">ease-out</div>
+            <div style="font-weight:600;padding-top:12px;border-top:1px solid var(--gray-200)">Standard</div>
+            <div class="mono" style="color:var(--gray-600);padding-top:12px;border-top:1px solid var(--gray-200)">200-300ms</div>
+            <div class="mono" style="color:var(--gray-600);padding-top:12px;border-top:1px solid var(--gray-200)">cubic-bezier(0.4,0,0.2,1)</div>
+            <div style="font-weight:600;padding-top:12px;border-top:1px solid var(--gray-200)">Emphasis</div>
+            <div class="mono" style="color:var(--gray-600);padding-top:12px;border-top:1px solid var(--gray-200)">300-400ms</div>
+            <div class="mono" style="color:var(--gray-600);padding-top:12px;border-top:1px solid var(--gray-200)">cubic-bezier(0.8,0,0.2,1)</div>
+            <div style="font-weight:600;padding-top:12px;border-top:1px solid var(--gray-200)">Page</div>
+            <div class="mono" style="color:var(--gray-600);padding-top:12px;border-top:1px solid var(--gray-200)">400-500ms</div>
+            <div class="mono" style="color:var(--gray-600);padding-top:12px;border-top:1px solid var(--gray-200)">cubic-bezier(0.4,0,0,1)</div>
+          </div>
+        </div>
+        <div style="padding:16px 20px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px">
+          <div style="font-size:11px;color:var(--gray-500);line-height:1.8">
+            <span style="text-decoration:line-through;opacity:.5">bounce / spring / elastic</span> &ensp;
+            <span style="text-decoration:line-through;opacity:.5">rotate 360</span> &ensp;
+            <span style="text-decoration:line-through;opacity:.5">500ms+</span> &ensp;
+            <span style="text-decoration:line-through;opacity:.5">parallax</span> &ensp;
+            <span style="text-decoration:line-through;opacity:.5">glitch</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">25 / 28</div>
+</div>
+
+
+<!-- 26. ANIMATION — PRIMARY -->
+<style>
+  @property --c68{syntax:"<integer>";initial-value:0;inherits:false}
+  .live-c68{animation:lc68 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--c68);font-variant-numeric:tabular-nums}
+  .live-c68::after{content:counter(n)}
+  @keyframes lc68{from{--c68:0}to{--c68:68}}
+
+  .live-fill2{width:0;animation:lf2 1.5s cubic-bezier(0.4,0,0.2,1) 0.5s forwards}
+  @keyframes lf2{to{width:var(--t)}}
+
+  .live-skel2{background:linear-gradient(90deg,var(--gray-100) 25%,var(--gray-200) 50%,var(--gray-100) 75%);background-size:200% 100%;animation:ls2 1.5s ease infinite;border-radius:4px}
+  @keyframes ls2{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+  .live-zoom{animation:lz 8s ease-in-out infinite alternate}
+  @keyframes lz{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-3%,-2%)}}
+</style>
+<!-- 26. ANIMATION — PRIMARY A -->
+<div class="slide" id="anim-primary">
+  <div class="s flex flex-col justify-between" style="padding:72px 80px">
+    <div>
+      <div class="cap" style="margin-bottom:8px">Animation — Primary 1/2</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">항상 사용하는 애니메이션</div>
+    </div>
+
+    <div class="grid-2" style="gap:32px">
+      <!-- Counter Up -->
+      <div style="padding:36px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+        <div style="font-size:18px;font-weight:800;margin-bottom:6px">Counter Up</div>
+        <div class="mono" style="font-size:12px;color:var(--gray-500);line-height:1.6;margin-bottom:24px">CSS @property 기반 · 0 → target · 2s · ease-out</div>
+        <div style="display:flex;gap:32px">
+          <div style="text-align:center"><div class="mono live-c68" style="font-size:56px;font-weight:700;color:var(--ink)"></div><div style="font-size:12px;color:var(--gray-500);margin-top:4px">거래처</div></div>
+          <div style="text-align:center"><div class="mono" style="font-size:56px;font-weight:700;color:var(--mint)">36</div><div style="font-size:12px;color:var(--gray-500);margin-top:4px">팀원</div></div>
+        </div>
+        <div style="font-size:11px;color:var(--gray-400);margin-top:20px">용도: 스탯 슬라이드 핵심 숫자</div>
+      </div>
+
+      <!-- Progress Fill -->
+      <div style="padding:36px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+        <div style="font-size:18px;font-weight:800;margin-bottom:6px">Progress Fill</div>
+        <div class="mono" style="font-size:12px;color:var(--gray-500);line-height:1.6;margin-bottom:24px">width: 0 → target% · 1.5s · delay n×150ms</div>
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div>
+            <div class="flex justify-between" style="margin-bottom:6px"><div style="font-size:13px;font-weight:600">Shopify 구축</div><div class="mono" style="font-size:12px;color:var(--gray-400)">42%</div></div>
+            <div style="height:8px;background:var(--gray-200);border-radius:4px;overflow:hidden"><div class="live-fill2" style="height:100%;background:var(--ink);border-radius:4px;--t:42%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between" style="margin-bottom:6px"><div style="font-size:13px;font-weight:600">시스템 통합</div><div class="mono" style="font-size:12px;color:var(--gray-400)">28%</div></div>
+            <div style="height:8px;background:var(--gray-200);border-radius:4px;overflow:hidden"><div class="live-fill2" style="height:100%;background:var(--ink);border-radius:4px;--t:28%;animation-delay:.7s"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between" style="margin-bottom:6px"><div style="font-size:13px;font-weight:600">리테이너</div><div class="mono" style="font-size:12px;color:var(--gray-400)">20%</div></div>
+            <div style="height:8px;background:var(--gray-200);border-radius:4px;overflow:hidden"><div class="live-fill2" style="height:100%;background:var(--mint);border-radius:4px;--t:20%;animation-delay:.9s"></div></div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--gray-400);margin-top:20px">용도: 바 차트 · 데이터 시각화</div>
+      </div>
+    </div>
+
+    <div style="text-align:right">
+      <a href="#anim-primary-b" style="font-size:12px;font-weight:600;color:var(--ink);text-decoration:none">다음 →</a>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">26 / 31</div>
+</div>
+
+
+<!-- 27. ANIMATION — PRIMARY B -->
+<div class="slide" id="anim-primary-b">
+  <div class="s flex flex-col justify-between" style="padding:72px 80px">
+    <div>
+      <div class="cap" style="margin-bottom:8px">Animation — Primary 2/2</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">항상 사용하는 애니메이션</div>
+    </div>
+
+    <div class="grid-2" style="gap:32px">
+      <!-- Skeleton -->
+      <div style="padding:36px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+        <div style="font-size:18px;font-weight:800;margin-bottom:6px">Skeleton Loading</div>
+        <div class="mono" style="font-size:12px;color:var(--gray-500);line-height:1.6;margin-bottom:24px">shimmer gradient · background-position · 1.5s infinite</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="live-skel2" style="height:20px;width:55%"></div>
+          <div class="live-skel2" style="height:14px;width:100%"></div>
+          <div class="live-skel2" style="height:14px;width:80%"></div>
+          <div style="display:flex;gap:8px;margin-top:6px">
+            <div class="live-skel2" style="height:36px;width:88px;border-radius:6px"></div>
+            <div class="live-skel2" style="height:36px;width:88px;border-radius:6px"></div>
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--gray-400);margin-top:20px">용도: 로딩 상태 플레이스홀더</div>
+      </div>
+
+      <!-- Zoom Pan -->
+      <div style="padding:36px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px">
+        <div style="font-size:18px;font-weight:800;margin-bottom:6px">Zoom Pan (Ken Burns)</div>
+        <div class="mono" style="font-size:12px;color:var(--gray-500);line-height:1.6;margin-bottom:24px">scale 1→1.15 · translate · 8s infinite alternate</div>
+        <div style="overflow:hidden;border-radius:6px;height:160px">
+          <img src="captures/fila.png" class="live-zoom" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='var(--gray-200)'">
+        </div>
+        <div style="font-size:11px;color:var(--gray-400);margin-top:20px">용도: 포트폴리오 이미지</div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between">
+      <a href="#anim-primary" style="font-size:12px;font-weight:600;color:var(--gray-400);text-decoration:none">← 이전</a>
+      <a href="#anim-subtle" style="font-size:12px;font-weight:600;color:var(--ink);text-decoration:none">Subtle 애니메이션 →</a>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">27 / 31</div>
+</div>
+
+
+<!-- 27. ANIMATION — SUBTLE -->
+<style>
+  .live-scramble{animation:lScramble 600ms steps(8) forwards}
+  @keyframes lScramble{0%{filter:blur(4px);opacity:0;letter-spacing:4px}50%{filter:blur(1px);opacity:.7;letter-spacing:1px}100%{filter:blur(0);opacity:1;letter-spacing:-1px}}
+  .live-wave{display:inline-block;animation:lWave 1.5s ease-in-out infinite}
+  @keyframes lWave{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+</style>
+<div class="slide" id="anim-subtle">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap" style="margin-bottom:8px">Animation — Subtle</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">필요시, 미세하게</div>
+      <div style="font-size:14px;color:var(--gray-500);margin-top:8px">과하면 사용하지 않습니다. 원본 대비 축소 적용.</div>
+    </div>
+
+    <div class="grid-2" style="gap:32px;flex:1">
+      <!-- Text Scramble -->
+      <div style="padding:40px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="font-size:16px;font-weight:800;margin-bottom:4px">Text Scramble</div>
+          <div class="mono" style="font-size:12px;color:var(--gray-500);line-height:1.6;margin-bottom:8px">blur(4px)→0 · spacing 4px→-1px · 600ms</div>
+          <div style="font-size:12px;color:var(--gray-400);line-height:1.6">원본 blur(8px)+spacing(12px) 대비 <strong style="color:var(--ink)">50% 축소</strong>.<br>헤딩 등장 시에만. 과하면 사용 금지.</div>
+        </div>
+        <div style="margin-top:32px;padding:24px;background:var(--white);border:1px solid var(--gray-200);border-radius:6px;text-align:center">
+          <div class="live-scramble" style="font-size:32px;font-weight:900;letter-spacing:-1px">68개 거래처.</div>
+        </div>
+        <div style="font-size:10px;color:var(--gray-400);margin-top:16px">용도: 헤딩 등장 · 커버 타이틀</div>
+      </div>
+
+      <!-- Wave Text -->
+      <div style="padding:40px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:8px;display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <div style="font-size:16px;font-weight:800;margin-bottom:4px">Wave Text</div>
+          <div class="mono" style="font-size:12px;color:var(--gray-500);line-height:1.6;margin-bottom:8px">translateY(-3px) · delay 80ms/char · 1.5s infinite</div>
+          <div style="font-size:12px;color:var(--gray-400);line-height:1.6">원본 -8px 대비 <strong style="color:var(--ink)">37% 축소</strong>.<br><strong style="color:var(--ink)">"Lukuku." 로고 전용</strong>. 본문 사용 금지.</div>
+        </div>
+        <div style="margin-top:32px;padding:24px;background:var(--white);border:1px solid var(--gray-200);border-radius:6px;text-align:center">
+          <div style="font-size:36px;font-weight:900">
+            <span class="live-wave" style="animation-delay:0ms">L</span><span class="live-wave" style="animation-delay:80ms">u</span><span class="live-wave" style="animation-delay:160ms">k</span><span class="live-wave" style="animation-delay:240ms">u</span><span class="live-wave" style="animation-delay:320ms">k</span><span class="live-wave" style="animation-delay:400ms">u</span><span class="live-wave" style="animation-delay:480ms;color:var(--mint)">.</span>
+          </div>
+        </div>
+        <div style="font-size:10px;color:var(--gray-400);margin-top:16px">용도: 로고 · 브랜드 워드마크</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;display:flex;justify-content:space-between;align-items:center">
+      <a href="#anim-primary" style="font-size:12px;font-weight:600;color:var(--gray-400);text-decoration:none">← Primary 애니메이션</a>
+      <a href="#anim-archive" style="font-size:12px;font-weight:600;color:var(--gray-400);text-decoration:none">보류 애니메이션 →</a>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">27 / 30</div>
+</div>
+
+
+<!-- 28. ANIMATION — ARCHIVE -->
+<div class="slide" id="anim-archive">
+  <div class="s flex flex-col justify-between" style="padding:72px 80px">
+    <div>
+      <div class="cap" style="margin-bottom:8px">Animation — Archive</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">보류 애니메이션</div>
+      <div style="font-size:14px;color:var(--gray-500);margin-top:8px">34개. 필요 시 탐색 파일에서 테스트 후 채택 가능.</div>
+    </div>
+
+    <div class="grid-2" style="gap:32px">
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:16px">Vol.1 (20개)</div>
+        <div style="font-size:12px;color:var(--gray-500);line-height:2">
+          Slot Roll · Color Fill · Stagger Fade In · Scale Pop · Flip In ·
+          Slide Reveal · Border Draw · Dot Pulse · Line Trace · Morph Blob ·
+          Underline Draw · Hover Lift · Ripple · Typing Effect · Gradient Shift ·
+          Architecture Path Draw · Shake · Fade In Up · Scale In · Slide In
+        </div>
+        <div style="margin-top:12px;padding:12px 16px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px">
+          <div class="mono" style="font-size:11px;color:var(--gray-400)">→ lukuku-animation-exploration.html</div>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:13px;font-weight:700;margin-bottom:16px">Vol.2 (14개)</div>
+        <div style="font-size:12px;color:var(--gray-500);line-height:2">
+          Marquee · Glitch Text · Orbit · Particle Float · Breathing Scale ·
+          Circular Meter · Spotlight Sweep · Elastic Appear · Reveal Mask ·
+          Accordion Reveal · Scatter In · Card Fan · Gradient Border Spin · Flip Digit
+        </div>
+        <div style="margin-top:12px;padding:12px 16px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px">
+          <div class="mono" style="font-size:11px;color:var(--gray-400)">→ lukuku-animation-exploration-2.html</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <a href="#anim-subtle" style="font-size:12px;font-weight:600;color:var(--gray-400);text-decoration:none">← Subtle 애니메이션</a>
+      <div style="font-size:11px;color:var(--gray-400)">채택 프로세스: 탐색 파일 → 테스트 → 피드백 → 가이드 등록</div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">28 / 31</div>
+</div>
+
+
+<!-- 29. APPLICATION -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">Application</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Examples in Action</div>
+    </div>
+    <div class="grid-2" style="gap:32px;flex:1">
+      <div style="border:1px solid var(--gray-200);border-radius:8px;overflow:hidden">
+        <div style="padding:24px 28px;border-bottom:1px solid var(--gray-200)">
+          <div class="cap" style="margin-bottom:8px">Services</div>
+          <div style="font-size:22px;font-weight:900;letter-spacing:-0.5px">Shopify Global Store<span style="color:var(--mint)">.</span></div>
+        </div>
+        <div style="display:flex">
+          <div style="flex:1;padding:20px;border-right:1px solid var(--gray-200);text-align:center">
+            <div class="mono" style="font-size:24px;font-weight:700;color:var(--ink)">68<span style="font-size:12px;color:var(--gray-400)">+</span></div>
+            <div style="font-size:10px;color:var(--gray-500)">Clients</div>
+          </div>
+          <div style="flex:1;padding:20px;border-right:1px solid var(--gray-200);text-align:center">
+            <div class="mono" style="font-size:24px;font-weight:700;color:var(--mint)">97</div>
+            <div style="font-size:10px;color:var(--gray-500)">Tests</div>
+          </div>
+          <div style="flex:1;padding:20px;text-align:center">
+            <div class="mono" style="font-size:24px;font-weight:700;color:var(--ink)">6</div>
+            <div style="font-size:10px;color:var(--gray-500)">MSA</div>
+          </div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--gray-200);border-radius:8px;overflow:hidden;display:flex">
+        <div style="width:40%;background:var(--ink);padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+          <div><div class="cap" style="color:var(--gray-600);margin-bottom:8px">Case Study</div><div style="font-size:18px;font-weight:800;color:var(--white);line-height:1.2">M사<br>글로벌 유통<span style="color:var(--mint)">.</span></div></div>
+          <div><div class="mono" style="font-size:28px;font-weight:700;color:var(--mint)">6<span style="font-size:12px;color:var(--gray-500)">mo</span></div></div>
+        </div>
+        <div style="flex:1;padding:24px;display:flex;flex-direction:column;justify-content:space-between">
+          <div><div style="font-size:12px;font-weight:700;margin-bottom:6px">Scope</div><div style="font-size:11px;color:var(--gray-600);line-height:2">Shopify Migration<br>POS System (12 screens)<br>ERP Real-time I/F<br>Dual Payment</div></div>
+          <div style="background:var(--gray-100);border-radius:4px;padding:8px 12px"><div class="mono" style="font-size:10px;color:var(--gray-500)"><span style="color:var(--gray-400)">$</span> test --total=97 --pass=97</div></div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--gray-200);border-radius:8px;padding:24px">
+        <div class="cap" style="margin-bottom:12px">Architecture</div>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:12px">
+          <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:6px;padding:12px;text-align:center"><div style="font-size:11px;font-weight:700">Shopify</div></div>
+          <div style="font-size:16px;color:var(--gray-400)">&rarr;</div>
+          <div style="background:var(--ink);border-radius:6px;padding:12px;text-align:center"><div style="font-size:11px;font-weight:700;color:var(--white)">LUKUKU</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px">
+          <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:4px;padding:8px;text-align:center"><div class="mono" style="font-size:9px;color:var(--gray-600)">store-api</div></div>
+          <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:4px;padding:8px;text-align:center"><div class="mono" style="font-size:9px;color:var(--gray-600)">erp-conn</div></div>
+          <div style="background:var(--gray-100);border:1px solid var(--gray-200);border-radius:4px;padding:8px;text-align:center"><div class="mono" style="font-size:9px;color:var(--gray-600)">payment</div></div>
+        </div>
+      </div>
+      <div style="border:1px solid var(--gray-200);border-radius:8px;padding:24px;display:flex;gap:20px">
+        <div style="width:140px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;padding:18px;display:flex;flex-direction:column;justify-content:space-between">
+          <div><div style="font-size:10px;font-weight:800;color:var(--ink);margin-bottom:6px">Lukuku<span style="color:var(--mint)">.</span></div><div style="font-size:12px;font-weight:800;color:var(--ink);line-height:1.3">글로벌<br>커머스<br>인프라</div></div>
+          <div class="mono" style="font-size:20px;font-weight:700;color:var(--mint)">68<span style="font-size:9px;color:var(--gray-400)">+</span></div>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;justify-content:center">
+          <div class="cap" style="margin-bottom:10px">Card News Preview</div>
+          <div style="font-size:12px;color:var(--gray-600);line-height:2">세로 모바일 포맷<br>Instagram / LinkedIn 최적화<br>1080 x 1350px<br>White base + minimal text</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">30 / 31</div>
+</div>
+
+
+<!-- 30. REFERENCES -->
+<div class="slide">
+  <div class="s flex flex-col" style="padding:72px 80px">
+    <div style="margin-bottom:48px">
+      <div class="cap-m" style="margin-bottom:8px">References</div>
+      <div style="font-size:42px;font-weight:900;letter-spacing:-1.5px">Design System References</div>
+    </div>
+    <div class="grid-2" style="gap:32px;flex:1">
+      <div style="padding:32px;border:1px solid var(--gray-200);border-radius:8px">
+        <div style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:12px">Toss TDS</div>
+        <div style="font-size:13px;color:var(--gray-600);line-height:1.9;margin-bottom:16px">
+          OKLCH perceptual color system<br>
+          3-layer token system<br>
+          "1 Thing per 1 Page" principle
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);padding-top:12px;border-top:1px solid var(--gray-200)">Adopted: OKLCH direction, 1-page principle, 3-layer tokens</div>
+      </div>
+      <div style="padding:32px;border:1px solid var(--gray-200);border-radius:8px">
+        <div style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:12px">Stripe</div>
+        <div style="font-size:13px;color:var(--gray-600);line-height:1.9;margin-bottom:16px">
+          CIELAB accessible color system<br>
+          Gradient mesh backgrounds<br>
+          #635BFF single accent, sparingly
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);padding-top:12px;border-top:1px solid var(--gray-200)">Adopted: Single accent restraint, accessible color</div>
+      </div>
+      <div style="padding:32px;border:1px solid var(--gray-200);border-radius:8px">
+        <div style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:12px">Linear</div>
+        <div style="font-size:13px;color:var(--gray-600);line-height:1.9;margin-bottom:16px">
+          LCH 3-variable theme system<br>
+          Inter Display headings<br>
+          "Precision over decoration"
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);padding-top:12px;border-top:1px solid var(--gray-200)">Adopted: Precision ethos, partial dark, Inter font</div>
+      </div>
+      <div style="padding:32px;border:1px solid var(--gray-200);border-radius:8px">
+        <div style="font-size:20px;font-weight:800;color:var(--ink);margin-bottom:12px">Vercel Geist</div>
+        <div style="font-size:13px;color:var(--gray-600);line-height:1.9;margin-bottom:16px">
+          Geist font family (Sans + Mono)<br>
+          Swiss design principles<br>
+          Tailwind token integration
+        </div>
+        <div class="mono" style="font-size:10px;color:var(--gray-400);padding-top:12px;border-top:1px solid var(--gray-200)">Adopted: Mono-heavy metrics, Swiss grid, Tailwind tokens</div>
+      </div>
+    </div>
+    <div style="padding:20px 24px;background:var(--gray-50);border:1px solid var(--gray-200);border-radius:6px;margin-top:24px">
+      <div style="font-size:14px;font-weight:600;color:var(--ink);text-align:center">"These systems inform our direction. We don't copy — we synthesize."</div>
+    </div>
+  </div>
+  <div class="slide-logo">Lukuku<span style="color:var(--mint)">.</span></div>
+  <div class="slide-num">31 / 31</div>
+</div>
+
+
+</body>
+</html>

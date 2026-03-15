@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lukuku Animation Exploration Vol.2</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{--ink:#1A1A1A;--white:#fff;--g50:#FAFAFA;--g100:#F5F5F5;--g200:#E5E5E5;--g300:#D4D4D4;--g400:#A3A3A3;--g500:#737373;--g600:#525252;--g800:#262626;--mint:#2BF5A0}
+  body{font-family:'Inter','Noto Sans KR',sans-serif;background:var(--g200);color:var(--ink);-webkit-font-smoothing:antialiased;padding:40px 0}
+  .mono{font-family:'JetBrains Mono',monospace}
+  .cap{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--g500)}
+  .flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}
+
+  .section{width:1280px;margin:0 auto 48px;background:var(--white);border-radius:8px;overflow:hidden}
+  .section-head{padding:36px 60px 0;margin-bottom:28px}
+  .section-body{padding:0 60px 40px}
+  .demo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+  .demo-card{background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:24px;min-height:240px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+  .demo-label{font-size:14px;font-weight:700;margin-bottom:4px}
+  .demo-desc{font-size:11px;color:var(--g500);line-height:1.6;margin-bottom:12px}
+  .demo-area{flex:1;display:flex;align-items:center;justify-content:center;min-height:100px}
+  .demo-tag{display:inline-block;padding:3px 10px;border:1px solid var(--g200);border-radius:100px;font-size:9px;color:var(--g500);margin-top:8px}
+  .replay-btn{position:absolute;top:12px;right:12px;background:var(--ink);color:var(--white);border:none;padding:5px 14px;border-radius:4px;font-size:10px;font-weight:600;cursor:pointer;font-family:inherit;z-index:10}
+  .replay-btn:hover{background:var(--g800)}
+
+  .title{text-align:center;padding:48px 0 16px}
+
+  /* ══════════════════════════════════════ */
+  /* ANIMATIONS */
+  /* ══════════════════════════════════════ */
+
+  /* 01. Marquee - 무한 흐름 텍스트 */
+  .marquee-track{display:flex;gap:48px;animation:marquee 12s linear infinite;white-space:nowrap}
+  @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+  /* 02. Reveal Mask - 마스크 와이프 */
+  .reveal-mask{clip-path:inset(0 100% 0 0);animation:revealMask 800ms cubic-bezier(0.4,0,0.2,1) forwards}
+  @keyframes revealMask{to{clip-path:inset(0 0 0 0)}}
+
+  /* 03. Typewriter with multi-line */
+  .typewriter{overflow:hidden;white-space:nowrap;width:0;border-right:2px solid var(--ink);animation:tw 1.8s steps(24) forwards,twBlink .5s step-end infinite}
+  @keyframes tw{to{width:100%}}
+  @keyframes twBlink{50%{border-color:transparent}}
+
+  /* 04. Orbit - 궤도 회전 */
+  .orbit-container{position:relative;width:140px;height:140px}
+  .orbit-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:2}
+  .orbit-ring{position:absolute;inset:0;border:1px solid var(--g200);border-radius:50%;animation:orbitSpin 8s linear infinite}
+  .orbit-dot{position:absolute;top:-5px;left:50%;transform:translateX(-50%);width:10px;height:10px;border-radius:50%;background:var(--mint)}
+  @keyframes orbitSpin{to{transform:rotate(360deg)}}
+
+  /* 05. Accordion Reveal */
+  .accordion-item{max-height:0;overflow:hidden;opacity:0;animation:accReveal 400ms cubic-bezier(0.4,0,0.2,1) forwards}
+  @keyframes accReveal{to{max-height:80px;opacity:1}}
+
+  /* 06. Scatter In - 파편 모임 */
+  .scatter-in{opacity:0;animation:scatterIn 600ms cubic-bezier(0.4,0,0.2,1) forwards}
+  @keyframes scatterIn{
+    0%{opacity:0;transform:translate(var(--sx),var(--sy)) scale(0.5)}
+    100%{opacity:1;transform:translate(0,0) scale(1)}
+  }
+
+  /* 07. Glitch Text */
+  .glitch{position:relative;display:inline-block}
+  .glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%}
+  .glitch::before{animation:glitchTop 2s infinite;clip-path:polygon(0 0,100% 0,100% 33%,0 33%);color:var(--mint)}
+  .glitch::after{animation:glitchBot 2s infinite;clip-path:polygon(0 67%,100% 67%,100% 100%,0 100%);color:var(--g400)}
+  @keyframes glitchTop{0%,90%,100%{transform:translate(0)}92%{transform:translate(3px,-2px)}94%{transform:translate(-3px,2px)}96%{transform:translate(2px,1px)}}
+  @keyframes glitchBot{0%,90%,100%{transform:translate(0)}91%{transform:translate(-2px,1px)}93%{transform:translate(3px,-1px)}95%{transform:translate(-1px,2px)}}
+
+  /* 08. Particle Float */
+  .particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--g300);animation:particleFloat 4s ease-in-out infinite}
+  @keyframes particleFloat{
+    0%,100%{transform:translateY(0) scale(1);opacity:.4}
+    50%{transform:translateY(-20px) scale(1.5);opacity:.8}
+  }
+
+  /* 09. Meter Fill (circular) */
+  .meter-circle{width:100px;height:100px;border-radius:50%;background:conic-gradient(var(--ink) 0deg,var(--ink) 0deg,var(--g200) 0deg);animation:meterFill 2s cubic-bezier(0.4,0,0.2,1) forwards}
+  @keyframes meterFill{to{background:conic-gradient(var(--ink) 0deg,var(--ink) 252deg,var(--g200) 252deg)}}
+
+  /* 10. Card Fan */
+  .fan-card{transition:transform 400ms cubic-bezier(0.4,0,0.2,1);transform-origin:bottom center}
+
+  /* 11. Breathing Scale */
+  .breathe{animation:breathe 3s ease-in-out infinite}
+  @keyframes breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+
+  /* 12. Text Scramble effect (CSS only approximation) */
+  .scramble{animation:scrambleIn 600ms steps(8) forwards}
+  @keyframes scrambleIn{
+    0%{filter:blur(8px);opacity:0;letter-spacing:12px}
+    50%{filter:blur(2px);opacity:.7;letter-spacing:4px}
+    100%{filter:blur(0);opacity:1;letter-spacing:-1.5px}
+  }
+
+  /* 13. Zoom Pan (image) */
+  .zoom-pan{animation:zoomPan 8s ease-in-out infinite alternate}
+  @keyframes zoomPan{
+    0%{transform:scale(1) translate(0,0)}
+    100%{transform:scale(1.15) translate(-3%,-2%)}
+  }
+
+  /* 14. Wave text */
+  .wave-char{display:inline-block;animation:waveChar 1.5s ease-in-out infinite}
+  @keyframes waveChar{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+  /* 15. Gradient Border Spin */
+  .gradient-border-spin{position:relative;border-radius:8px;padding:2px}
+  .gradient-border-spin::before{content:'';position:absolute;inset:-2px;border-radius:10px;background:conic-gradient(var(--mint),var(--g300),var(--ink),var(--g300),var(--mint));animation:borderSpin 3s linear infinite;z-index:0}
+  .gradient-border-spin>*{position:relative;z-index:1;background:var(--white);border-radius:6px}
+  @keyframes borderSpin{to{transform:rotate(360deg)}}
+
+  /* 16. Collapse/Expand toggle */
+  .collapse-toggle{transition:max-height 300ms cubic-bezier(0.4,0,0.2,1),opacity 300ms;max-height:200px;opacity:1}
+  .collapse-toggle.collapsed{max-height:0;opacity:0;overflow:hidden}
+
+  /* 17. Spotlight */
+  .spotlight{position:relative;overflow:hidden}
+  .spotlight::after{content:'';position:absolute;top:-100%;left:-100%;width:60%;height:200%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);transform:rotate(25deg);animation:spotlightSweep 3s ease-in-out infinite}
+  @keyframes spotlightSweep{0%,100%{left:-100%}50%{left:150%}}
+
+  /* 18. Flip Counter (digit) */
+  .flip-digit{perspective:200px;overflow:hidden;height:56px}
+  .flip-digit-inner{animation:flipDigit 0.6s cubic-bezier(0.4,0,0.2,1) forwards;transform-origin:bottom}
+  @keyframes flipDigit{0%{transform:rotateX(90deg);opacity:0}100%{transform:rotateX(0);opacity:1}}
+
+  /* 19. Elastic Appear */
+  .elastic-appear{animation:elasticAppear 800ms cubic-bezier(0.68,-0.55,0.265,1.55) forwards;opacity:0;transform:scale(0)}
+  @keyframes elasticAppear{to{opacity:1;transform:scale(1)}}
+
+  /* 20. Gradient Wipe */
+  .gradient-wipe{background:linear-gradient(90deg,var(--ink) 50%,transparent 50%);background-size:200% 100%;background-position:100%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradWipe 1.2s cubic-bezier(0.4,0,0.2,1) forwards}
+  @keyframes gradWipe{to{background-position:0}}
+
+</style>
+</head>
+<body>
+
+<div class="title">
+  <div style="font-size:40px;font-weight:900;letter-spacing:-2px">Animation Exploration <span class="mono" style="color:var(--g400)">Vol.2</span></div>
+  <div style="font-size:14px;color:var(--g500);margin-top:8px">20개 추가 마이크로 애니메이션 · Replay 클릭으로 재생</div>
+</div>
+
+<script>
+function replay(el){
+  const card=el.closest('.demo-card');
+  card.querySelectorAll('[data-a]').forEach(t=>{
+    const c=t.dataset.a;t.classList.remove(c);void t.offsetWidth;t.classList.add(c);
+  });
+}
+</script>
+
+
+<!-- ═══ SECTION 1: Text Effects ═══ -->
+<div class="section">
+  <div class="section-head"><div class="cap" style="margin-bottom:6px">Text</div><div style="font-size:28px;font-weight:900;letter-spacing:-1px">텍스트 효과</div></div>
+  <div class="section-body"><div class="demo-grid">
+
+    <!-- Marquee -->
+    <div class="demo-card">
+      <div><div class="demo-label">01. Marquee</div><div class="demo-desc">무한 흐름 텍스트. 클라이언트 나열/기술 스택 표시에.</div></div>
+      <div class="demo-area" style="overflow:hidden;width:100%">
+        <div class="marquee-track">
+          <span style="font-size:14px;font-weight:700;color:var(--g400)">Shopify · AWS · React · Node.js · PostgreSQL · Docker · Terraform · Redis · SQS · Shopify · AWS · React · Node.js · PostgreSQL · Docker · Terraform · Redis · SQS</span>
+        </div>
+      </div>
+      <div><span class="demo-tag">Tech stack bar</span> <span class="demo-tag">12s infinite</span></div>
+    </div>
+
+    <!-- Glitch -->
+    <div class="demo-card">
+      <div><div class="demo-label">02. Glitch Text</div><div class="demo-desc">디지털 글리치. 테크 브랜딩/히어로에 강렬한 인상.</div></div>
+      <div class="demo-area">
+        <div class="glitch" data-text="Lukuku." style="font-size:40px;font-weight:900;color:var(--ink)">Lukuku.</div>
+      </div>
+      <div><span class="demo-tag">Brand hero</span> <span class="demo-tag">2s infinite</span></div>
+    </div>
+
+    <!-- Text Scramble -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">03. Text Scramble</div><div class="demo-desc">블러→선명, 간격→좁아짐. 해독되는 느낌.</div></div>
+      <div class="demo-area">
+        <div class="scramble" data-a="scramble" style="font-size:36px;font-weight:900">Build. Operate.</div>
+      </div>
+      <div><span class="demo-tag">Headings</span> <span class="demo-tag">600ms</span></div>
+    </div>
+
+    <!-- Wave Text -->
+    <div class="demo-card">
+      <div><div class="demo-label">04. Wave Text</div><div class="demo-desc">글자가 순차적으로 물결. 로고/브랜드에.</div></div>
+      <div class="demo-area">
+        <div style="font-size:36px;font-weight:900">
+          <span class="wave-char" style="animation-delay:0ms">L</span><span class="wave-char" style="animation-delay:80ms">u</span><span class="wave-char" style="animation-delay:160ms">k</span><span class="wave-char" style="animation-delay:240ms">u</span><span class="wave-char" style="animation-delay:320ms">k</span><span class="wave-char" style="animation-delay:400ms">u</span><span class="wave-char" style="animation-delay:480ms;color:var(--mint)">.</span>
+        </div>
+      </div>
+      <div><span class="demo-tag">Logo / Brand</span> <span class="demo-tag">1.5s infinite</span></div>
+    </div>
+
+    <!-- Gradient Wipe -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">05. Gradient Wipe</div><div class="demo-desc">텍스트가 왼쪽부터 색이 채워짐. 헤딩 등장에.</div></div>
+      <div class="demo-area">
+        <div class="gradient-wipe" data-a="gradient-wipe" style="font-size:32px;font-weight:900">68개 거래처.</div>
+      </div>
+      <div><span class="demo-tag">Hero heading</span> <span class="demo-tag">1.2s</span></div>
+    </div>
+
+    <!-- Typewriter -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">06. Typewriter</div><div class="demo-desc">한 글자씩 타이핑. CLI/터미널 느낌.</div></div>
+      <div class="demo-area" style="align-items:flex-start;padding:0 16px">
+        <div style="background:var(--g100);border:1px solid var(--g200);border-radius:6px;padding:14px 18px;width:100%">
+          <div class="mono typewriter" data-a="typewriter" style="font-size:13px;color:var(--g600)">$ kubectl get pods -n prod</div>
+        </div>
+      </div>
+      <div><span class="demo-tag">Terminal UI</span> <span class="demo-tag">1.8s</span></div>
+    </div>
+
+  </div></div>
+</div>
+
+
+<!-- ═══ SECTION 2: Shape & Motion ═══ -->
+<div class="section">
+  <div class="section-head"><div class="cap" style="margin-bottom:6px">Shape & Motion</div><div style="font-size:28px;font-weight:900;letter-spacing:-1px">도형 & 모션</div></div>
+  <div class="section-body"><div class="demo-grid">
+
+    <!-- Orbit -->
+    <div class="demo-card">
+      <div><div class="demo-label">07. Orbit</div><div class="demo-desc">중심 주위를 도는 궤도. 생태계/연결 표현에.</div></div>
+      <div class="demo-area">
+        <div class="orbit-container">
+          <div class="orbit-center"><div style="font-size:11px;font-weight:800;color:var(--white)">Lu.</div></div>
+          <div class="orbit-ring"><div class="orbit-dot"></div></div>
+          <div class="orbit-ring" style="inset:15px;animation-duration:5s;animation-direction:reverse;border-color:var(--g100)"><div class="orbit-dot" style="background:var(--g400);width:7px;height:7px"></div></div>
+        </div>
+      </div>
+      <div><span class="demo-tag">Ecosystem diagram</span> <span class="demo-tag">8s infinite</span></div>
+    </div>
+
+    <!-- Particle Float -->
+    <div class="demo-card">
+      <div><div class="demo-label">08. Particle Float</div><div class="demo-desc">부유하는 파티클 배경. 히어로/커버 데코에.</div></div>
+      <div class="demo-area" style="position:relative;width:100%;min-height:120px">
+        <div class="particle" style="left:15%;top:30%;animation-delay:0s"></div>
+        <div class="particle" style="left:35%;top:60%;animation-delay:0.8s;width:6px;height:6px"></div>
+        <div class="particle" style="left:55%;top:20%;animation-delay:1.6s;background:var(--mint);width:5px;height:5px"></div>
+        <div class="particle" style="left:75%;top:50%;animation-delay:2.4s"></div>
+        <div class="particle" style="left:25%;top:75%;animation-delay:0.4s;width:3px;height:3px"></div>
+        <div class="particle" style="left:85%;top:35%;animation-delay:1.2s;width:5px;height:5px"></div>
+        <div class="particle" style="left:45%;top:80%;animation-delay:2s"></div>
+        <div class="particle" style="left:65%;top:15%;animation-delay:3s;background:var(--g200);width:8px;height:8px"></div>
+      </div>
+      <div><span class="demo-tag">Hero background</span> <span class="demo-tag">4s infinite</span></div>
+    </div>
+
+    <!-- Breathing Scale -->
+    <div class="demo-card">
+      <div><div class="demo-label">09. Breathing Scale</div><div class="demo-desc">미세하게 숨쉬듯 확대/축소. CTA/로고 강조에.</div></div>
+      <div class="demo-area">
+        <div class="breathe" style="background:var(--mint);width:64px;height:64px;border-radius:12px;display:flex;align-items:center;justify-content:center">
+          <div style="font-size:20px;font-weight:900;color:var(--ink)">→</div>
+        </div>
+      </div>
+      <div><span class="demo-tag">CTA / Logo</span> <span class="demo-tag">3s infinite</span></div>
+    </div>
+
+    <!-- Circular Meter -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">10. Circular Meter</div><div class="demo-desc">원형 프로그레스. 완료율/점수 표시에.</div></div>
+      <div class="demo-area">
+        <div style="position:relative">
+          <div class="meter-circle" data-a="meter-circle" style="display:flex;align-items:center;justify-content:center">
+            <div style="width:76px;height:76px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center">
+              <div class="mono" style="font-size:24px;font-weight:700">70<span style="font-size:14px;color:var(--g400)">%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div><span class="demo-tag">Completion / Score</span> <span class="demo-tag">2s</span></div>
+    </div>
+
+    <!-- Spotlight -->
+    <div class="demo-card">
+      <div><div class="demo-label">11. Spotlight Sweep</div><div class="demo-desc">광택이 스르르 지나감. 카드/버튼 강조에.</div></div>
+      <div class="demo-area">
+        <div class="spotlight" style="background:var(--ink);border-radius:8px;padding:20px 32px;display:flex;align-items:center;gap:12px">
+          <div style="font-size:16px;font-weight:700;color:var(--white)">Start Project</div>
+          <div style="font-size:16px;color:var(--mint)">→</div>
+        </div>
+      </div>
+      <div><span class="demo-tag">CTA Button</span> <span class="demo-tag">3s infinite</span></div>
+    </div>
+
+    <!-- Elastic Appear -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">12. Elastic Appear</div><div class="demo-desc">약간의 탄성과 함께 팡 등장. 배지/아이콘에.</div></div>
+      <div class="demo-area" style="gap:12px">
+        <div class="elastic-appear" data-a="elastic-appear" style="animation-delay:0ms;background:var(--g100);border:1px solid var(--g200);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center"><div class="mono" style="font-size:14px;font-weight:700">01</div></div>
+        <div class="elastic-appear" data-a="elastic-appear" style="animation-delay:100ms;background:var(--g100);border:1px solid var(--g200);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center"><div class="mono" style="font-size:14px;font-weight:700">02</div></div>
+        <div class="elastic-appear" data-a="elastic-appear" style="animation-delay:200ms;background:var(--mint);width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center"><div class="mono" style="font-size:14px;font-weight:700;color:var(--ink)">03</div></div>
+      </div>
+      <div><span class="demo-tag">Badges / Steps</span> <span class="demo-tag">800ms</span></div>
+    </div>
+
+  </div></div>
+</div>
+
+
+<!-- ═══ SECTION 3: Layout & Reveal ═══ -->
+<div class="section">
+  <div class="section-head"><div class="cap" style="margin-bottom:6px">Layout</div><div style="font-size:28px;font-weight:900;letter-spacing:-1px">레이아웃 & 리빌</div></div>
+  <div class="section-body"><div class="demo-grid">
+
+    <!-- Reveal Mask -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">13. Reveal Mask</div><div class="demo-desc">이미지/섹션이 마스크로 드러남. 포트폴리오에.</div></div>
+      <div class="demo-area">
+        <div class="reveal-mask" data-a="reveal-mask" style="width:200px;height:120px;background:var(--g100);border:1px solid var(--g200);border-radius:6px;display:flex;align-items:center;justify-content:center">
+          <div style="text-align:center"><div style="font-size:14px;font-weight:700">FILA Korea</div><div style="font-size:11px;color:var(--g500)">Shopify · POS · ERP</div></div>
+        </div>
+      </div>
+      <div><span class="demo-tag">Portfolio images</span> <span class="demo-tag">800ms</span></div>
+    </div>
+
+    <!-- Accordion -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">14. Accordion Reveal</div><div class="demo-desc">리스트 항목이 위에서 펼쳐짐. FAQ/상세에.</div></div>
+      <div class="demo-area" style="flex-direction:column;gap:6px;align-items:stretch;padding:0 16px">
+        <div class="accordion-item" data-a="accordion-item" style="animation-delay:0ms;background:var(--white);border:1px solid var(--g200);border-radius:4px;padding:10px 14px">
+          <div style="font-size:12px;font-weight:600">Shopify Payments 활성화</div>
+          <div style="font-size:10px;color:var(--g500)">해외 법인 연동 필요</div>
+        </div>
+        <div class="accordion-item" data-a="accordion-item" style="animation-delay:150ms;background:var(--white);border:1px solid var(--g200);border-radius:4px;padding:10px 14px">
+          <div style="font-size:12px;font-weight:600">ERP 실시간 I/F</div>
+          <div style="font-size:10px;color:var(--g500)">주문·재고·회원 양방향</div>
+        </div>
+        <div class="accordion-item" data-a="accordion-item" style="animation-delay:300ms;background:var(--white);border:1px solid var(--g200);border-radius:4px;padding:10px 14px">
+          <div style="font-size:12px;font-weight:600">3PL 물류 연동</div>
+          <div style="font-size:10px;color:var(--g500)">GEODIS · Maersk · FBA</div>
+        </div>
+      </div>
+      <div><span class="demo-tag">Lists / FAQ</span> <span class="demo-tag">400ms + 150ms delay</span></div>
+    </div>
+
+    <!-- Scatter In -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">15. Scatter In</div><div class="demo-desc">흩어진 조각이 제자리로 모임. 팀/구성 표현에.</div></div>
+      <div class="demo-area" style="gap:8px">
+        <div class="scatter-in" data-a="scatter-in" style="--sx:-30px;--sy:20px;animation-delay:0ms;background:var(--g100);border:1px solid var(--g200);border-radius:4px;padding:10px 16px;font-size:11px;font-weight:600">KR</div>
+        <div class="scatter-in" data-a="scatter-in" style="--sx:20px;--sy:-25px;animation-delay:100ms;background:var(--g100);border:1px solid var(--g200);border-radius:4px;padding:10px 16px;font-size:11px;font-weight:600">ID</div>
+        <div class="scatter-in" data-a="scatter-in" style="--sx:10px;--sy:30px;animation-delay:200ms;background:var(--g100);border:1px solid var(--g200);border-radius:4px;padding:10px 16px;font-size:11px;font-weight:600">US</div>
+      </div>
+      <div><span class="demo-tag">Team / Regions</span> <span class="demo-tag">600ms</span></div>
+    </div>
+
+    <!-- Card Fan -->
+    <div class="demo-card">
+      <div><div class="demo-label">16. Card Fan</div><div class="demo-desc">호버 시 카드가 부채처럼 펼쳐짐. 포트폴리오 인터랙션.</div></div>
+      <div class="demo-area" style="position:relative;height:120px;width:200px" onmouseover="this.querySelectorAll('.fan-card').forEach((c,i)=>c.style.transform=`rotate(${(i-1.5)*8}deg) translateY(-${i*4}px)`)" onmouseout="this.querySelectorAll('.fan-card').forEach(c=>c.style.transform='rotate(0)')">
+        <div class="fan-card" style="position:absolute;bottom:0;left:50%;margin-left:-60px;width:120px;height:80px;background:var(--white);border:1px solid var(--g200);border-radius:6px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,0.06);z-index:1"><div style="font-size:10px;font-weight:600">FILA</div></div>
+        <div class="fan-card" style="position:absolute;bottom:0;left:50%;margin-left:-60px;width:120px;height:80px;background:var(--white);border:1px solid var(--g200);border-radius:6px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,0.06);z-index:2"><div style="font-size:10px;font-weight:600">Salomon</div></div>
+        <div class="fan-card" style="position:absolute;bottom:0;left:50%;margin-left:-60px;width:120px;height:80px;background:var(--white);border:1px solid var(--g200);border-radius:6px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,0.06);z-index:3"><div style="font-size:10px;font-weight:600">Stand Oil</div></div>
+        <div class="fan-card" style="position:absolute;bottom:0;left:50%;margin-left:-60px;width:120px;height:80px;background:var(--white);border:1px solid var(--g200);border-radius:6px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,0.06);z-index:4"><div style="font-size:10px;font-weight:600">BlackVue</div></div>
+      </div>
+      <div><span class="demo-tag">Portfolio hover</span> <span class="demo-tag">400ms hover</span></div>
+    </div>
+
+    <!-- Gradient Border Spin -->
+    <div class="demo-card">
+      <div><div class="demo-label">17. Gradient Border Spin</div><div class="demo-desc">회전하는 그라디언트 테두리. 강조 카드에.</div></div>
+      <div class="demo-area">
+        <div class="gradient-border-spin" style="width:160px">
+          <div style="padding:20px;text-align:center">
+            <div class="mono" style="font-size:28px;font-weight:700">97</div>
+            <div style="font-size:10px;color:var(--g500)">Test Cases</div>
+          </div>
+        </div>
+      </div>
+      <div><span class="demo-tag">Highlight metric</span> <span class="demo-tag">3s infinite</span></div>
+    </div>
+
+    <!-- Flip Digit -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">18. Flip Digit</div><div class="demo-desc">3D 뒤집히며 숫자 등장. 공항 보드 느낌.</div></div>
+      <div class="demo-area" style="gap:4px">
+        <div class="flip-digit"><div class="flip-digit-inner" data-a="flip-digit-inner" style="animation-delay:0ms"><div class="mono" style="font-size:48px;font-weight:700;background:var(--g100);padding:4px 12px;border-radius:4px">6</div></div></div>
+        <div class="flip-digit"><div class="flip-digit-inner" data-a="flip-digit-inner" style="animation-delay:150ms"><div class="mono" style="font-size:48px;font-weight:700;background:var(--g100);padding:4px 12px;border-radius:4px">8</div></div></div>
+        <div style="font-size:36px;font-weight:700;color:var(--g400);padding-top:4px">+</div>
+      </div>
+      <div><span class="demo-tag">Counter / Stats</span> <span class="demo-tag">600ms</span></div>
+    </div>
+
+  </div></div>
+</div>
+
+
+<!-- ═══ SECTION 4: Image ═══ -->
+<div class="section">
+  <div class="section-head"><div class="cap" style="margin-bottom:6px">Image</div><div style="font-size:28px;font-weight:900;letter-spacing:-1px">이미지 효과</div></div>
+  <div class="section-body"><div class="demo-grid">
+
+    <!-- Zoom Pan -->
+    <div class="demo-card">
+      <div><div class="demo-label">19. Zoom Pan (Ken Burns)</div><div class="demo-desc">이미지가 천천히 확대 이동. 포트폴리오 슬라이드에.</div></div>
+      <div class="demo-area" style="overflow:hidden;border-radius:6px;width:220px;height:130px">
+        <img src="captures/fila.png" class="zoom-pan" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='var(--g100)'">
+      </div>
+      <div><span class="demo-tag">Portfolio images</span> <span class="demo-tag">8s infinite</span></div>
+    </div>
+
+    <!-- Reveal + Zoom combo -->
+    <div class="demo-card">
+      <button class="replay-btn" onclick="replay(this)">Replay</button>
+      <div><div class="demo-label">20. Reveal + Scale Combo</div><div class="demo-desc">마스크 드러남 + 약간 확대. 극적 등장.</div></div>
+      <div class="demo-area" style="overflow:hidden;border-radius:6px;width:220px;height:130px">
+        <div data-a="reveal-mask" class="reveal-mask" style="width:100%;height:100%">
+          <img src="captures/salomon.png" style="width:100%;height:100%;object-fit:cover;animation:subtleZoom 600ms cubic-bezier(0.4,0,0.2,1) forwards" onerror="this.parentElement.style.background='var(--g100)'">
+        </div>
+      </div>
+      <style>@keyframes subtleZoom{from{transform:scale(1.1)}to{transform:scale(1)}}</style>
+      <div><span class="demo-tag">Hero / Portfolio</span> <span class="demo-tag">800ms</span></div>
+    </div>
+
+  </div></div>
+</div>
+
+
+</body>
+</html>
