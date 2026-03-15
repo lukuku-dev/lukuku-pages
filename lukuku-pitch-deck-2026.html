@@ -50,52 +50,15 @@
   .dbox-acc{background:var(--ink);border:1px solid var(--ink);padding:10px 14px;text-align:center;font-size:11px;font-weight:600;color:var(--white);border-radius:4px}
   .harr{font-size:14px;color:var(--g400);padding:0 6px}
 
-  /* === VISUAL EFFECTS === */
-  .dot-grid{background-image:radial-gradient(circle,#D4D4D4 1px,transparent 1px);background-size:24px 24px}
-  .gradient-mesh{background:radial-gradient(ellipse at 20% 50%,rgba(43,245,160,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(43,245,160,0.05) 0%,transparent 40%),radial-gradient(ellipse at 60% 80%,rgba(200,200,200,0.1) 0%,transparent 50%)}
-  .zoom-pan{animation:zoomPan 8s ease-in-out infinite alternate}
-  @keyframes zoomPan{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-3%,-2%)}}
-
-  /* === ANIMATIONS === */
-  @property --num{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n4{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n36{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n68{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n44{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n110{syntax:"<integer>";initial-value:0;inherits:false}
-
-  .counter-4{animation:c4 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n4);font-variant-numeric:tabular-nums}
-  .counter-4::after{content:counter(n)}
-  @keyframes c4{from{--n4:0}to{--n4:4}}
-
-  .counter-36{animation:c36 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n36);font-variant-numeric:tabular-nums}
-  .counter-36::after{content:counter(n)}
-  @keyframes c36{from{--n36:0}to{--n36:36}}
-
-  .counter-68{animation:c68 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n68);font-variant-numeric:tabular-nums}
-  .counter-68::after{content:counter(n)}
-  @keyframes c68{from{--n68:0}to{--n68:68}}
-
-  .counter-44{animation:c44 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n44);font-variant-numeric:tabular-nums}
-  .counter-44::after{content:counter(n)}
-  @keyframes c44{from{--n44:0}to{--n44:44}}
-
-  .counter-110{animation:c110 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n110);font-variant-numeric:tabular-nums}
-  .counter-110::after{content:counter(n)}
-  @keyframes c110{from{--n110:0}to{--n110:110}}
-
-  .text-scramble{animation:textScramble 600ms steps(8) forwards}
-  @keyframes textScramble{0%{filter:blur(4px);opacity:0;letter-spacing:4px}50%{filter:blur(1px);opacity:.7;letter-spacing:1px}100%{filter:blur(0);opacity:1;letter-spacing:-3px}}
-
   @media print{body{background:#fff}.slide{margin:0;page-break-after:always}}
 </style>
 </head>
 <body>
 
 
-<!-- 01. COVER — gradient-mesh + dot-grid + Text Scramble -->
+<!-- 01. COVER -->
 <div class="slide">
-  <div class="s flex flex-col justify-between gradient-mesh dot-grid" style="padding:72px 80px">
+  <div class="s flex flex-col justify-between" style="padding:72px 80px">
     <div class="flex justify-between items-center">
       <div class="flex items-center" style="gap:8px">
         <span style="font-size:20px;font-weight:800;color:var(--ink)">Lukuku<span style="color:var(--mint)">.</span></span>
@@ -104,7 +67,7 @@
     </div>
 
     <div>
-      <div class="text-scramble" style="font-size:72px;font-weight:900;color:var(--ink);line-height:1.05;letter-spacing:-3px;margin-bottom:20px">
+      <div style="font-size:72px;font-weight:900;color:var(--ink);line-height:1.05;letter-spacing:-3px;margin-bottom:20px">
         Global Commerce,<br>Engineered<span style="color:var(--mint)">.</span>
       </div>
       <div style="font-size:15px;font-weight:400;color:var(--g500);max-width:600px;line-height:1.7">
@@ -124,7 +87,7 @@
 </div>
 
 
-<!-- 02. AT A GLANCE — Counter Up on stats -->
+<!-- 02. AT A GLANCE -->
 <div class="slide">
   <div class="s flex flex-col" style="padding:60px 80px">
     <div style="margin-bottom:32px">
@@ -132,28 +95,28 @@
       <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">루쿠쿠 주식회사</div>
     </div>
 
-    <!-- stat row — Counter Up -->
+    <!-- stat row -->
     <div class="grid-5" style="gap:1px;background:var(--g200);border:1px solid var(--g200);margin-bottom:32px">
       <div style="background:var(--white);padding:24px">
-        <div class="mono counter-4" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)"></div>
+        <div class="mono" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)">4</div>
         <div style="font-size:22px;font-weight:700;color:var(--g400);display:inline">yr</div>
         <div style="font-size:11px;color:var(--g500);margin-top:6px">업력</div>
       </div>
       <div style="background:var(--white);padding:24px">
-        <div class="mono counter-36" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)"></div>
+        <div class="mono" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)">36</div>
         <div style="font-size:11px;color:var(--g500);margin-top:6px">팀원</div>
       </div>
       <div style="background:var(--white);padding:24px">
-        <div class="mono counter-68" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--mint)"></div>
+        <div class="mono" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--mint)">68</div>
         <div style="font-size:22px;font-weight:700;color:var(--g400);display:inline">+</div>
         <div style="font-size:11px;color:var(--g500);margin-top:6px">거래처</div>
       </div>
       <div style="background:var(--white);padding:24px">
-        <div class="mono counter-44" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)"></div>
+        <div class="mono" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)">44</div>
         <div style="font-size:11px;color:var(--g500);margin-top:6px">계약 건수</div>
       </div>
       <div style="background:var(--white);padding:24px">
-        <div class="mono counter-110" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)"></div>
+        <div class="mono" style="font-size:44px;font-weight:700;line-height:1;letter-spacing:-2px;color:var(--ink)">110</div>
         <div style="font-size:22px;font-weight:700;color:var(--g400);display:inline">+</div>
         <div style="font-size:11px;color:var(--g500);margin-top:6px">견적서</div>
       </div>
@@ -276,9 +239,9 @@
 </div>
 
 
-<!-- 04. ARCHITECTURE DIAGRAM — dot-grid background -->
+<!-- 04. ARCHITECTURE DIAGRAM -->
 <div class="slide">
-  <div class="s dot-grid" style="padding:60px 80px">
+  <div class="s" style="padding:60px 80px">
     <div style="margin-bottom:24px">
       <div class="cap" style="margin-bottom:8px">TECHNICAL ARCHITECTURE</div>
       <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">시스템 아키텍처</div>
@@ -377,7 +340,7 @@
 </div>
 
 
-<!-- 06. CLIENT SCREENSHOTS — Zoom Pan on images -->
+<!-- 06. CLIENT SCREENSHOTS -->
 <div class="slide">
   <div class="s flex flex-col" style="padding:60px 80px">
     <div style="margin-bottom:24px">
@@ -385,44 +348,36 @@
       <div style="font-size:32px;font-weight:900;letter-spacing:-1.5px;color:var(--ink)">구축/운영 중인 사이트</div>
     </div>
     <div class="flex-1" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1px;background:var(--g200);border:1px solid var(--g200)">
-      <!-- FILA -->
       <div style="background:var(--white);overflow:hidden">
-        <div style="overflow:hidden;height:160px"><img src="captures/fila.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
+        <div style="overflow:hidden;height:160px"><img src="captures/fila.png" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">FILA Korea</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · POS · ERP · HK/TW</div></div>
       </div>
-      <!-- Salomon -->
       <div style="background:var(--white);overflow:hidden">
-        <div style="overflow:hidden;height:160px"><img src="captures/salomon.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:1s" onerror="this.style.display='none'"></div>
+        <div style="overflow:hidden;height:160px"><img src="captures/salomon.png" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Salomon Korea</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · 월 리테이너 · 물류 연동</div></div>
       </div>
-      <!-- Verish -->
       <div style="background:var(--white);overflow:hidden">
-        <div style="overflow:hidden;height:160px"><img src="captures/verish.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:2s" onerror="this.style.display='none'"></div>
+        <div style="overflow:hidden;height:160px"><img src="captures/verish.png" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Verish (Amer Sports)</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · 사이즈차트 · 리뷰정책</div></div>
       </div>
-      <!-- Standoil -->
       <div style="background:var(--white);overflow:hidden">
-        <div style="overflow:hidden;height:160px"><img src="captures/standoil.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:3s" onerror="this.style.display='none'"></div>
+        <div style="overflow:hidden;height:160px"><img src="captures/standoil.png" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Stand Oil (코자)</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · JP/TW · Global-e</div></div>
       </div>
-      <!-- BlackVue -->
       <div style="background:var(--white);overflow:hidden">
-        <div style="overflow:hidden;height:160px"><img src="captures/blackvue.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:4s" onerror="this.style.display='none'"></div>
+        <div style="overflow:hidden;height:160px"><img src="captures/blackvue.png" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">BlackVue (피타소프트)</div><div style="font-size:10px;color:var(--g500);margin-top:2px">글로벌 B2C/B2B · FLEETA</div></div>
       </div>
-      <!-- Nonfiction -->
       <div style="background:var(--white);overflow:hidden">
-        <div style="overflow:hidden;height:160px"><img src="captures/nonfiction.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:5s" onerror="this.style.display='none'"></div>
+        <div style="overflow:hidden;height:160px"><img src="captures/nonfiction.png" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Nonfiction</div><div style="font-size:10px;color:var(--g500);margin-top:2px">카페24 + Shopify · IP 리다이렉션</div></div>
       </div>
-      <!-- Amuz -->
       <div style="background:var(--white);overflow:hidden">
-        <div style="overflow:hidden;height:160px"><img src="captures/amuz.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:6s" onerror="this.style.display='none'"></div>
+        <div style="overflow:hidden;height:160px"><img src="captures/amuz.png" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">어뮤즈 글로벌</div><div style="font-size:10px;color:var(--g500);margin-top:2px">K-Beauty · Shopify 글로벌</div></div>
       </div>
-      <!-- Spigen -->
       <div style="background:var(--white);overflow:hidden">
-        <div style="overflow:hidden;height:160px"><img src="captures/spigen.png" class="zoom-pan" style="width:100%;height:160px;object-fit:cover;object-position:top;animation-delay:7s" onerror="this.style.display='none'"></div>
+        <div style="overflow:hidden;height:160px"><img src="captures/spigen.png" style="width:100%;height:160px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px"><div style="font-size:12px;font-weight:700;color:var(--ink)">Wilson Korea</div><div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · 번들링 · 사이즈차트</div></div>
       </div>
     </div>
@@ -432,13 +387,11 @@
 </div>
 
 
-<!-- 07. CASE STUDY — Diagonal Split layout -->
+<!-- 07. CASE STUDY — Split layout -->
 <div class="slide">
   <div class="s flex" style="position:relative">
-    <!-- Diagonal ink background -->
-    <div style="position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 0,50% 0,38% 100%,0 100%)"></div>
-    <!-- Ink content panel -->
-    <div style="width:460px;position:relative;z-index:1;display:flex;flex-direction:column;justify-content:space-between;padding:60px 44px">
+    <!-- Ink panel — left -->
+    <div style="width:460px;background:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:60px 44px">
       <div>
         <div class="cap" style="color:var(--g600);margin-bottom:14px">CASE STUDY</div>
         <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.2;letter-spacing:-1px;margin-bottom:8px">M사 (글로벌 유통)</div>
@@ -459,7 +412,7 @@
       </div>
     </div>
     <!-- White content panel -->
-    <div class="flex-1 flex flex-col" style="position:relative;z-index:1;overflow-y:auto">
+    <div class="flex-1 flex flex-col" style="overflow-y:auto">
       <div style="flex:1;padding:32px 40px;border-bottom:1px solid var(--g200)">
         <div class="cap" style="margin-bottom:12px">SCOPE</div>
         <div class="grid-2" style="gap:20px">
@@ -550,9 +503,9 @@
 </div>
 
 
-<!-- 09. WHY LUKUKU — Asymmetric Grid -->
+<!-- 09. WHY LUKUKU — Grid layout -->
 <div class="slide">
-  <div class="s" style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;height:100%">
+  <div class="s" style="display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;height:100%">
     <!-- Large left panel spanning 2 rows -->
     <div style="grid-row:span 2;background:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:60px 48px">
       <div>
@@ -634,9 +587,9 @@
 </div>
 
 
-<!-- 11. CLOSE — gradient-mesh -->
+<!-- 11. CLOSE -->
 <div class="slide">
-  <div class="s flex flex-col justify-between gradient-mesh" style="padding:72px 80px">
+  <div class="s flex flex-col justify-between" style="padding:72px 80px">
     <div class="flex justify-between items-center">
       <span style="font-size:20px;font-weight:800;color:var(--ink)">Lukuku<span style="color:var(--mint)">.</span></span>
       <div class="flex items-center" style="gap:6px">
@@ -646,7 +599,7 @@
     </div>
 
     <div>
-      <div class="text-scramble" style="font-size:64px;font-weight:900;color:var(--ink);line-height:1.1;letter-spacing:-3px;margin-bottom:16px">
+      <div style="font-size:64px;font-weight:900;color:var(--ink);line-height:1.1;letter-spacing:-3px;margin-bottom:16px">
         Let's build<br>something global<span style="color:var(--mint)">.</span>
       </div>
       <div style="font-size:15px;font-weight:400;color:var(--g500)">글로벌 이커머스, 같이 만들어 갈까요?</div>

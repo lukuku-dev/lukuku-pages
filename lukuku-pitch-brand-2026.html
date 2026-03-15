@@ -40,81 +40,30 @@
   .slide-num{position:absolute;bottom:28px;right:40px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g400)}
   .slide-logo{position:absolute;bottom:28px;left:40px;font-size:13px;font-weight:800;color:var(--g300)}
 
-  /* === VISUAL EFFECTS === */
-  .gradient-mesh{background:radial-gradient(ellipse at 20% 50%,rgba(43,245,160,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(43,245,160,0.05) 0%,transparent 40%),radial-gradient(ellipse at 60% 80%,rgba(200,200,200,0.1) 0%,transparent 50%)}
-  .dot-grid{background-image:radial-gradient(circle,#D4D4D4 1px,transparent 1px);background-size:24px 24px}
-  .zoom-pan{animation:zoomPan 8s ease-in-out infinite alternate}
-  @keyframes zoomPan{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-3%,-2%)}}
-
-  /* Topographic lines SVG overlay */
-  .topo-lines{position:absolute;inset:0;opacity:0.06;pointer-events:none}
-
-  /* === ANIMATIONS === */
-  .text-scramble{animation:textScramble 600ms steps(8) forwards}
-  @keyframes textScramble{0%{filter:blur(4px);opacity:0;letter-spacing:4px}50%{filter:blur(1px);opacity:.7;letter-spacing:1px}100%{filter:blur(0);opacity:1;letter-spacing:-2px}}
-
-  @property --n68{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n44{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n110{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n8{syntax:"<integer>";initial-value:0;inherits:false}
-
-  .counter-68{animation:c68 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n68);font-variant-numeric:tabular-nums}
-  .counter-68::after{content:counter(n)}
-  @keyframes c68{from{--n68:0}to{--n68:68}}
-
-  .counter-44{animation:c44 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n44);font-variant-numeric:tabular-nums}
-  .counter-44::after{content:counter(n)}
-  @keyframes c44{from{--n44:0}to{--n44:44}}
-
-  .counter-110{animation:c110 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n110);font-variant-numeric:tabular-nums}
-  .counter-110::after{content:counter(n)}
-  @keyframes c110{from{--n110:0}to{--n110:110}}
-
-  .counter-8{animation:c8 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n8);font-variant-numeric:tabular-nums}
-  .counter-8::after{content:counter(n)}
-  @keyframes c8{from{--n8:0}to{--n8:8}}
-
-  .progress-fill{width:0;animation:pFill 1.5s cubic-bezier(0.4,0,0.2,1) 0.5s forwards}
-  @keyframes pFill{to{width:var(--t)}}
-
-  .stacked-card{transition:transform 0.3s ease;border-radius:8px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
-  .stacked-card:nth-child(odd){transform:rotate(-1deg)}
-  .stacked-card:nth-child(even){transform:rotate(1deg)}
-  .stacked-card:hover{transform:rotate(0) scale(1.02);z-index:2}
-
   @media print{body{background:#fff}.slide{margin:0;page-break-after:always}}
 </style>
 </head>
 <body>
 
 
-<!-- 01. COVER — gradient-mesh + topographic lines -->
+<!-- 01. COVER -->
 <div class="slide">
-  <div class="s flex" style="background:var(--white);position:relative">
-    <!-- Topographic lines overlay -->
-    <svg class="topo-lines" viewBox="0 0 1280 720" preserveAspectRatio="none">
-      <path d="M0 200 Q320 150 640 200 T1280 180" fill="none" stroke="var(--g300)" stroke-width="2"/>
-      <path d="M0 300 Q320 260 640 300 T1280 280" fill="none" stroke="var(--g300)" stroke-width="1.5"/>
-      <path d="M0 400 Q320 370 640 400 T1280 390" fill="none" stroke="var(--g300)" stroke-width="1.5"/>
-      <path d="M0 500 Q320 460 640 500 T1280 480" fill="none" stroke="var(--g300)" stroke-width="1"/>
-      <path d="M0 150 Q320 100 640 150 T1280 130" fill="none" stroke="var(--g300)" stroke-width="1"/>
-      <path d="M0 550 Q320 520 640 560 T1280 540" fill="none" stroke="var(--g300)" stroke-width="0.8"/>
-    </svg>
+  <div class="s flex" style="background:var(--white)">
     <!-- Ink panel — 40% left split -->
-    <div class="flex flex-col justify-between" style="width:40%;background:var(--ink);padding:64px 48px;position:relative;z-index:1">
+    <div class="flex flex-col justify-between" style="width:40%;background:var(--ink);padding:64px 48px">
       <div class="flex items-center" style="gap:8px">
         <span style="font-size:20px;font-weight:800;color:#fff">Lukuku<span style="color:var(--mint)">.</span></span>
       </div>
       <div>
         <div style="font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:16px">Brand Distribution</div>
-        <div class="text-scramble" style="font-size:56px;font-weight:900;color:#fff;line-height:1.05;letter-spacing:-2px">
+        <div style="font-size:56px;font-weight:900;color:#fff;line-height:1.05;letter-spacing:-2px">
           Your Brand,<br><span style="font-weight:300;opacity:.35">Global.</span>
         </div>
       </div>
       <div style="font-size:12px;color:rgba(255,255,255,.3)">Confidential &middot; March 2026</div>
     </div>
-    <!-- White panel — 60% right with gradient-mesh -->
-    <div class="flex-1 flex flex-col justify-between gradient-mesh" style="padding:64px 80px;position:relative;z-index:1">
+    <!-- White panel — 60% right -->
+    <div class="flex-1 flex flex-col justify-between" style="padding:64px 80px">
       <div>
         <div class="cap" style="margin-bottom:12px">Overview</div>
         <div style="font-size:15px;color:var(--g600);line-height:1.8;max-width:480px">
@@ -166,7 +115,7 @@
 </div>
 
 
-<!-- 03. END-TO-END MODEL — Asymmetric Grid -->
+<!-- 03. END-TO-END MODEL -->
 <div class="slide">
   <div class="s flex flex-col" style="padding:64px 80px">
     <div style="margin-bottom:32px">
@@ -174,7 +123,7 @@
       <div style="font-size:36px;font-weight:900;color:var(--ink);letter-spacing:-1.5px">Build &rarr; Operate &rarr; Distribute</div>
     </div>
 
-    <!-- Asymmetric Grid: 2fr + 1fr + 1fr -->
+    <!-- Grid layout -->
     <div style="display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:1fr 1fr;gap:1px;background:var(--g200);border:1px solid var(--g200);border-radius:6px;overflow:hidden;margin-bottom:28px;flex:1">
       <!-- BUILD — spans 2 rows -->
       <div style="grid-row:span 2;background:var(--white);padding:28px 24px;display:flex;flex-direction:column;justify-content:space-between">
@@ -264,9 +213,9 @@
 </div>
 
 
-<!-- 05. LOGISTICS — dot-grid background -->
+<!-- 05. LOGISTICS -->
 <div class="slide">
-  <div class="s flex flex-col dot-grid">
+  <div class="s flex flex-col">
     <div style="padding:64px 80px 0">
       <div class="cap" style="margin-bottom:8px">Logistics &amp; Fulfillment</div>
       <div style="font-size:36px;font-weight:900;color:var(--ink);letter-spacing:-1.5px">3PL / FBA / MCF 물류 전략</div>
@@ -307,7 +256,7 @@
 </div>
 
 
-<!-- 06. PAYMENT — Counter Up stats -->
+<!-- 06. PAYMENT -->
 <div class="slide">
   <div class="s flex">
     <div class="flex flex-col justify-between" style="width:35%;background:var(--ink);padding:64px 40px">
@@ -316,7 +265,7 @@
         <div style="font-size:32px;font-weight:900;color:#fff;line-height:1.15;letter-spacing:-1px;margin-bottom:20px">지역별 결제 PG<br><span style="font-weight:300;opacity:.35">전문성</span></div>
         <div style="font-size:12px;color:rgba(255,255,255,.3);line-height:1.8;margin-top:16px">
           한국 법인으로는 Shopify Payments를 미국에서 활성화할 수 없습니다.<br><br>
-          루쿠쿠는 해외 법인 연동 노하우와 <span class="mono counter-8" style="color:var(--mint)"></span>개국+ PG 연동 경험을 바탕으로 각 지역에 최적화된 결제 시스템을 설계합니다.
+          루쿠쿠는 해외 법인 연동 노하우와 <span class="mono" style="color:var(--mint)">8</span>개국+ PG 연동 경험을 바탕으로 각 지역에 최적화된 결제 시스템을 설계합니다.
         </div>
       </div>
       <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="pill-ink">Shopify Payments</span><span class="pill-ink">PayPal</span><span class="pill-ink">Airwallex</span><span class="pill-ink">TapPay</span><span class="pill-ink">Degica</span><span class="pill-ink">Global-e</span></div>
@@ -391,36 +340,36 @@
 </div>
 
 
-<!-- 09. PORTFOLIO — Stacked Cards + Zoom Pan -->
+<!-- 09. PORTFOLIO -->
 <div class="slide">
   <div class="s flex flex-col" style="padding:56px 80px">
     <div style="margin-bottom:24px">
       <div class="cap" style="margin-bottom:8px">Portfolio</div>
       <div style="font-size:36px;font-weight:900;color:var(--ink);letter-spacing:-1.5px">글로벌 브랜드 구축 레퍼런스</div>
     </div>
-    <div class="flex-1" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:8px">
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:188px"><img src="captures/fila.png" class="zoom-pan" style="width:100%;height:188px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
+    <div class="flex-1" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:188px"><img src="captures/fila.png" style="width:100%;height:188px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:14px 18px"><div style="font-size:13px;font-weight:700">FILA</div><div style="font-size:10px;color:var(--g500);line-height:1.6;margin-top:4px">Shopify 글로벌 스토어 &middot; POS &middot; ERP I/F &middot; 홍콩/대만</div></div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:188px"><img src="captures/salomon.png" class="zoom-pan" style="width:100%;height:188px;object-fit:cover;object-position:top;animation-delay:2s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:188px"><img src="captures/salomon.png" style="width:100%;height:188px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:14px 18px"><div style="font-size:13px;font-weight:700">Salomon</div><div style="font-size:10px;color:var(--g500);line-height:1.6;margin-top:4px">Shopify 월 리테이너 &middot; 물류 연동 &middot; CRO 최적화</div></div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:188px"><img src="captures/standoil.png" class="zoom-pan" style="width:100%;height:188px;object-fit:cover;object-position:top;animation-delay:4s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:188px"><img src="captures/standoil.png" style="width:100%;height:188px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:14px 18px"><div style="font-size:13px;font-weight:700">Stand Oil</div><div style="font-size:10px;color:var(--g500);line-height:1.6;margin-top:4px">JP/TW 글로벌 스토어 &middot; Global-e 크로스보더</div></div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:188px"><img src="captures/blackvue.png" class="zoom-pan" style="width:100%;height:188px;object-fit:cover;object-position:top;animation-delay:1s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:188px"><img src="captures/blackvue.png" style="width:100%;height:188px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:14px 18px"><div style="font-size:13px;font-weight:700">BlackVue</div><div style="font-size:10px;color:var(--g500);line-height:1.6;margin-top:4px">글로벌 B2C/B2B &middot; 웹사이트 리뉴얼 &middot; FLEETA</div></div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:188px"><img src="captures/amuz.png" class="zoom-pan" style="width:100%;height:188px;object-fit:cover;object-position:top;animation-delay:3s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:188px"><img src="captures/amuz.png" style="width:100%;height:188px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:14px 18px"><div style="font-size:13px;font-weight:700">어뮤즈 (Amuse)</div><div style="font-size:10px;color:var(--g500);line-height:1.6;margin-top:4px">K-Beauty 글로벌 D2C &middot; Shopify 글로벌 결제 연동</div></div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:188px"><img src="captures/nonfiction.png" class="zoom-pan" style="width:100%;height:188px;object-fit:cover;object-position:top;animation-delay:5s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:188px"><img src="captures/nonfiction.png" style="width:100%;height:188px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:14px 18px"><div style="font-size:13px;font-weight:700">Nonfiction</div><div style="font-size:10px;color:var(--g500);line-height:1.6;margin-top:4px">프래그런스 글로벌 D2C &middot; 카페24 + Shopify 연동</div></div>
       </div>
     </div>
@@ -431,7 +380,7 @@
 </div>
 
 
-<!-- 10. REVENUE MODEL — Data Viz (progress bars for revenue structure) -->
+<!-- 10. REVENUE MODEL -->
 <div class="slide">
   <div class="s flex flex-col">
     <div style="padding:64px 80px 0">
@@ -468,20 +417,20 @@
         <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:12px;margin-top:16px"><div style="font-size:10px;color:rgba(255,255,255,.2)">기본 구축비 + Revenue Share</div></div>
       </div>
     </div>
-    <!-- Data Viz: Revenue model distribution -->
+    <!-- Static progress bars -->
     <div style="padding:16px 80px;border-top:1px solid var(--g200)">
       <div class="flex" style="gap:32px">
         <div style="flex:1">
           <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:10px;font-weight:600">기본 구축비</div><div class="mono" style="font-size:10px;color:var(--g400)">일시</div></div>
-          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--ink);border-radius:3px;--t:100%"></div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="height:100%;width:100%;background:var(--ink);border-radius:3px"></div></div>
         </div>
         <div style="flex:1">
           <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:10px;font-weight:600">월 리테이너</div><div class="mono" style="font-size:10px;color:var(--g400)">정액</div></div>
-          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--g500);border-radius:3px;--t:70%;animation-delay:.5s"></div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="height:100%;width:70%;background:var(--g500);border-radius:3px"></div></div>
         </div>
         <div style="flex:1">
           <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:10px;font-weight:600">Revenue Share</div><div class="mono" style="font-size:10px;color:var(--g400)">성과 연동</div></div>
-          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--mint);border-radius:3px;--t:50%;animation-delay:1s"></div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="height:100%;width:50%;background:var(--mint);border-radius:3px"></div></div>
         </div>
       </div>
     </div>
@@ -491,7 +440,7 @@
 </div>
 
 
-<!-- 11. CLOSE — gradient-mesh + Counter Up -->
+<!-- 11. CLOSE -->
 <div class="slide">
   <div class="s flex" style="background:var(--white)">
     <!-- Ink panel — 45% -->
@@ -500,15 +449,15 @@
         <span style="font-size:20px;font-weight:800;color:#fff">Lukuku<span style="color:var(--mint)">.</span></span>
       </div>
       <div>
-        <div class="text-scramble" style="font-size:48px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-2px;margin-bottom:16px">
+        <div style="font-size:48px;font-weight:900;color:#fff;line-height:1.1;letter-spacing:-2px;margin-bottom:16px">
           Your brand<br>deserves a<br>global stage<span style="color:var(--mint)">.</span>
         </div>
         <div style="font-size:14px;font-weight:400;color:rgba(255,255,255,.3)">국내 브랜드의 글로벌 무대, 루쿠쿠가 함께합니다.</div>
       </div>
       <div style="font-size:10px;color:rgba(255,255,255,.15)">Confidential &middot; 2026</div>
     </div>
-    <!-- White panel — contact with gradient-mesh -->
-    <div class="flex-1 flex flex-col justify-between gradient-mesh" style="padding:64px 80px">
+    <!-- White panel — contact -->
+    <div class="flex-1 flex flex-col justify-between" style="padding:64px 80px">
       <div class="cap">Contact</div>
       <div style="display:flex;flex-direction:column;gap:32px">
         <div><div class="cap" style="margin-bottom:6px">Email</div><div style="font-size:18px;font-weight:700;color:var(--ink)">hello@lukuku.io</div></div>

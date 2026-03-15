@@ -40,54 +40,19 @@
   .slide-num{position:absolute;bottom:28px;right:40px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--g400)}
   .slide-logo{position:absolute;bottom:28px;left:40px;font-size:13px;font-weight:800;color:var(--g300)}
 
-  /* === VISUAL EFFECTS === */
-  .gradient-mesh{background:radial-gradient(ellipse at 20% 50%,rgba(43,245,160,0.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(43,245,160,0.05) 0%,transparent 40%),radial-gradient(ellipse at 60% 80%,rgba(200,200,200,0.1) 0%,transparent 50%)}
-  .dot-grid{background-image:radial-gradient(circle,#D4D4D4 1px,transparent 1px);background-size:24px 24px}
-  .zoom-pan{animation:zoomPan 8s ease-in-out infinite alternate}
-  @keyframes zoomPan{0%{transform:scale(1) translate(0,0)}100%{transform:scale(1.15) translate(-3%,-2%)}}
-
-  /* === ANIMATIONS === */
-  .text-scramble{animation:textScramble 600ms steps(8) forwards}
-  @keyframes textScramble{0%{filter:blur(4px);opacity:0;letter-spacing:4px}50%{filter:blur(1px);opacity:.7;letter-spacing:1px}100%{filter:blur(0);opacity:1;letter-spacing:-2px}}
-
-  @property --n68{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n110{syntax:"<integer>";initial-value:0;inherits:false}
-  @property --n44{syntax:"<integer>";initial-value:0;inherits:false}
-
-  .counter-68{animation:c68 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n68);font-variant-numeric:tabular-nums}
-  .counter-68::after{content:counter(n)}
-  @keyframes c68{from{--n68:0}to{--n68:68}}
-
-  .counter-110{animation:c110 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n110);font-variant-numeric:tabular-nums}
-  .counter-110::after{content:counter(n)}
-  @keyframes c110{from{--n110:0}to{--n110:110}}
-
-  .counter-44{animation:c44 2s cubic-bezier(0.4,0,0.2,1) forwards;counter-reset:n var(--n44);font-variant-numeric:tabular-nums}
-  .counter-44::after{content:counter(n)}
-  @keyframes c44{from{--n44:0}to{--n44:44}}
-
-  .progress-fill{width:0;animation:pFill 1.5s cubic-bezier(0.4,0,0.2,1) 0.5s forwards}
-  @keyframes pFill{to{width:var(--t)}}
-
-  /* Stacked Cards */
-  .stacked-card{transition:transform 0.3s ease;border-radius:8px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.08)}
-  .stacked-card:nth-child(odd){transform:rotate(-1deg)}
-  .stacked-card:nth-child(even){transform:rotate(1deg)}
-  .stacked-card:hover{transform:rotate(0) scale(1.02);z-index:2}
-
   @media print{body{background:#fff}.slide{margin:0;page-break-after:always}}
 </style>
 </head>
 <body>
 
-<!-- 01. COVER — gradient-mesh + Text Scramble -->
+<!-- 01. COVER -->
 <div class="slide">
-  <div class="s flex gradient-mesh" style="overflow:hidden">
+  <div class="s flex" style="overflow:hidden">
     <!-- Ink panel — left 38% -->
     <div style="width:38%;background:var(--ink);padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between">
       <div style="font-size:20px;font-weight:800;color:var(--white)">Lukuku<span style="color:var(--mint)">.</span></div>
       <div>
-        <div class="text-scramble mono" style="font-size:56px;font-weight:700;color:var(--white);line-height:1.05;letter-spacing:-2px;margin-bottom:16px">
+        <div class="mono" style="font-size:56px;font-weight:700;color:var(--white);line-height:1.05;letter-spacing:-2px;margin-bottom:16px">
           Operate<br>&amp; Optimize<span style="color:var(--mint)">.</span>
         </div>
         <div style="font-size:12px;color:rgba(255,255,255,.35);line-height:1.7">
@@ -97,14 +62,14 @@
       </div>
       <div style="font-size:10px;color:rgba(255,255,255,.2)">Confidential · March 2026</div>
     </div>
-    <!-- White panel — right with Counter Up -->
+    <!-- White panel — right with static numbers -->
     <div style="flex:1;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between">
       <div>
         <div class="cap" style="margin-bottom:32px">Key Numbers</div>
         <div style="display:flex;flex-direction:column;gap:28px">
           <div>
             <div class="flex items-end" style="gap:4px">
-              <div class="mono counter-68" style="font-size:48px;font-weight:700;color:var(--ink);line-height:1"></div>
+              <div class="mono" style="font-size:48px;font-weight:700;color:var(--ink);line-height:1">68</div>
               <span class="mono" style="font-size:20px;color:var(--g400);line-height:1.8">+</span>
             </div>
             <div style="font-size:11px;color:var(--g500);margin-top:4px">거래처 운영 경험</div>
@@ -112,14 +77,14 @@
           <div style="height:1px;background:var(--g200)"></div>
           <div>
             <div class="flex items-end" style="gap:4px">
-              <div class="mono counter-110" style="font-size:48px;font-weight:700;color:var(--mint);line-height:1"></div>
+              <div class="mono" style="font-size:48px;font-weight:700;color:var(--mint);line-height:1">110</div>
               <span class="mono" style="font-size:20px;color:var(--g400);line-height:1.8">+</span>
             </div>
             <div style="font-size:11px;color:var(--g500);margin-top:4px">견적 운영 실적</div>
           </div>
           <div style="height:1px;background:var(--g200)"></div>
           <div>
-            <div class="mono counter-44" style="font-size:48px;font-weight:700;color:var(--ink);line-height:1"></div>
+            <div class="mono" style="font-size:48px;font-weight:700;color:var(--ink);line-height:1">44</div>
             <div style="font-size:11px;color:var(--g500);margin-top:4px">Modusign 계약 체결</div>
           </div>
         </div>
@@ -271,7 +236,7 @@
 </div>
 
 
-<!-- 05. WEEKLY PROCESS — Data Viz (progress bars) -->
+<!-- 05. WEEKLY PROCESS -->
 <div class="slide">
   <div class="s flex flex-col" style="padding:60px 80px">
     <div style="margin-bottom:32px">
@@ -279,7 +244,7 @@
       <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">Weekly Cycle</div>
     </div>
 
-    <!-- Weekly cycle with Data Viz progress -->
+    <!-- Weekly cycle -->
     <div style="display:grid;grid-template-columns:1fr 32px 1fr 32px 1fr;align-items:stretch;margin-bottom:24px">
       <div style="border:1px solid var(--g200);border-radius:8px;overflow:hidden">
         <div style="background:var(--ink);padding:16px 20px">
@@ -306,25 +271,25 @@
       </div>
     </div>
 
-    <!-- Data Viz: Weekly task progress bars -->
+    <!-- Static progress bars -->
     <div style="margin-bottom:24px;padding:20px 24px;background:var(--g50);border:1px solid var(--g200);border-radius:8px">
       <div class="cap" style="margin-bottom:12px">Weekly Task Distribution</div>
       <div class="flex" style="gap:24px">
         <div style="flex:1">
           <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:11px;font-weight:600">스토어 운영</div><div class="mono" style="font-size:10px;color:var(--g400)">35%</div></div>
-          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--ink);border-radius:3px;--t:35%"></div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="height:100%;width:35%;background:var(--ink);border-radius:3px"></div></div>
         </div>
         <div style="flex:1">
           <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:11px;font-weight:600">기능 개발</div><div class="mono" style="font-size:10px;color:var(--g400)">30%</div></div>
-          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--ink);border-radius:3px;--t:30%;animation-delay:.7s"></div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="height:100%;width:30%;background:var(--ink);border-radius:3px"></div></div>
         </div>
         <div style="flex:1">
           <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:11px;font-weight:600">CRO / A/B</div><div class="mono" style="font-size:10px;color:var(--g400)">20%</div></div>
-          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--mint);border-radius:3px;--t:20%;animation-delay:.9s"></div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="height:100%;width:20%;background:var(--mint);border-radius:3px"></div></div>
         </div>
         <div style="flex:1">
           <div class="flex justify-between" style="margin-bottom:4px"><div style="font-size:11px;font-weight:600">리포트</div><div class="mono" style="font-size:10px;color:var(--g400)">15%</div></div>
-          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div class="progress-fill" style="height:100%;background:var(--g400);border-radius:3px;--t:15%;animation-delay:1.1s"></div></div>
+          <div style="height:6px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="height:100%;width:15%;background:var(--g400);border-radius:3px"></div></div>
         </div>
       </div>
     </div>
@@ -352,7 +317,7 @@
 </div>
 
 
-<!-- 06. PORTFOLIO — Stacked Cards + Zoom Pan -->
+<!-- 06. PORTFOLIO -->
 <div class="slide">
   <div class="s flex flex-col" style="padding:60px 80px">
     <div style="margin-bottom:24px">
@@ -360,59 +325,57 @@
       <div style="font-size:36px;font-weight:900;letter-spacing:-1.5px">운영 중인 사이트</div>
     </div>
 
-    <div class="flex-1" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px;padding:8px">
-      <!-- Row 1 — Stacked Cards with Zoom Pan -->
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:170px"><img src="captures/fila.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
+    <div class="flex-1" style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:12px">
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:170px"><img src="captures/fila.png" style="width:100%;height:170px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px">
           <div style="font-size:12px;font-weight:700">FILA Korea</div>
           <div style="font-size:10px;color:var(--g500);margin-top:2px">Shopify · POS · ERP · 리테이너</div>
         </div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:170px"><img src="captures/salomon.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:2s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:170px"><img src="captures/salomon.png" style="width:100%;height:170px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px">
           <div style="font-size:12px;font-weight:700">Salomon Korea</div>
           <div style="font-size:10px;color:var(--g500);margin-top:2px">월 리테이너 · 물류 연동</div>
         </div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:170px"><img src="captures/verish.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:4s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:170px"><img src="captures/verish.png" style="width:100%;height:170px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px">
           <div style="font-size:12px;font-weight:700">Verish (Amer Sports)</div>
           <div style="font-size:10px;color:var(--g500);margin-top:2px">사이즈차트 · 리뷰 · 포인트 정책</div>
         </div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:170px"><img src="captures/standoil.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:6s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:170px"><img src="captures/standoil.png" style="width:100%;height:170px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px">
           <div style="font-size:12px;font-weight:700">Stand Oil</div>
           <div style="font-size:10px;color:var(--g500);margin-top:2px">JP/TW · Global-e · 멀티마켓</div>
         </div>
       </div>
-      <!-- Row 2 -->
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:170px"><img src="captures/blackvue.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:1s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:170px"><img src="captures/blackvue.png" style="width:100%;height:170px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px">
           <div style="font-size:12px;font-weight:700">BlackVue</div>
           <div style="font-size:10px;color:var(--g500);margin-top:2px">B2C/B2B · FLEETA</div>
         </div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:170px"><img src="captures/nonfiction.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:3s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:170px"><img src="captures/nonfiction.png" style="width:100%;height:170px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px">
           <div style="font-size:12px;font-weight:700">Nonfiction</div>
           <div style="font-size:10px;color:var(--g500);margin-top:2px">카페24 + 글로벌</div>
         </div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
-        <div style="overflow:hidden;height:170px"><img src="captures/amuz.png" class="zoom-pan" style="width:100%;height:170px;object-fit:cover;object-position:top;animation-delay:5s" onerror="this.style.display='none'"></div>
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
+        <div style="overflow:hidden;height:170px"><img src="captures/amuz.png" style="width:100%;height:170px;object-fit:cover;object-position:top" onerror="this.style.display='none'"></div>
         <div style="padding:12px 16px">
           <div style="font-size:12px;font-weight:700">어뮤즈</div>
           <div style="font-size:10px;color:var(--g500);margin-top:2px">K-Beauty 글로벌</div>
         </div>
       </div>
-      <div class="stacked-card" style="background:var(--white);border:1px solid var(--g200)">
+      <div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;overflow:hidden">
         <div style="width:100%;height:170px;background:var(--ink);display:flex;align-items:center;justify-content:center">
           <div style="font-size:22px;font-weight:800;color:var(--white);letter-spacing:4px">WILSON</div>
         </div>
@@ -428,13 +391,11 @@
 </div>
 
 
-<!-- 07. CASE A — Diagonal Split -->
+<!-- 07. CASE A — Split layout -->
 <div class="slide">
-  <div class="s flex" style="overflow:hidden;position:relative">
-    <!-- Diagonal ink background -->
-    <div style="position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 0,48% 0,36% 100%,0 100%)"></div>
-    <!-- Ink panel content -->
-    <div style="width:38%;position:relative;z-index:1;padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between">
+  <div class="s flex" style="overflow:hidden">
+    <!-- Ink panel — left -->
+    <div style="width:38%;background:var(--ink);padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between">
       <div>
         <div class="cap" style="color:rgba(255,255,255,.3);margin-bottom:14px">Case Study — Retainer</div>
         <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:20px">A사<br>(글로벌 스포츠 그룹)</div>
@@ -450,7 +411,7 @@
       </div>
     </div>
     <!-- White panel — right -->
-    <div style="flex:1;display:flex;flex-direction:column;position:relative;z-index:1">
+    <div style="flex:1;display:flex;flex-direction:column">
       <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
         <div class="cap" style="margin-bottom:12px">Operation Scope</div>
         <div class="grid-2" style="gap:20px">
@@ -479,11 +440,10 @@
 </div>
 
 
-<!-- 08. CASE J — Diagonal Split -->
+<!-- 08. CASE J — Split layout -->
 <div class="slide">
-  <div class="s flex" style="overflow:hidden;position:relative">
-    <div style="position:absolute;inset:0;background:var(--ink);clip-path:polygon(0 0,48% 0,36% 100%,0 100%)"></div>
-    <div style="width:38%;position:relative;z-index:1;padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between">
+  <div class="s flex" style="overflow:hidden">
+    <div style="width:38%;background:var(--ink);padding:60px 48px;display:flex;flex-direction:column;justify-content:space-between">
       <div>
         <div class="cap" style="color:rgba(255,255,255,.3);margin-bottom:14px">Case Study — Retainer</div>
         <div style="font-size:28px;font-weight:900;color:var(--white);line-height:1.2;margin-bottom:20px">J사<br>(럭셔리 셀렉트샵)</div>
@@ -497,7 +457,7 @@
         <div style="display:flex;gap:4px;flex-wrap:wrap"><span class="pill-dk">큐 시스템</span><span class="pill-dk">UX 리디자인</span><span class="pill-dk">Slack Ops</span></div>
       </div>
     </div>
-    <div style="flex:1;display:flex;flex-direction:column;position:relative;z-index:1">
+    <div style="flex:1;display:flex;flex-direction:column">
       <div style="flex:1;padding:28px 48px;border-bottom:1px solid var(--g200)">
         <div class="cap" style="margin-bottom:12px">Operation Scope</div>
         <div class="grid-2" style="gap:20px">
@@ -605,14 +565,14 @@
 </div>
 
 
-<!-- 11. CLOSE — gradient-mesh -->
+<!-- 11. CLOSE -->
 <div class="slide">
   <div class="s flex" style="overflow:hidden">
     <!-- Ink panel — left 45% -->
     <div style="width:45%;background:var(--ink);padding:72px 48px;display:flex;flex-direction:column;justify-content:space-between">
       <div style="font-size:20px;font-weight:800;color:var(--white)">Lukuku<span style="color:var(--mint)">.</span></div>
       <div>
-        <div class="text-scramble" style="font-size:48px;font-weight:900;color:var(--white);line-height:1.1;letter-spacing:-2px;margin-bottom:16px">
+        <div style="font-size:48px;font-weight:900;color:var(--white);line-height:1.1;letter-spacing:-2px;margin-bottom:16px">
           Your store,<br>always<br>optimized<span style="color:var(--mint)">.</span>
         </div>
         <div style="font-size:13px;color:rgba(255,255,255,.3);line-height:1.7">구축 이후의 모든 것,<br>루쿠쿠가 함께합니다.</div>
@@ -621,8 +581,8 @@
         <a href="mailto:hello@lukuku.io" style="display:inline-block;background:var(--mint);color:var(--ink);padding:12px 32px;border-radius:6px;font-size:13px;font-weight:700;text-decoration:none">Let's talk</a>
       </div>
     </div>
-    <!-- White panel — right with gradient-mesh -->
-    <div class="gradient-mesh" style="flex:1;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between">
+    <!-- White panel — right -->
+    <div style="flex:1;padding:72px 80px;display:flex;flex-direction:column;justify-content:space-between">
       <div class="cap" style="margin-bottom:8px">Contact</div>
       <div style="display:flex;flex-direction:column;gap:28px">
         <div><div class="cap" style="margin-bottom:6px">Email</div><div style="font-size:15px;font-weight:600;color:var(--ink)">hello@lukuku.io</div></div>
